@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttendanceRecordViewController">
+            <connections>
+                <outlet property="deleteClassButton" destination="YyC-fX-zNI" id="HG7-Hd-gVW"/>
+                <outlet property="tableView" destination="jUb-64-MFu" id="XSQ-Lk-0VF"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="jUb-64-MFu">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyC-fX-zNI">
+                    <rect key="frame" x="91" y="450" width="138" height="30"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="138" id="GmC-dB-no6"/>
+                        <constraint firstAttribute="height" constant="30" id="bPO-Dm-01T"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="授業削除">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteClassButton:" destination="-1" eventType="touchUpInside" id="CvU-d4-goR"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="jUb-64-MFu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="SDa-ba-QJz"/>
+                <constraint firstAttribute="trailing" secondItem="jUb-64-MFu" secondAttribute="trailing" id="T68-Oi-ZEo"/>
+                <constraint firstAttribute="bottom" secondItem="jUb-64-MFu" secondAttribute="bottom" id="W4H-6u-ea3"/>
+                <constraint firstAttribute="centerX" secondItem="YyC-fX-zNI" secondAttribute="centerX" id="XNu-BU-e65"/>
+                <constraint firstItem="jUb-64-MFu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uLy-hQ-0PO"/>
+                <constraint firstAttribute="bottom" secondItem="YyC-fX-zNI" secondAttribute="bottom" id="uoo-tL-wb2"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>
