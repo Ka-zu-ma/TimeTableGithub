@@ -84,6 +84,9 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
 
 -(void)viewWillAppear:(BOOL)animated{
     
+    _classNames=[NSMutableArray array];
+    _classroomNames=[NSMutableArray array];
+    
     if (_classNames.count > 0 && _classroomNames.count > 0) {
         
         /*NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
