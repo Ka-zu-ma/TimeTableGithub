@@ -84,33 +84,51 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    /*NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    _row=indexPath.row;
-    
-    [self.collectionView reloadData];
-    [super viewWillAppear:animated];*/
-    
-    //UICollectionViewCell *cell=[_collectionView cellForItemAtIndexPath:indexPath];
-    
-    
-    
-    
-    
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString=paths[0];
-    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
-    [db open];
-    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
-    
-    FMResultSet *results=[db executeQuery:@"SELECT className, classroomName FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
-    while ([results next]) {
-        [_classNames addObject:[results stringForColumn:@"className"]];
-        [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
+    if (_classNames.count > 0 && _classroomNames.count > 0) {
+        
+        /*NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+         _row=indexPath.row;
+         
+         [self.collectionView reloadData];
+         [super viewWillAppear:animated];*/
+        
+        //UICollectionViewCell *cell=[_collectionView cellForItemAtIndexPath:indexPath];
+        
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *dbPathString=paths[0];
+        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
+        [db open];
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+        
+        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
+        while ([results next]) {
+            [_classNames addObject:[results stringForColumn:@"className"]];
+            [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
+        }
+        [db close];
+        
+        [self.collectionView reloadData];
+        [super viewWillAppear:animated];
+        
+
+    }else{
+        
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *dbPathString=paths[0];
+        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
+        [db open];
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+        
+        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName FROM selectclasstable;"];
+        while ([results next]) {
+            [_classNames addObject:[results stringForColumn:@"className"]];
+            [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
+        }
+        [db close];
+        
+        [self.collectionView reloadData];
+        [super viewWillAppear:animated];
     }
-    [db close];
-    
-    [self.collectionView reloadData];
-    [super viewWillAppear:animated];
 }
 
 #pragma mark - Memory Management

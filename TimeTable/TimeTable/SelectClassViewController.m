@@ -125,7 +125,7 @@
         }
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+/*-(void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
     NSArray *managedViewControllers = self.navigationController.viewControllers;
@@ -138,7 +138,7 @@
     
     viewController.classNameString = cell.textLabel.text;
     viewController.row=_row;
-}
+}*/
 
 #pragma mark - Memory Management
 
@@ -219,6 +219,18 @@
     
     [selectclassdb close];
     
+    UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dbPathString=paths[0];
+    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
+    [db open];
+    [db executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,@""];
+    
+    
+    
+    [db close];
+
     [self.navigationController popViewControllerAnimated:YES];
     
     
