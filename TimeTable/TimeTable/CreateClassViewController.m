@@ -8,10 +8,10 @@
 
 #import "CreateClassViewController.h"
 #import "ClassTableCell.h"
-
 #import "FMDatabase.h"
 
 @interface CreateClassViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UIButton *registerClassButton;
 @property (weak, nonatomic) IBOutlet UITextField *classTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classroomTextField;
@@ -23,6 +23,7 @@
 @implementation CreateClassViewController
 
 #pragma mark - View Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -34,10 +35,6 @@
     _classTextField.delegate=self;
     _teacherTextField.delegate=self;
     
-    /*UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewTapped:)];
-    
-    [self.view addGestureRecognizer:tapGesture];*/
-    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     //タイトル色変更
@@ -47,68 +44,58 @@
     [titleLabel sizeToFit];
     self.navigationItem.titleView=titleLabel;
     
-    //バー背景色
+    
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
 
     // Do any additional setup after loading the view from its nib.
 }
 
-/*-(void)viewWillAppear:(BOOL)animated{
-    
-    if ((_classTextField.text=@"") || (_teacherTextField.text=@"") || (_classroomTextField.text=@"")) {
-        _registerClassButton.enabled=NO;
-        
-    }else{
-        _registerClassButton.enabled=YES;
-        
-    }
-
-    
-}*/
-#pragma Memory Management
+#pragma mark - Memory Management
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
 #pragma mark - IBAction
 
 - (IBAction)registerClassButton:(id)sender {
     
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString=paths[0];
-    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
-    [db open];
-    [db executeUpdate:@"INSERT INTO createclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",_classTextField.text,_teacherTextField.text,_classroomTextField.text];
+    if ((_classTextField.text.length != 0) && (_teacherTextField.text.length != 0) && (_classroomTextField.text.length != 0)){
+        
+        if ((![_classTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_classroomTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_teacherTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding])) {
+            
+            NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *dbPathString=paths[0];
+            FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+            [db open];
+            [db executeUpdate:@"INSERT INTO createclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",_classTextField.text,_teacherTextField.text,_classroomTextField.text];
+            
+            NSLog(@"%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
+            
+            [db close];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+
+        }else{
+            
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"警告" message:@"授業名、教員名、教室名には日本語のみ入力してください。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            
+            [alertView show];
+        }
     
-    NSLog(@"%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
-    
-    [db close];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    }else{
+        
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"警告" message:@"授業名、教員名、教室名を3つとも入力しなさい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        
+        [alertView show];
+    }
 }
 
 #pragma mark - UITextField Delegate
 
-/*-(void)textFieldDidEndEditing:(UITextField *)textField{
-    if ((_classTextField.text=@"") || (_teacherTextField.text=@"") || (_classroomTextField.text=@"")) {
-        _registerClassButton.enabled=NO;
-        
-    }else{
-        _registerClassButton.enabled=YES;
-        
-    }
-    
-}*/
 
-/*-(BOOL)textFieldShouldReturn:(UITextField *)textField{
- [self.view endEditing:YES];
- return NO;
- }*/
 
 
 

@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SuperSelectClassViewController.h"
 
 @interface SelectClassViewController : UIViewController
+
+@property (strong,nonatomic) NSMutableArray *classes;
+@property (strong,nonatomic) NSMutableArray *teachers;
+@property (strong,nonatomic) NSMutableArray *classrooms;
+@property (nonatomic) NSInteger row;
 
 @end

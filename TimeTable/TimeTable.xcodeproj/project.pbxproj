@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		87BD2CD6011CB725D7F097EB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E10A7BABDB838251E120F4BB /* libPods.a */; };
+		E380FB2E1B096E510018D0D5 /* UpdateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E380FB2C1B096E510018D0D5 /* UpdateClassViewController.m */; };
+		E380FB2F1B096E510018D0D5 /* UpdateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E380FB2D1B096E510018D0D5 /* UpdateClassViewController.xib */; };
+		E380FB321B0984170018D0D5 /* SuperSelectClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E380FB311B0984170018D0D5 /* SuperSelectClassViewController.m */; };
 		E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */; };
 		E384598D1AF33AAF00ADB04A /* CreateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */; };
 		E39AF7561B02D6D000A4D8D2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E39AF7551B02D6D000A4D8D2 /* libsqlite3.0.dylib */; };
@@ -49,6 +52,11 @@
 		0B308C34BF409DAC54B244E5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		803FFAEE7E6B6AD4A6A08A93 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E10A7BABDB838251E120F4BB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E380FB2B1B096E510018D0D5 /* UpdateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateClassViewController.h; sourceTree = "<group>"; };
+		E380FB2C1B096E510018D0D5 /* UpdateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateClassViewController.m; sourceTree = "<group>"; };
+		E380FB2D1B096E510018D0D5 /* UpdateClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateClassViewController.xib; sourceTree = "<group>"; };
+		E380FB301B0984170018D0D5 /* SuperSelectClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperSelectClassViewController.h; sourceTree = "<group>"; };
+		E380FB311B0984170018D0D5 /* SuperSelectClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperSelectClassViewController.m; sourceTree = "<group>"; };
 		E38459891AF33AAF00ADB04A /* CreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClassViewController.h; sourceTree = "<group>"; };
 		E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateClassViewController.xib; sourceTree = "<group>"; };
@@ -153,9 +161,14 @@
 				E3A162271AF30FE40058642D /* AttendanceRecordViewController.h */,
 				E3A162281AF30FE40058642D /* AttendanceRecordViewController.m */,
 				E3A162291AF30FE40058642D /* AttendanceRecordViewController.xib */,
+				E380FB301B0984170018D0D5 /* SuperSelectClassViewController.h */,
+				E380FB311B0984170018D0D5 /* SuperSelectClassViewController.m */,
 				E3A162221AF30F780058642D /* SelectClassViewController.h */,
 				E3A162231AF30F780058642D /* SelectClassViewController.m */,
 				E3A162241AF30F780058642D /* SelectClassViewController.xib */,
+				E380FB2B1B096E510018D0D5 /* UpdateClassViewController.h */,
+				E380FB2C1B096E510018D0D5 /* UpdateClassViewController.m */,
+				E380FB2D1B096E510018D0D5 /* UpdateClassViewController.xib */,
 				E38459891AF33AAF00ADB04A /* CreateClassViewController.h */,
 				E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */,
 				E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */,
@@ -347,6 +360,7 @@
 				E3FE066C1B01F5A800AB1BB3 /* CountUpCell.xib in Resources */,
 				E3A161FB1AF301520058642D /* Images.xcassets in Resources */,
 				E384598D1AF33AAF00ADB04A /* CreateClassViewController.xib in Resources */,
+				E380FB2F1B096E510018D0D5 /* UpdateClassViewController.xib in Resources */,
 				E39CBFCF1AFB460100AAEA5D /* ClassTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,8 +416,10 @@
 				E3A161F31AF301520058642D /* AppDelegate.m in Sources */,
 				E3A161F01AF301520058642D /* main.m in Sources */,
 				E3A162201AF30D7C0058642D /* DayOfWeekCell.m in Sources */,
+				E380FB2E1B096E510018D0D5 /* UpdateClassViewController.m in Sources */,
 				E3A0F6F01AFC7C08009664DD /* ClassListCell.m in Sources */,
 				E3A162251AF30F780058642D /* SelectClassViewController.m in Sources */,
+				E380FB321B0984170018D0D5 /* SuperSelectClassViewController.m in Sources */,
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
 				E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */,
 				E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */,
