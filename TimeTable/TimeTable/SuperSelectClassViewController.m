@@ -24,10 +24,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)createClassTable{
+-(void)createCreateClassTable{
     
     
 }
+-(void)createSelectClassTable{
+    
+}
+
 
 
 @end

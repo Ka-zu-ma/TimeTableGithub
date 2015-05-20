@@ -11,9 +11,6 @@
 
 @interface SelectClassViewController : UIViewController
 
-@property (strong,nonatomic) NSMutableArray *classes;
-@property (strong,nonatomic) NSMutableArray *teachers;
-@property (strong,nonatomic) NSMutableArray *classrooms;
-@property (nonatomic) NSInteger row;
-
+//@property (nonatomic) NSInteger row;
+@property  NSIndexPath *indexPath;
 @end

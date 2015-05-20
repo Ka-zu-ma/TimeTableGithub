@@ -10,5 +10,6 @@
 
 @interface SuperSelectClassViewController : UIViewController
 
--(void)createClassTable;
+-(void)createCreateClassTable;
+-(void)createSelectClassTable;
 @end

@@ -14,12 +14,14 @@
 #import "UpdateClassViewController.h"
 #import "SuperSelectClassViewController.h"
 
-
 @interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong,nonatomic) NSMutableArray *classes;
+@property (strong,nonatomic) NSMutableArray *teachers;
+@property (strong,nonatomic) NSMutableArray *classrooms;
+@property NSString *cellclassroomNameString;
 
-
-
+-(void)updateTableViewCell;
 @end
 
 @implementation SelectClassViewController
@@ -29,18 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //空リスト生成
-    _classes=[NSMutableArray array];
-    _teachers=[NSMutableArray array];
-    _classrooms=[NSMutableArray array];
-    
     _tableView.delegate=self;
     _tableView.dataSource=self;
     
-    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title=@"授業選択";
-    
     
     //タイトル色変更
     UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
@@ -48,7 +43,6 @@
     titleLabel.text=@"授業選択";
     [titleLabel sizeToFit];
     self.navigationItem.titleView=titleLabel;  //親クラス作って共通化
-    
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
@@ -60,9 +54,9 @@
     
     self.navigationItem.rightBarButtonItem=addButton;
     
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     
+    //NSLog(@"row=%ld",(long)_row);
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -73,14 +67,11 @@
     _classes=[NSMutableArray array];
     _teachers=[NSMutableArray array];
     _classrooms=[NSMutableArray array];
-    
+
     //戻ったときにフェードアウトして非選択状態に戻る
-    [_tableView deselectRowAtIndexPath:_tableView.indexPathForSelectedRow animated:YES];
+    //[_tableView deselectRowAtIndexPath:_tableView.indexPathForSelectedRow animated:YES];
     
     if (_classes.count>0 && _teachers.count>0 && _classrooms.count>0) {
-        
-       
-        SelectClassViewController *viewController=[[SelectClassViewController alloc]init];
         
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *dbPathString=paths[0];
@@ -88,14 +79,16 @@
         [db open];
         [db executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
         
-        FMResultSet *results=[db executeQuery:@"SELECT className, teacherName　FROM createclasstable　WHERE id= (SELECT MAX(id) FROM createclasstable);"];
+        FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName　FROM createclasstable　WHERE id= (SELECT MAX(id) FROM createclasstable);"];
+        
         while ([results next]) {
-            [viewController.classes addObject:[results stringForColumn:@"className"]];
-            [viewController.teachers addObject:[results stringForColumn:@"teacherName"]];
+            [_classes addObject:[results stringForColumn:@"className"]];
+            [_teachers addObject:[results stringForColumn:@"teacherName"]];
+            [_classrooms addObject:[results stringForColumn:@"classroomName"]];
         }
+        
         [db close];
         
-
         [self.tableView reloadData];
         [super viewWillAppear:animated];
         
@@ -119,26 +112,8 @@
         [self.tableView reloadData];
         [super viewWillAppear:animated];
         
-        
-        
-        
-        }
+    }
 }
-
-/*-(void)viewWillDisappear:(BOOL)animated{
-    
-    [super viewWillDisappear:animated];
-    NSArray *managedViewControllers = self.navigationController.viewControllers;
-    NSInteger arrayCount = [managedViewControllers count];
-    
-    TimeTableViewController *viewController = managedViewControllers[arrayCount - 1];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    viewController.classNameString = cell.textLabel.text;
-    viewController.row=_row;
-}*/
 
 #pragma mark - Memory Management
 
@@ -155,13 +130,6 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-#pragma mark - UITableView Methods
-
-/*-(void)reload{
-    
-    
-}*/
-
 #pragma mark - UITableView DataSource
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -171,9 +139,9 @@
     cell=[[ClassListCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
-    cell.textLabel.text=_classes[indexPath.section];
-    cell.detailTextLabel.text=_teachers[indexPath.section];
-    cell.cellClassroomNameString=_classrooms[indexPath.section];
+    cell.textLabel.text=_classes[indexPath.row];
+    cell.detailTextLabel.text=_teachers[indexPath.row];
+    
     
     cell.detailTextLabel.textColor=[UIColor grayColor];
     cell.selectionStyle=UITableViewCellSelectionStyleBlue;
@@ -186,11 +154,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
    
-    return 1;
+    return _classes.count; //1;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return _classes.count;
+    return 1; //_classes.count;
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -207,13 +175,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-   
     NSArray *selectclassPaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *selectclassdbPathString=selectclassPaths[0];
     FMDatabase *selectclassdb=[FMDatabase databaseWithPath:[selectclassdbPathString stringByAppendingPathComponent:@"selectclass.db"]];
-    //DBファイル名を定数
+    //DBファイル名を定数にする
+    
     [selectclassdb open];
-    [selectclassdb executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+    [selectclassdb executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT, indexPath);"];
     
     NSLog(@"%@",[selectclassdbPathString stringByAppendingPathComponent:@"selectclass.db"]);
     
@@ -225,45 +193,16 @@
     NSString *dbPathString=paths[0];
     FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
     [db open];
-    [db executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,@""];
+    [db executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,@"",_indexPath];//セルが持ってるclassroomNameプロパティを入れないといけない
+    
+    //NSLog(@"%@",cell.textLabel.text);
+    
     
     
     
     [db close];
 
     [self.navigationController popViewControllerAnimated:YES];
-    
-    
-    
-    
-    
-    
-    
-
-    
-    //selectclasstable内の授業名、教員名に対応した教室名取得
-    /*NSArray *paths1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString1=paths1[0];
-    FMDatabase *db1=[FMDatabase databaseWithPath:[dbPathString1 stringByAppendingPathComponent:@"createclass.db"]];
-    [db1 open];
-    [db1 executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
-    
-    FMResultSet *results=[db1 executeQuery:@"SELECT classroomName FROM createclasstable WHERE ;"];
-    while ([results next]) {
-        [_classrooms addObject:[results stringForColumn:@"className"]];
-        
-    }
-    
-    [db1 close];*/
-
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -275,15 +214,34 @@
     //削除ボタン
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
-        //セル表示の元となるデータ削除
-        [_classes removeObjectAtIndex:indexPath.section];
+        UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
-        //セル表示の元となるデータとセル表示を同期させるため、セル削除
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *dbPathString=paths[0];
+        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+        [db open];
+        
+        FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
+        
+        while ([results next]) {
+            _cellclassroomNameString=[results stringForColumn:@"classroomName"];
+        }
+        
+        [db executeUpdate:@"DELETE FROM createclasstable WHERE className = ? AND teacherName = ? AND classroomName = ?",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString];
+        
+        [db close];
+        
+        [self updateTableViewCell];
+        
+        /*//セル表示の元となるデータとセル表示を同期させるため、セル削除
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
-        NSLog(@"abc");
-        
-        
+        //セル表示の元となるデータ削除
+        [_classes removeObjectAtIndex:indexPath.row];
+        [_teachers removeObjectAtIndex:indexPath.row];
+        [_classrooms removeObjectAtIndex:indexPath.row];*/
+
+        [self.tableView reloadData];
     }];
     
     //編集ボタン
@@ -291,24 +249,66 @@
         
         UpdateClassViewController *viewController=[[UpdateClassViewController alloc]init];
         
-        //indexPathを指定して呼び出しすることでCellを取り出せる
-        /*UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
+        //indexPathを指定して呼び出しすることでcellを取り出せる
+        UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
         viewController.classNameString=cell.textLabel.text;
         viewController.teacherNameString=cell.detailTextLabel.text;
-        viewController.classroomNameString=@"";//_classrooms[indexPath.section];
-        viewController.title=@"授業詳細";*/
+        
+        //セルの授業名、教室名に対応する教室名を取得
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *dbPathString=paths[0];
+        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+        [db open];
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+        
+        FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
+        
+        while ([results next]) {
+            _cellclassroomNameString=[results stringForColumn:@"classroomName"];
+        }
+        
+        [db close];
+       
+        viewController.classroomNameString=_cellclassroomNameString;
         
         [self.navigationController pushViewController:viewController animated:YES];
 
         
         
-        NSLog(@"Edit:%@", indexPath);
+        //NSLog(@"Edit:%@", indexPath);
     }];
     
     editAction.backgroundColor=[UIColor greenColor];
     
     return @[deleteAction,editAction];
 }
+
+-(void)updateTableViewCell{
+    
+    //空リスト生成
+    _classes=[NSMutableArray array];
+    _teachers=[NSMutableArray array];
+    _classrooms=[NSMutableArray array];
+    
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dbPathString=paths[0];
+    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+    [db open];
+    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+    
+    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName　FROM createclasstable　WHERE id= (SELECT MAX(id) FROM createclasstable);"];
+    
+    while ([results next]) {
+        [_classes addObject:[results stringForColumn:@"className"]];
+        [_teachers addObject:[results stringForColumn:@"teacherName"]];
+        [_classrooms addObject:[results stringForColumn:@"classroomName"]];
+    }
+    
+    [db close];
+    
+    
+}
+
 
 @end

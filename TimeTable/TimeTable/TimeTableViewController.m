@@ -21,6 +21,7 @@
 @property (strong,nonatomic) NSMutableArray *classTimes;
 @property (strong,nonatomic) NSMutableArray *classNames;
 @property (strong,nonatomic) NSMutableArray *classroomNames;
+@property (strong,nonatomic) NSMutableArray *indexPathes;
 
 extern const int userRegisteredWeekCount; //ユーザーが登録した週の日数
 extern const int userRegisteredClassCount; //ユーザーが登録した授業コマ数
@@ -38,7 +39,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     _classTimes=[NSMutableArray array];
     
     NSArray *weekContents=@[@"月",@"火",@"水",@"木",@"金",@"土",@"日"];
-    NSArray *classTimesContents=@[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    NSArray *classTimeContents=@[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
     
     int i=0;
     int m=0;
@@ -53,7 +54,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     }
     
     while (m < userRegisteredClassCount) {
-        [_classTimes addObject:classTimesContents[m]];
+        
+        [_classTimes addObject:classTimeContents[m]];
         m++;
     }
     
@@ -66,7 +68,6 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     titleLabel.text=@"Time Table";
     [titleLabel sizeToFit];
     self.navigationItem.titleView=titleLabel;
-    
     
     self.navigationController.navigationBar.tintColor=[UIColor blueColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
@@ -86,47 +87,62 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     
     _classNames=[NSMutableArray array];
     _classroomNames=[NSMutableArray array];
+    _indexPathes=[NSMutableArray array];
     
-    if (_classNames.count > 0 && _classroomNames.count > 0) {
-        
-        /*NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-         _row=indexPath.row;
-         
-         [self.collectionView reloadData];
-         [super viewWillAppear:animated];*/
-        
-        //UICollectionViewCell *cell=[_collectionView cellForItemAtIndexPath:indexPath];
+    if (_classNames.count > 0 /*&& _classroomNames.count > 0*/) {
         
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *dbPathString=paths[0];
         FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
         [db open];
-        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, indexPath);"];
         
-        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
+        FMResultSet *results=[db executeQuery:@"SELECT className, indexPath FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
+        
         while ([results next]) {
             [_classNames addObject:[results stringForColumn:@"className"]];
-            [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
+            [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
         }
+        
         [db close];
+        
+        /*
+        //選択した授業名、教員名と対応する教室名をcreateclasstableから取得
+        NSArray *createclasspath=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *createclassdbPathString=createclasspath[0];
+        FMDatabase *createclassdb=[FMDatabase databaseWithPath:[createclassdbPathString stringByAppendingPathComponent:@"createclass.db"]];
+        [createclassdb open];
+        [createclassdb executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+        
+        FMResultSet *createclassresults=[db executeQuery:@"SELECT classroomName FROM createclasstable　WHERE className=? AND teacherName=? FROM createclasstable);",,];
+        
+        while ([createclassresults next]) {
+            [_classroomNames addObject:[createclassresults stringForColumn:@"classroomName"]];
+        
+        }
+            
+        [createclassdb close];*/
+
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
-        
-
+    
     }else{
         
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *dbPathString=paths[0];
         FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
         [db open];
-        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
+        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT, indexPath);"];
         
-        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName FROM selectclasstable;"];
+        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
+        
         while ([results next]) {
             [_classNames addObject:[results stringForColumn:@"className"]];
             [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
+            [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
         }
+        
         [db close];
         
         [self.collectionView reloadData];
@@ -192,34 +208,18 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             
         }else{
             
-            
-            
-            if (indexPath.row == 10) {
-                
-                cell.classLabel.text=@"りか";
-                cell.classroomLabel.text=@"実験室";
-                cell.classTimeLabel.text=@"";
-                
-            }else{
+            /*if (indexPath == _indexPathes[indexPath.row]) {
                 
                 cell.classTimeLabel.text=@"";
-                cell.classLabel.text=_classNameString;
+                cell.classLabel.text=@""; //_classNames[indexPath.row];
+                cell.classroomLabel.text=@"";//_classroomNames[indexPath.row];*/
+                
+            /*}else{*/
+                
+                cell.classTimeLabel.text=@"";
+                cell.classLabel.text=@"";
                 cell.classroomLabel.text=@"";
-                
-            }
-            
-            /* NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-             NSString *dbPathString=paths[0];
-             FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"class.db"]];
-             [db open];
-             [db executeUpdate:@"CREATE TABLE IF NOT EXISTS classtable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT,teacherName TEXT,classroomName TEXT);"];
-             
-             FMResultSet *results=[db executeQuery:@"SELECT className, classroomName FROM classtable;"];
-             while ([results next]) {
-             cell.classTimeLabel.text=[results stringForColumn:@"className"];
-             cell.classroomLabel.text=[results stringForColumn:@"classroomName"];
-             }
-             [db close];*/
+            //}
             
         }
         return  cell;
@@ -312,12 +312,12 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
                 SelectClassViewController *viewController=[[SelectClassViewController alloc]init];
                 
                 //セルの番号取得
-                NSInteger Selectedrow =indexPath.row;
-                viewController.row=Selectedrow;
+                //NSInteger Selectedrow =indexPath.row;
+                viewController.indexPath=indexPath;
                 
                 //viewController.selectedRowString=[NSString stringWithFormat:@"%ld",(long)selectedRow];
                 
-                
+                //NSLog(@"%ld",(long)viewController.row);
                 
                 [self.navigationController pushViewController:viewController animated:YES];
             }

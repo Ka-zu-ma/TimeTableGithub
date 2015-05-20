@@ -10,8 +10,6 @@
 
 @interface UpdateClassViewController : UIViewController
 
-
-
 @property (strong,nonatomic) NSString *classNameString;
 @property (strong,nonatomic) NSString *teacherNameString;
 @property (strong,nonatomic) NSString *classroomNameString;

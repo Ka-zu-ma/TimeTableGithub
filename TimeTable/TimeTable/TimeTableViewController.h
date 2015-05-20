@@ -11,7 +11,5 @@
 
 
 @interface TimeTableViewController : UIViewController
-@property (strong,nonatomic) NSString *classNameString;
-@property (strong,nonatomic) NSString *classroomString;
-@property (nonatomic) NSInteger row;
+
 @end
