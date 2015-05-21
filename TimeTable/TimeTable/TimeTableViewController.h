@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperClassViewController.h"
 
 
-
-@interface TimeTableViewController : UIViewController
+@interface TimeTableViewController : SuperClassViewController
 
 @end

@@ -66,13 +66,10 @@
         
         if ((![_classTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_classroomTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_teacherTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding])) {
             
-            NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *dbPathString=paths[0];
-            FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+            FMDatabase *db=[super getDatabaseOfcreateclass];
+            
             [db open];
             [db executeUpdate:@"INSERT INTO createclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",_classTextField.text,_teacherTextField.text,_classroomTextField.text];
-            
-            NSLog(@"%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
             
             [db close];
             

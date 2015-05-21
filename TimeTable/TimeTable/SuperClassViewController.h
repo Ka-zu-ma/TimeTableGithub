@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FMDatabase.h"
+@interface SuperClassViewController : UIViewController
 
-@interface SuperSelectClassViewController : UIViewController
-
+-(FMDatabase *)getDatabaseOfcreateclass;
+-(FMDatabase *)getDatabaseOfselectclass;
 -(void)createCreateClassTable;
 -(void)createSelectClassTable;
+
 @end

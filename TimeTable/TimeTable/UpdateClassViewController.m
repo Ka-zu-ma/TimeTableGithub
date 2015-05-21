@@ -69,9 +69,9 @@
 
 - (IBAction)registerButton:(id)sender {
     
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString=paths[0];
-    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+    [super getDatabaseOfcreateclass];
+    FMDatabase *db=[super getDatabaseOfcreateclass];
+    
     [db open];
     [db executeUpdate:@"UPDATE createclasstable SET className = ?, teacherName = ?, classroomName = ? WHERE className = ? AND teacherName = ? AND classroomName = ?;",_classNameTextField.text,_teacherNameTextField.text,_classroomNameTextField.text,_classNameString,_teacherNameString,_classroomNameString];
     

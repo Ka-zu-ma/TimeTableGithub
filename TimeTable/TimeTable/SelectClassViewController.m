@@ -12,7 +12,7 @@
 #import "FMDatabase.h"
 #import "TimeTableViewController.h"
 #import "UpdateClassViewController.h"
-#import "SuperSelectClassViewController.h"
+#import "SuperClassViewController.h"
 
 @interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -63,21 +63,15 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    //空リスト生成
-    _classes=[NSMutableArray array];
-    _teachers=[NSMutableArray array];
-    _classrooms=[NSMutableArray array];
-
-    //戻ったときにフェードアウトして非選択状態に戻る
-    //[_tableView deselectRowAtIndexPath:_tableView.indexPathForSelectedRow animated:YES];
+    [self createEmptyArrays];
     
     if (_classes.count>0 && _teachers.count>0 && _classrooms.count>0) {
         
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *dbPathString=paths[0];
-        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+        [super createCreateClassTable];
+        
+        FMDatabase *db=[super getDatabaseOfcreateclass];
+        
         [db open];
-        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
         
         FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName　FROM createclasstable　WHERE id= (SELECT MAX(id) FROM createclasstable);"];
         
@@ -94,11 +88,12 @@
         
     }else{
         
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *dbPathString=paths[0];
-        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+        
+        [super createCreateClassTable];
+        
+        FMDatabase *db=[super getDatabaseOfcreateclass];
+        
         [db open];
-        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
         
         FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
         while ([results next]) {
@@ -177,33 +172,22 @@
     
     UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
     
-    NSArray *createpaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *createdbPathString=createpaths[0];
-    FMDatabase *createdb=[FMDatabase databaseWithPath:[createdbPathString stringByAppendingPathComponent:@"createclass.db"]];
-    [createdb open];
+    FMDatabase *onedb=[super getDatabaseOfcreateclass];
+    [onedb open];
     
-    FMResultSet *results=[createdb executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
+    FMResultSet *results=[onedb executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
     while ([results next]) {
         _cellclassroomNameString=[results stringForColumn:@"classroomName"];
     }
-    [createdb close];
+    [onedb close];
     
     
-    NSArray *Paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString=Paths[0];
-    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
-    //DBファイル名を定数にする
+    [super createSelectClassTable];
+    FMDatabase *twodb=[super getDatabaseOfselectclass];
     
-    [db open];
-    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT, indexPath);"];
+    [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,_indexPath];//セルが持ってるclassroomNameプロパティをcreateclasstableからとってきてそれを入れないといけない
     
-    NSLog(@"%@",[dbPathString stringByAppendingPathComponent:@"selectclass.db"]);
-    
-    
-    
-    [db executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,_indexPath];//セルが持ってるclassroomNameプロパティをcreateclasstableからとってきてそれを入れないといけない
-    
-    [db close];
+    [twodb close];
 
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -217,9 +201,9 @@
         
         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *dbPathString=paths[0];
-        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+        
+        FMDatabase *db=[super getDatabaseOfcreateclass];
+        
         [db open];
         
         FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
@@ -247,12 +231,10 @@
         viewController.classNameString=cell.textLabel.text;
         viewController.teacherNameString=cell.detailTextLabel.text;
         
-        //セルの授業名、教室名に対応する教室名を取得
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *dbPathString=paths[0];
-        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
-        [db open];
+        FMDatabase *db=[super getDatabaseOfcreateclass];
         
+        [db open];
+        //セルの授業名、教室名に対応する教室名を取得
         FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
         
         while ([results next]) {
@@ -279,18 +261,16 @@
 
 -(void)deleteTableViewCell{
     
-    //空リスト生成
-    _classes=[NSMutableArray array];
-    _teachers=[NSMutableArray array];
-    _classrooms=[NSMutableArray array];
+    [self createEmptyArrays];
     
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString=paths[0];
-    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+    [super createCreateClassTable];
+    FMDatabase *db=[super getDatabaseOfcreateclass];
+    
     [db open];
-    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
     
-    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable WHERE id = (SELECT MAX(id) FROM createclasstable);"];
+    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
+    
+    //FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable WHERE id = (SELECT MAX(id) FROM createclasstable);"];
     
     while ([results next]) {
         [_classes addObject:[results stringForColumn:@"className"]];
@@ -299,5 +279,12 @@
     }
     
     [db close];
+}
+
+-(void)createEmptyArrays{
+    _classes=[NSMutableArray array];
+    _teachers=[NSMutableArray array];
+    _classrooms=[NSMutableArray array];
+
 }
 @end

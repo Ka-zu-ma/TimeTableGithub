@@ -14,11 +14,14 @@
 #import "CreateClassViewController.h"
 #import "FMDatabase.h"
 
-@interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
+@interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray *weeks;
 @property (strong,nonatomic) NSMutableArray *classTimes;
+
+@property (strong,nonatomic) NSMutableDictionary *classNamesAndIndexPathes;
+@property (strong,nonatomic) NSMutableDictionary *classroomNamesAndIndexPathes;
 @property (strong,nonatomic) NSMutableArray *classNames;
 @property (strong,nonatomic) NSMutableArray *classroomNames;
 @property (strong,nonatomic) NSMutableArray *indexPathes;
@@ -89,48 +92,55 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     _classroomNames=[NSMutableArray array];
     _indexPathes=[NSMutableArray array];
     
+    _classNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classNames forKey:_indexPathes];
+    _classroomNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classroomNames forKey:_indexPathes];
     
-    
-    if (_classNames.count > 0 && _classroomNames.count > 0 && _indexPathes.count > 0) {
+    if (_classNames.count > 0 && _classroomNames.count > 0) {
         
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *dbPathString=paths[0];
-        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
+        [super getDatabaseOfselectclass];
+        [super createSelectClassTable];
+        
+        FMDatabase *db=[super getDatabaseOfselectclass];
         [db open];
-        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, indexPath);"];
         
         FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
         
         while ([results next]) {
+            
             [_classNames addObject:[results stringForColumn:@"className"]];
             [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
             [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
+            
         }
         
         [db close];
+        
+        [_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
+        [_classroomNamesAndIndexPathes setObject:_classroomNames forKey:_indexPathes];
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
     
     }else{
-        
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *dbPathString=paths[0];
-        FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
+        FMDatabase *db=[super getDatabaseOfselectclass];
         [db open];
-        [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT, indexPath);"];
         
         FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
         
         while ([results next]) {
+            
             [_classNames addObject:[results stringForColumn:@"className"]];
             [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
             [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
+            
         }
         
         [db close];
         
-        //NSLog(@"%@",_indexPathes);
+        [_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
+        [_classroomNamesAndIndexPathes setObject:_classroomNames forKey:_indexPathes];
+        
+        NSLog(@"indexPathes:%@",_indexPathes);
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
@@ -194,19 +204,20 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             cell.classTimeLabel.text=_classTimes[(indexPath.row) / (_weeks.count + 1) ];
             
         }else{
+            BOOL b=[_classroomNamesAndIndexPathes.allKeys containsObject:indexPath];
             
-            /*if (indexPath == _indexPathes[indexPath.row]) {
+            if (b==YES) {
                 
                 cell.classTimeLabel.text=@"";
-                cell.classLabel.text=@""; //_classNames[indexPath.row];
-                cell.classroomLabel.text=@"";//_classroomNames[indexPath.row];*/
+                cell.classLabel.text=_classNamesAndIndexPathes[_indexPathes];
+                cell.classroomLabel.text=_classroomNamesAndIndexPathes[_indexPathes];
                 
-            /*}else{*/
+            }else{
                 
                 cell.classTimeLabel.text=@"";
                 cell.classLabel.text=@"";
                 cell.classroomLabel.text=@"";
-            //}
+            }
             
         }
         return  cell;
@@ -284,16 +295,14 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section==0) {
-        //曜日を選択してもアクションを起こさない
+        
     }else{
         if (indexPath.row % (_weeks.count + 1)==0) {
-            //時限を選択してもアクション起こさない
+            
         }else{
-            BOOL a =[_indexPathes containsObject:indexPath];
+            BOOL b =[_indexPathes containsObject:indexPath];
             
-            //NSLog(@"%ld",(long)indexPath.row);
-            
-            if (a==YES) {
+            if (b==YES) {
                 
                 AttendanceRecordViewController *viewController=[[AttendanceRecordViewController alloc]init];
                 [self.navigationController pushViewController:viewController animated:YES];

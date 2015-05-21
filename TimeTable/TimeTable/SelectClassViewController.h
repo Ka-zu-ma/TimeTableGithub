@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SuperSelectClassViewController.h"
+#import "SuperClassViewController.h"
 
-@interface SelectClassViewController : UIViewController
-
-//@property (nonatomic) NSInteger row;
+@interface SelectClassViewController : SuperClassViewController
 @property  NSIndexPath *indexPath;
 @end
