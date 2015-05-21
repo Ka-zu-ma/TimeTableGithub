@@ -91,7 +91,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     
     
     
-    if (_classNames.count > 0 && _classroomNames.count > 0) {
+    if (_classNames.count > 0 && _classroomNames.count > 0 && _indexPathes.count > 0) {
         
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *dbPathString=paths[0];
@@ -108,24 +108,6 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         }
         
         [db close];
-        
-        /*
-        //選択した授業名、教員名と対応する教室名をcreateclasstableから取得
-        NSArray *createclasspath=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *createclassdbPathString=createclasspath[0];
-        FMDatabase *createclassdb=[FMDatabase databaseWithPath:[createclassdbPathString stringByAppendingPathComponent:@"createclass.db"]];
-        [createclassdb open];
-        [createclassdb executeUpdate:@"CREATE TABLE IF NOT EXISTS createclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT);"];
-        
-        FMResultSet *createclassresults=[db executeQuery:@"SELECT classroomName FROM createclasstable　WHERE className=? AND teacherName=? FROM createclasstable);",,];
-        
-        while ([createclassresults next]) {
-            [_classroomNames addObject:[createclassresults stringForColumn:@"classroomName"]];
-        
-        }
-            
-        [createclassdb close];*/
-
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
@@ -148,7 +130,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         
         [db close];
         
-        NSLog(@"%@",_indexPathes);
+        //NSLog(@"%@",_indexPathes);
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
@@ -308,6 +290,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             //時限を選択してもアクション起こさない
         }else{
             BOOL a =[_indexPathes containsObject:indexPath];
+            
+            //NSLog(@"%ld",(long)indexPath.row);
             
             if (a==YES) {
                 
