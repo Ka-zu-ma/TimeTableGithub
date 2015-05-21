@@ -185,7 +185,7 @@
     [super createSelectClassTable];
     FMDatabase *twodb=[super getDatabaseOfselectclass];
     
-    [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,_indexPath];//セルが持ってるclassroomNameプロパティをcreateclasstableからとってきてそれを入れないといけない
+    [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,_indexPath];
     
     [twodb close];
 
@@ -269,8 +269,6 @@
     [db open];
     
     FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
-    
-    //FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable WHERE id = (SELECT MAX(id) FROM createclasstable);"];
     
     while ([results next]) {
         [_classes addObject:[results stringForColumn:@"className"]];

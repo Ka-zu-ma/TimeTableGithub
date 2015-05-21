@@ -10,5 +10,5 @@
 #import "SuperClassViewController.h"
 
 @interface SelectClassViewController : SuperClassViewController
-@property  NSIndexPath *indexPath;
+@property  (strong,nonatomic) NSIndexPath *indexPath;
 @end

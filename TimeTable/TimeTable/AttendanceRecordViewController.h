@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface AttendanceRecordViewController : UIViewController
-
+@property (strong,nonatomic) NSIndexPath *indexPath;
 @end

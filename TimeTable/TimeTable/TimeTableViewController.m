@@ -300,11 +300,12 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         if (indexPath.row % (_weeks.count + 1)==0) {
             
         }else{
-            BOOL b =[_indexPathes containsObject:indexPath];
+            //BOOL b =[_indexPathes containsObject:indexPath];
             
-            if (b==YES) {
+            if (indexPath.row==1) {
                 
                 AttendanceRecordViewController *viewController=[[AttendanceRecordViewController alloc]init];
+                viewController.indexPath=indexPath;
                 [self.navigationController pushViewController:viewController animated:YES];
                 
             }else{

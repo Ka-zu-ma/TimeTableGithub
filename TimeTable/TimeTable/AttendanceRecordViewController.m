@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteClassButton;
 @property (strong,nonatomic) NSMutableArray *dates;
+@property (strong,nonatomic) NSMutableArray *attendanceDatas;
 - (IBAction)deleteClassButton:(id)sender;
 @end
 
@@ -78,10 +79,9 @@
     if (section==0){
         return 1;
     }else{
-        //return _dates.count;
-        return 15;
+        return _dates.count;
     }
-    //return _dates.count;
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -92,22 +92,13 @@
     }else{
         DateCell *dateCell=[tableView dequeueReusableCellWithIdentifier:@"DateCell"];
         
-        dateCell=[[DateCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"DateCell"];
-            
+        if(!dateCell){
+            dateCell=[[DateCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"DateCell"];
+        }
+
+        dateCell.textLabel.text=_dates[indexPath.row];
         
-        
-        dateCell.textLabel.text=@"a";
-        
-        dateCell.detailTextLabel.text=@"a";
-        
-        /*if ((dateCell.detailTextLabel.text=@"出席")) {
-            dateCell.detailTextLabel.textColor=[UIColor redColor];
-        }else if((dateCell.detailTextLabel.text=@"欠席")){
-            dateCell.detailTextLabel.textColor=[UIColor blueColor];
-        }else{
-            dateCell.detailTextLabel.textColor=[UIColor greenColor];
-        }*/
-        
+        dateCell.detailTextLabel.text=_attendanceDatas[indexPath.row];
         
         return dateCell;
     }
@@ -136,7 +127,7 @@
 
 }*/
 
-/*-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [_dates removeObjectAtIndex:indexPath.row];
@@ -145,7 +136,33 @@
     
     [tableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationAutomatic];
     
-}*/
+}
+
+//編集モードを呼び出す
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //削除ボタン
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        
+        UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
+        
+        
+        
+    }];
+    
+    //編集ボタン
+    UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"edit" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        
+        
+    }];
+    editAction.backgroundColor=[UIColor greenColor];
+
+    return  @[deleteAction,editAction];
+}
 /*
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
