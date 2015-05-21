@@ -89,7 +89,9 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     _classroomNames=[NSMutableArray array];
     _indexPathes=[NSMutableArray array];
     
-    if (_classNames.count > 0 /*&& _classroomNames.count > 0*/) {
+    
+    
+    if (_classNames.count > 0 && _classroomNames.count > 0) {
         
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *dbPathString=paths[0];
@@ -97,10 +99,11 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         [db open];
         [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, indexPath);"];
         
-        FMResultSet *results=[db executeQuery:@"SELECT className, indexPath FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
+        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
         
         while ([results next]) {
             [_classNames addObject:[results stringForColumn:@"className"]];
+            [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
             [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
         }
         
@@ -144,6 +147,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         }
         
         [db close];
+        
+        NSLog(@"%@",_indexPathes);
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
@@ -302,7 +307,9 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         if (indexPath.row % (_weeks.count + 1)==0) {
             //時限を選択してもアクション起こさない
         }else{
-            if (indexPath.row==10) {
+            BOOL a =[_indexPathes containsObject:indexPath];
+            
+            if (a==YES) {
                 
                 AttendanceRecordViewController *viewController=[[AttendanceRecordViewController alloc]init];
                 [self.navigationController pushViewController:viewController animated:YES];
@@ -311,13 +318,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
                 
                 SelectClassViewController *viewController=[[SelectClassViewController alloc]init];
                 
-                //セルの番号取得
-                //NSInteger Selectedrow =indexPath.row;
                 viewController.indexPath=indexPath;
-                
-                //viewController.selectedRowString=[NSString stringWithFormat:@"%ld",(long)selectedRow];
-                
-                //NSLog(@"%ld",(long)viewController.row);
                 
                 [self.navigationController pushViewController:viewController animated:YES];
             }
