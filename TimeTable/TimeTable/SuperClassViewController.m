@@ -8,12 +8,14 @@
 
 #import "SuperClassViewController.h"
 
-
 @interface SuperClassViewController ()
 
 @end
 
 @implementation SuperClassViewController
+
+//static  NSString *const createclassdbName=@"createclass.db";
+//static  NSString *const selectclassdbName=@"selectclass.db";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,6 +32,7 @@
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *dbPathString=paths[0];
     FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"createclass.db"]];
+    
     NSLog(@"createclass.dbの場所:%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
     return db;
 }

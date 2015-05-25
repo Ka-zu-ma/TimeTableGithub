@@ -7,7 +7,9 @@
 //
 
 #import "CountUpCell.h"
-
+#import "FMDatabase.h"
+#import "SuperAttendanceRecordViewController.h"
+#import "SuperCountUpCell.h"
 @implementation CountUpCell
 
 - (void)awakeFromNib {
@@ -34,10 +36,6 @@
     [[_lateButton layer] setCornerRadius:10.0];
     [_lateButton setClipsToBounds:YES];
     
-    
-    
-    
-
     // Initialization code
 }
 
@@ -49,26 +47,88 @@
 }
 
 - (IBAction)attendanceButton:(id)sender {
-    int tapCount1=_attendanceButton.titleLabel.text.intValue;
-    int tapCount2;
-    tapCount2=tapCount1+1;
-    _attendanceButton.titleLabel.text=[NSString stringWithFormat:@"%d",tapCount2];
     
+    [self selectCountsOfMaxId];
+    
+    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
+    [db open];
+    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxId+1,_absenceCountOfMaxId,_lateCountOfMaxId];
+    [db close];
+   
+    [self selectCountsOfMaxId];
+    [self updateButtonTitleLabelText];
+    
+    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
+    [twodb open];
+    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"出席"];
+    [twodb close];
 }
 
 - (IBAction)absenceButton:(id)sender {
+    [self selectCountsOfMaxId];
     
-    int tapCount1=_absenceButton.titleLabel.text.intValue;
-    int tapCount2;
-    tapCount2=tapCount1+1;
-    _absenceButton.titleLabel.text=[NSString stringWithFormat:@"%d",tapCount2];
+    FMDatabase *onedb=[super getDatabaseOfCountUpRecordTable];
+    [onedb open];
+    [onedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxId,_absenceCountOfMaxId+1,_lateCountOfMaxId];
+    [onedb close];
+    
+    [self selectCountsOfMaxId];
+    [self updateButtonTitleLabelText];
+    
+    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
+    [twodb open];
+    
+    
+    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"欠席"];
+    [twodb close];
 }
 
 - (IBAction)lateButton:(id)sender {
+    [self selectCountsOfMaxId];
     
-    int tapCount1=_lateButton.titleLabel.text.intValue;
-    int tapCount2;
-    tapCount2=tapCount1+1;
-    _lateButton.titleLabel.text=[NSString stringWithFormat:@"%d",tapCount2];
+    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
+    [db open];
+    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxId,_absenceCountOfMaxId,_lateCountOfMaxId+1];
+    [db close];
+    
+    [self selectCountsOfMaxId];
+    [self updateButtonTitleLabelText];
+    
+    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
+    [twodb open];
+    
+    
+    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"遅刻"];
+    [twodb close];
+
 }
+
+-(void)selectCountsOfMaxId{
+    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
+    [db open];
+    
+    FMResultSet *oneresults=[db executeQuery:@"SELECT attendancecount, absencecount , latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+    
+    _attendanceCountOfMaxId=[oneresults intForColumn:@"attendancecount"];
+    _absenceCountOfMaxId=[oneresults intForColumn:@"absencecount"];
+    _lateCountOfMaxId=[oneresults intForColumn:@"latecount"];
+    
+    [db close];
+}
+
+-(void)updateButtonTitleLabelText{
+    _attendanceButton.titleLabel.text=[NSString stringWithFormat:@"%ld",(long)_attendanceCountOfMaxId];
+    _absenceButton.titleLabel.text=[NSString stringWithFormat:@"%ld",(long)_absenceCountOfMaxId];
+    _lateButton.titleLabel.text=[NSString stringWithFormat:@"%ld",(long)_lateCountOfMaxId];
+    
+}
+-(NSString *)getNowTime{
+    
+    NSDateFormatter *format=[[NSDateFormatter alloc]init];
+    [format setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"ja_JP"]];
+    [format setDateFormat:@"yyyy/MM/dd"];
+    NSString *stringTime=[format stringFromDate:[NSDate date]];
+    return stringTime;
+}
+
 @end

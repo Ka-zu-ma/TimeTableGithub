@@ -56,7 +56,7 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     
-    //NSLog(@"row=%ld",(long)_row);
+    //NSLog(@"%ld",(long)_indexPath.row);
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -184,6 +184,7 @@
     
     [super createSelectClassTable];
     FMDatabase *twodb=[super getDatabaseOfselectclass];
+    [twodb open];
     
     [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,_indexPath];
     
@@ -200,7 +201,6 @@
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
-        
         
         FMDatabase *db=[super getDatabaseOfcreateclass];
         

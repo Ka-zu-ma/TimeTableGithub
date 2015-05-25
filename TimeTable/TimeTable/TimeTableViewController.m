@@ -14,7 +14,6 @@
 #import "CreateClassViewController.h"
 #import "FMDatabase.h"
 
-
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic) NSMutableArray *weeks;
@@ -97,7 +96,6 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     
     if (_classNames.count > 0 && _classroomNames.count > 0) {
         
-        [super getDatabaseOfselectclass];
         [super createSelectClassTable];
         
         FMDatabase *db=[super getDatabaseOfselectclass];
@@ -122,6 +120,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         [super viewWillAppear:animated];
     
     }else{
+        
+        [super createSelectClassTable];
         FMDatabase *db=[super getDatabaseOfselectclass];
         [db open];
         
@@ -140,7 +140,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         [_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
         [_classroomNamesAndIndexPathes setObject:_classroomNames forKey:_indexPathes];
         
-        NSLog(@"indexPathes:%@",_indexPathes);
+        //NSLog(@"indexPathes:%@",_indexPathes);
+        //NSLog(@"%@",_classNames[1]);
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
@@ -194,7 +195,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         
     }else{
         
-        ClassTableCell *cell=[_collectionView dequeueReusableCellWithReuseIdentifier:@"ClassTableCell" forIndexPath:indexPath];
+        ClassTableCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ClassTableCell" forIndexPath:indexPath];
         
         cell.backgroundColor=[UIColor whiteColor];
         cell.classTimeLabel.textColor=[UIColor blackColor];
@@ -204,13 +205,16 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             cell.classTimeLabel.text=_classTimes[(indexPath.row) / (_weeks.count + 1) ];
             
         }else{
-            BOOL b=[_classroomNamesAndIndexPathes.allKeys containsObject:indexPath];
+            NSUInteger oneindex=[_classroomNamesAndIndexPathes.allKeys indexOfObject:indexPath];
+            NSUInteger twoindex=[_classNamesAndIndexPathes.allKeys indexOfObject:indexPath];
             
-            if (b==YES) {
+            if (oneindex != NSNotFound && twoindex !=NSNotFound) {
                 
                 cell.classTimeLabel.text=@"";
-                cell.classLabel.text=_classNamesAndIndexPathes[_indexPathes];
-                cell.classroomLabel.text=_classroomNamesAndIndexPathes[_indexPathes];
+                cell.classLabel.text=_classNamesAndIndexPathes[_indexPathes[oneindex]];
+                cell.classroomLabel.text=_classroomNamesAndIndexPathes[_indexPathes[twoindex]];
+                
+                NSLog(@"abcd");
                 
             }else{
                 

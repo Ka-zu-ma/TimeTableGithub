@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteClassButton;
 @property (strong,nonatomic) NSMutableArray *dates;
-@property (strong,nonatomic) NSMutableArray *attendanceDatas;
+@property (strong,nonatomic) NSMutableArray *attendanceOrAbsenceOrLates;
 - (IBAction)deleteClassButton:(id)sender;
 @end
 
@@ -53,11 +53,28 @@
     UINib *nib2=[UINib nibWithNibName:@"DateCell" bundle:nil];
     [self.tableView registerNib:nib2 forCellReuseIdentifier:@"DateCell"];
     
+    [super createCountUpRecordTable];
+    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
+    
+    [db open];
+    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",0,0,0];
+    
+    [db close];
     
     
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
+    
+    _dates=[NSMutableArray array];
+    _attendanceOrAbsenceOrLates=[NSMutableArray array];
+    
+    
+    
+    [self.tableView reloadData];
+    [super viewWillAppear:animated];
+    
+    
     
     [self.tableView reloadData];
     [super viewWillAppear:animated];
@@ -75,6 +92,7 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section==0){
         return 1;
@@ -98,7 +116,10 @@
 
         dateCell.textLabel.text=_dates[indexPath.row];
         
-        dateCell.detailTextLabel.text=_attendanceDatas[indexPath.row];
+        dateCell.detailTextLabel.text=_attendanceOrAbsenceOrLates[indexPath.row];
+        
+        [dateCell.textLabel sizeToFit];
+        [dateCell.detailTextLabel sizeToFit];
         
         return dateCell;
     }
@@ -107,24 +128,32 @@
 #pragma mark - UITableView Delegate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section==1) {
-        return 10;
+    if (section==0) {
+        return 0;
     }
-    return 0;
-    
+        return 20;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+/*-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
-        return 100;
+                
+        CGSize maxSize= CGSizeMake(200, CGFLOAT_MAX);
+        
+        NSDictionary *attributes=@{NSFontAttributeName:[UIFont boldSystemFontOfSize:<#(CGFloat)#>]}
+        
+    }else{
+        DateCell *dateCell=[[DateCell alloc]init];
+        dateCell.textLabel.text=_dates[indexPath.row];
+        dateCell.detailTextLabel.text=_attendanceOrAbsenceOrLates[indexPath.row];
+        
+        CGSize maxSize= CGSizeMake(200, CGFLOAT_MAX);
+        
+        NSDictionary *attributes=@{NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]};
+        
+        CGSize modifiedSize=[]
     }
     return 40;
     
-}
-/*-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-
 }*/
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -148,7 +177,7 @@
     //削除ボタン
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
-        UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
+        //UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
         
         
@@ -173,4 +202,6 @@
 - (IBAction)deleteClassButton:(id)sender {
     
 }
+
+
 @end

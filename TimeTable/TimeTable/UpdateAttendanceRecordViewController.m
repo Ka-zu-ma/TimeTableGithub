@@ -24,16 +24,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSe/Users/sdt-b004/Desktop/TimeTableGithub/TimeTable/TimeTable/UpdateAttendanceRecordViewController.h
-/Users/sdt-b004/Desktop/TimeTableGithub/TimeTable/TimeTable/UpdateAttendanceRecordViewController.m
-/Users/sdt-b004/Desktop/TimeTableGithub/TimeTable/TimeTable/UpdateAttendanceRecordViewController.xibgue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

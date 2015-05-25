@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AttendanceRecordViewController : UIViewController
+#import "SuperAttendanceRecordViewController.h"
+@interface AttendanceRecordViewController : SuperAttendanceRecordViewController
 @property (strong,nonatomic) NSIndexPath *indexPath;
 @end
