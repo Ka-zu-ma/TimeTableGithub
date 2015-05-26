@@ -11,4 +11,6 @@
 @interface SuperAttendanceRecordViewController : UIViewController
 -(FMDatabase *)getDatabaseOfCountUpRecordTable;
 -(void)createCountUpRecordTable;
+-(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable;
+-(void)createDateAndAttendanceRecordTable;
 @end

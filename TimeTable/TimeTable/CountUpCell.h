@@ -14,13 +14,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *absenceButton;
 @property (weak, nonatomic) IBOutlet UIButton *lateButton;
 
-@property  NSInteger attendanceCountOfMaxId;
-@property  NSInteger absenceCountOfMaxId;
-@property  NSInteger lateCountOfMaxId;
+@property  (strong,nonatomic) NSString *attendanceCountOfMaxIdString;
+@property  (strong,nonatomic) NSString *absenceCountOfMaxIdString;
+@property  (strong,nonatomic) NSString *lateCountOfMaxIdString;
+
+@property (strong,nonatomic) NSString *renewAttendanceCountOfMaxIdString;
+@property (strong,nonatomic) NSString *renewAbsenceCountOfMaxIdString;
+@property (strong,nonatomic) NSString *renewlateCountOfMaxIdString;
 
 - (IBAction)attendanceButton:(id)sender;
 - (IBAction)absenceButton:(id)sender;
 - (IBAction)lateButton:(id)sender;
--(void)selectCountsOfMaxId;
--(void)updateButtonTitleLabelText;
+-(void)selectCountsOfMaxIdAndNewCounts;
 @end

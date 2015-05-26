@@ -28,6 +28,7 @@
     return db;
     
 }
+
 -(void)createCountUpRecordTable{
     
     FMDatabase *db=[self getDatabaseOfCountUpRecordTable];
@@ -37,6 +38,7 @@
     
     [db close];
 }
+
 -(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable{
     
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -49,17 +51,8 @@
 -(void)createDateAndAttendanceRecordTable{
     FMDatabase *db=[self getDatabaseOfDateAndAttendanceRecordTable];
     [db open];
-    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS dates_attendancerecord_table (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, attendancerecord TEXT);"];
+    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS date_attendancerecord_table (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, attendancerecord TEXT);"];
     [db close];
 }
-/*-(void)selectAttendanceCountOfMaxIdFromCountUpRecordTable{
-    FMDatabase *db=[self getDatabaseOfCountUpRecordTable];
-    [db open];
-    FMResultSet *results=[db executeQuery:@"SELECT attendancecount FROM count_up_record_table　WHERE id= (SELECT MAX(id) FROM count_up_record_table);"];
-    
-    _attendanceCountOfMaxId=[results stringForColumn:@"attendancecount"];
-    
-    [db close];
-}*/
 
 @end

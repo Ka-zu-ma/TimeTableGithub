@@ -42,4 +42,23 @@
     [db close];
 }
 
+-(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable{
+    
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dbPathString=paths[0];
+    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"date_attendancerecord.db"]];
+    
+    return db;
+}
+
+-(void)createDateAndAttendanceRecordTable{
+    FMDatabase *db=[self getDatabaseOfDateAndAttendanceRecordTable];
+    [db open];
+    [db executeUpdate:@"CREATE TABLE IF NOT EXISTS date_attendancerecord_table (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, attendancerecord TEXT);"];
+    [db close];
+}
+
+
+
+
 @end

@@ -21,7 +21,7 @@
                             <constraint firstAttribute="height" constant="60" id="wbH-rO-oyj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <state key="normal" title="0">
+                        <state key="normal">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -36,7 +36,7 @@
                             <constraint firstAttribute="height" constant="60" id="qyt-F3-Cjh"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <state key="normal" title="0">
+                        <state key="normal">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -51,7 +51,7 @@
                             <constraint firstAttribute="width" constant="60" id="ufm-EZ-gNo"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <state key="normal" title="0">
+                        <state key="normal">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -60,7 +60,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="遅刻" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wU5-TP-dV5">
-                        <rect key="frame" x="321" y="119" width="42" height="21"/>
+                        <rect key="frame" x="321" y="102" width="42" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="6FE-0m-Ho4"/>
                             <constraint firstAttribute="width" constant="42" id="zEi-tu-6PS"/>
@@ -70,7 +70,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="欠席" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-ym-p2K">
-                        <rect key="frame" x="201" y="119" width="42" height="21"/>
+                        <rect key="frame" x="201" y="102" width="42" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="eHH-el-Aet"/>
                             <constraint firstAttribute="height" constant="21" id="gCe-81-ZPH"/>
@@ -80,7 +80,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出席" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pw6-Mu-89N">
-                        <rect key="frame" x="81" y="119" width="42" height="21"/>
+                        <rect key="frame" x="81" y="102" width="42" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="cPo-l9-Txf"/>
                             <constraint firstAttribute="width" constant="42" id="zHr-OA-aB8"/>
@@ -94,13 +94,13 @@
                     <constraint firstItem="goD-eg-qzX" firstAttribute="centerX" secondItem="uhf-ym-p2K" secondAttribute="centerX" id="59a-q0-xIm"/>
                     <constraint firstAttribute="centerY" secondItem="goD-eg-qzX" secondAttribute="centerY" id="6Xd-AJ-sED"/>
                     <constraint firstAttribute="centerY" secondItem="am3-TR-A8c" secondAttribute="centerY" id="9Ag-XA-OtW"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="wU5-TP-dV5" secondAttribute="bottom" constant="13" id="FYM-Dn-vpT"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Pw6-Mu-89N" secondAttribute="bottom" constant="30" id="Qxf-3q-kvI"/>
                     <constraint firstItem="Nd6-eB-WKa" firstAttribute="leading" secondItem="goD-eg-qzX" secondAttribute="trailing" constant="60" id="b6q-N2-eyO"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Pw6-Mu-89N" secondAttribute="bottom" constant="13" id="d7F-Ig-iUl"/>
                     <constraint firstAttribute="centerY" secondItem="Nd6-eB-WKa" secondAttribute="centerY" id="dzv-0y-g2l"/>
                     <constraint firstItem="goD-eg-qzX" firstAttribute="leading" secondItem="am3-TR-A8c" secondAttribute="trailing" constant="60" id="gLf-nL-P2R"/>
                     <constraint firstItem="Pw6-Mu-89N" firstAttribute="centerX" secondItem="am3-TR-A8c" secondAttribute="centerX" id="kF6-Cp-YFK"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="uhf-ym-p2K" secondAttribute="bottom" constant="13" id="rk2-eE-tpF"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="wU5-TP-dV5" secondAttribute="bottom" constant="30" id="nhl-WK-k8i"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="uhf-ym-p2K" secondAttribute="bottom" constant="30" id="sS0-rq-qk8"/>
                     <constraint firstAttribute="centerX" secondItem="goD-eg-qzX" secondAttribute="centerX" id="w2X-wJ-KWO"/>
                     <constraint firstItem="Nd6-eB-WKa" firstAttribute="centerX" secondItem="wU5-TP-dV5" secondAttribute="centerX" id="wZI-jn-q8F"/>
                 </constraints>

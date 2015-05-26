@@ -10,6 +10,8 @@
 #import "FMDatabase.h"
 #import "SuperAttendanceRecordViewController.h"
 #import "SuperCountUpCell.h"
+
+
 @implementation CountUpCell
 
 - (void)awakeFromNib {
@@ -36,9 +38,9 @@
     [[_lateButton layer] setCornerRadius:10.0];
     [_lateButton setClipsToBounds:YES];
     
+    //このメソッドはAttendanceRecordViewControllerのviewWillappearよりあとに呼ばれる
     // Initialization code
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -48,80 +50,80 @@
 
 - (IBAction)attendanceButton:(id)sender {
     
-    [self selectCountsOfMaxId];
+    [self selectCountsOfMaxIdAndNewCounts];
     
     FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
     [db open];
-    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxId+1,_absenceCountOfMaxId,_lateCountOfMaxId];
+    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_renewAttendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_lateCountOfMaxIdString];
     [db close];
    
-    [self selectCountsOfMaxId];
-    [self updateButtonTitleLabelText];
-    
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
     [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"出席"];
     [twodb close];
+    
 }
 
 - (IBAction)absenceButton:(id)sender {
-    [self selectCountsOfMaxId];
+    [self selectCountsOfMaxIdAndNewCounts];
     
     FMDatabase *onedb=[super getDatabaseOfCountUpRecordTable];
     [onedb open];
-    [onedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxId,_absenceCountOfMaxId+1,_lateCountOfMaxId];
-    [onedb close];
     
-    [self selectCountsOfMaxId];
-    [self updateButtonTitleLabelText];
+    [onedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxIdString,_renewAbsenceCountOfMaxIdString,_lateCountOfMaxIdString];
+    [onedb close];
     
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
-    
     
     [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"欠席"];
     [twodb close];
 }
 
 - (IBAction)lateButton:(id)sender {
-    [self selectCountsOfMaxId];
+    [self selectCountsOfMaxIdAndNewCounts];
     
     FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
     [db open];
-    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxId,_absenceCountOfMaxId,_lateCountOfMaxId+1];
-    [db close];
     
-    [self selectCountsOfMaxId];
-    [self updateButtonTitleLabelText];
+    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_renewlateCountOfMaxIdString];
+    [db close];
     
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
-    
     
     [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"遅刻"];
     [twodb close];
 
 }
 
--(void)selectCountsOfMaxId{
+-(void)selectCountsOfMaxIdAndNewCounts{
     FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
     [db open];
     
-    FMResultSet *oneresults=[db executeQuery:@"SELECT attendancecount, absencecount , latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+    FMResultSet *oneresults=[db executeQuery:@"SELECT attendancecount, absencecount, latecount  FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
     
-    _attendanceCountOfMaxId=[oneresults intForColumn:@"attendancecount"];
-    _absenceCountOfMaxId=[oneresults intForColumn:@"absencecount"];
-    _lateCountOfMaxId=[oneresults intForColumn:@"latecount"];
+    _attendanceCountOfMaxIdString=[oneresults stringForColumn:@"attendancecount"];
+    _absenceCountOfMaxIdString=[oneresults stringForColumn:@"absencecount"];
+    _lateCountOfMaxIdString=[oneresults stringForColumn:@"latecount"];
     
+    int a=_renewAttendanceCountOfMaxIdString.intValue;
+    int b=_attendanceCountOfMaxIdString.intValue;
+    int c=_renewAbsenceCountOfMaxIdString.intValue;
+    int d=_absenceCountOfMaxIdString.intValue;
+    int e=_renewlateCountOfMaxIdString.intValue;
+    int f=_lateCountOfMaxIdString.intValue;
+    
+    a=b+1;
+    c=d+1;
+    e=f+1;
+    NSLog(@"%d",a);
     [db close];
+    
+    //この書き方だとなぜエラーが出るのか
+    //_renewAttendanceCountOfMaxIdString.intValue=_attendanceCountOfMaxIdString.intValue + 1;
 }
 
--(void)updateButtonTitleLabelText{
-    _attendanceButton.titleLabel.text=[NSString stringWithFormat:@"%ld",(long)_attendanceCountOfMaxId];
-    _absenceButton.titleLabel.text=[NSString stringWithFormat:@"%ld",(long)_absenceCountOfMaxId];
-    _lateButton.titleLabel.text=[NSString stringWithFormat:@"%ld",(long)_lateCountOfMaxId];
-    
-}
 -(NSString *)getNowTime{
     
     NSDateFormatter *format=[[NSDateFormatter alloc]init];

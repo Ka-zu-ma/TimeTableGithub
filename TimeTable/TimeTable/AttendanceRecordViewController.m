@@ -14,8 +14,14 @@
 @interface AttendanceRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteClassButton;
+
 @property (strong,nonatomic) NSMutableArray *dates;
 @property (strong,nonatomic) NSMutableArray *attendanceOrAbsenceOrLates;
+
+@property (strong,nonatomic) NSString *attendanceCountString;
+@property (strong,nonatomic) NSString *absenceCountString;
+@property (strong,nonatomic) NSString *lateCountString;
+
 - (IBAction)deleteClassButton:(id)sender;
 @end
 
@@ -53,14 +59,14 @@
     UINib *nib2=[UINib nibWithNibName:@"DateCell" bundle:nil];
     [self.tableView registerNib:nib2 forCellReuseIdentifier:@"DateCell"];
     
+    _tableView.contentInset=UIEdgeInsetsMake(-1.0f,0.0, 0.0, 0.0);
+    
     [super createCountUpRecordTable];
+    
     FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
-    
     [db open];
-    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",0,0,0];
-    
+    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",@"0",@"0",@"0"];
     [db close];
-    
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -69,16 +75,46 @@
     _dates=[NSMutableArray array];
     _attendanceOrAbsenceOrLates=[NSMutableArray array];
     
-    
-    
-    [self.tableView reloadData];
-    [super viewWillAppear:animated];
-    
-    
-    
-    [self.tableView reloadData];
-    [super viewWillAppear:animated];
-    
+    if (_dates.count > 0 && _attendanceOrAbsenceOrLates.count > 0) {
+        
+        [super createDateAndAttendanceRecordTable];
+        
+        FMDatabase *db=[super getDatabaseOfDateAndAttendanceRecordTable];
+        [db open];
+        
+        FMResultSet *results=[db executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table);"];
+        
+        [_dates addObject:[results stringForColumn:@"date"]];
+        [_attendanceOrAbsenceOrLates addObject:[results stringForColumn:@"attendancerecord"]];
+        
+        [db close];
+        
+        [self displayLatestCounts];
+        
+        [self.tableView reloadData];
+        [super viewWillAppear:animated];
+
+    }else{
+        
+        [super createDateAndAttendanceRecordTable];
+        
+        FMDatabase *db=[super getDatabaseOfDateAndAttendanceRecordTable];
+        [db open];
+        
+        FMResultSet *results=[db executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table;"];
+        
+        while ([results next]) {
+            [_dates addObject:[results stringForColumn:@"date"]];
+            [_attendanceOrAbsenceOrLates addObject:[results stringForColumn:@"attendancerecord"]];
+        }
+        
+        [db close];
+        
+        [self displayLatestCounts];
+        
+        [self.tableView reloadData];
+        [super viewWillAppear:animated];
+    }
 }
 #pragma mark - Memory Management
 
@@ -103,8 +139,13 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (indexPath.section==0) {
         CountUpCell *countUpCell=[tableView dequeueReusableCellWithIdentifier:@"CountUpCell"];
+        
+        [countUpCell.attendanceButton setTitle:_attendanceCountString forState:UIControlStateNormal];
+        [countUpCell.absenceButton setTitle:_absenceCountString forState:UIControlStateNormal];
+        [countUpCell.lateButton setTitle:_lateCountString forState:UIControlStateNormal];
         
         return countUpCell;
     }else{
@@ -118,8 +159,8 @@
         
         dateCell.detailTextLabel.text=_attendanceOrAbsenceOrLates[indexPath.row];
         
-        [dateCell.textLabel sizeToFit];
-        [dateCell.detailTextLabel sizeToFit];
+        //[dateCell.textLabel sizeToFit];
+        //[dateCell.detailTextLabel sizeToFit];
         
         return dateCell;
     }
@@ -129,34 +170,38 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section==0) {
-        return 0;
+        return 1.0f;
     }
         return 20;
 }
 
-/*-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
                 
-        CGSize maxSize= CGSizeMake(200, CGFLOAT_MAX);
+        //CGSize maxSize= CGSizeMake(150, CGFLOAT_MAX);
         
-        NSDictionary *attributes=@{NSFontAttributeName:[UIFont boldSystemFontOfSize:<#(CGFloat)#>]}
+        return 130;
         
-    }else{
-        DateCell *dateCell=[[DateCell alloc]init];
+    }
+        
+        /*DateCell *dateCell=[[DateCell alloc]init];
         dateCell.textLabel.text=_dates[indexPath.row];
         dateCell.detailTextLabel.text=_attendanceOrAbsenceOrLates[indexPath.row];
         
-        CGSize maxSize= CGSizeMake(200, CGFLOAT_MAX);
+        CGSize maxSize= CGSizeMake(40, CGFLOAT_MAX);
         
         NSDictionary *attributes=@{NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]};
         
-        CGSize modifiedSize=[]
-    }
-    return 40;
+        CGSize modifiedSize=[]*/
     
-}*/
+    return 40;
+}
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+/*-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [_dates removeObjectAtIndex:indexPath.row];
@@ -165,7 +210,7 @@
     
     [tableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationAutomatic];
     
-}
+}*/
 
 //編集モードを呼び出す
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -197,9 +242,34 @@
     
 }*/
 
+#pragma  mark - Database
+
+-(void)displayLatestCounts{
+    
+    //[super createCountUpRecordTable];
+    FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
+    [twodb open];
+    
+    FMResultSet *tworesults=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount  FROM count_up_record_table WHERE id= (SELECT MAX(id) FROM count_up_record_table);"];
+    
+    int attendanceCount,absenceCount,lateCount;
+    
+    attendanceCount=[tworesults intForColumn:@"attendancecount"];
+    absenceCount=[tworesults intForColumn:@"absencecount"];
+    lateCount=[tworesults intForColumn:@"latecount"];
+    
+    _attendanceCountString=[NSString stringWithFormat:@"%d",attendanceCount];
+    _absenceCountString=[NSString stringWithFormat:@"%d",absenceCount];
+    _lateCountString=[NSString stringWithFormat:@"%d",lateCount];
+    
+    [twodb close];
+    
+}
+
 #pragma mark - IBAction
 
 - (IBAction)deleteClassButton:(id)sender {
+    
     
 }
 

@@ -15,6 +15,4 @@
 -(void)createDateAndAttendanceRecordTable;
 -(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable;
 
-
-//-(void)selectAttendanceCountOfMaxIdFromCountUpRecordTable;
 @end
