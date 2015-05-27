@@ -26,7 +26,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="lateButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dd2-VJ-Lbi"/>
+                            <action selector="lateButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="itV-wq-BU9"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="am3-TR-A8c">
@@ -41,7 +41,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="attendanceButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nRh-cH-X3n"/>
+                            <action selector="attendanceButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sbN-NL-Cyd"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="goD-eg-qzX">
@@ -56,7 +56,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="absenceButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wS3-yY-Zup"/>
+                            <action selector="absenceButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="SR5-di-pcY"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="遅刻" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wU5-TP-dV5">

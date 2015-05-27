@@ -7,10 +7,6 @@
 //
 
 #import "CountUpCell.h"
-#import "FMDatabase.h"
-#import "SuperAttendanceRecordViewController.h"
-#import "SuperCountUpCell.h"
-
 
 @implementation CountUpCell
 
@@ -48,89 +44,17 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - IBAction
+
 - (IBAction)attendanceButton:(id)sender {
-    
-    [self selectCountsOfMaxIdAndNewCounts];
-    
-    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
-    [db open];
-    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_renewAttendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_lateCountOfMaxIdString];
-    [db close];
-   
-    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
-    [twodb open];
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"出席"];
-    [twodb close];
-    
+    [self.delegate attendanceCountUp];
 }
-
 - (IBAction)absenceButton:(id)sender {
-    [self selectCountsOfMaxIdAndNewCounts];
-    
-    FMDatabase *onedb=[super getDatabaseOfCountUpRecordTable];
-    [onedb open];
-    
-    [onedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxIdString,_renewAbsenceCountOfMaxIdString,_lateCountOfMaxIdString];
-    [onedb close];
-    
-    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
-    [twodb open];
-    
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"欠席"];
-    [twodb close];
+    [self.delegate absenceCountUp];
 }
-
 - (IBAction)lateButton:(id)sender {
-    [self selectCountsOfMaxIdAndNewCounts];
-    
-    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
-    [db open];
-    
-    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount) VALUES (?, ?, ?);",_attendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_renewlateCountOfMaxIdString];
-    [db close];
-    
-    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
-    [twodb open];
-    
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord) VALUES (?, ?);",[self getNowTime],@"遅刻"];
-    [twodb close];
-
+    [self.delegate lateCountUp];
 }
 
--(void)selectCountsOfMaxIdAndNewCounts{
-    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
-    [db open];
-    
-    FMResultSet *oneresults=[db executeQuery:@"SELECT attendancecount, absencecount, latecount  FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
-    
-    _attendanceCountOfMaxIdString=[oneresults stringForColumn:@"attendancecount"];
-    _absenceCountOfMaxIdString=[oneresults stringForColumn:@"absencecount"];
-    _lateCountOfMaxIdString=[oneresults stringForColumn:@"latecount"];
-    
-    int a=_renewAttendanceCountOfMaxIdString.intValue;
-    int b=_attendanceCountOfMaxIdString.intValue;
-    int c=_renewAbsenceCountOfMaxIdString.intValue;
-    int d=_absenceCountOfMaxIdString.intValue;
-    int e=_renewlateCountOfMaxIdString.intValue;
-    int f=_lateCountOfMaxIdString.intValue;
-    
-    a=b+1;
-    c=d+1;
-    e=f+1;
-    NSLog(@"%d",a);
-    [db close];
-    
-    //この書き方だとなぜエラーが出るのか
-    //_renewAttendanceCountOfMaxIdString.intValue=_attendanceCountOfMaxIdString.intValue + 1;
-}
-
--(NSString *)getNowTime{
-    
-    NSDateFormatter *format=[[NSDateFormatter alloc]init];
-    [format setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"ja_JP"]];
-    [format setDateFormat:@"yyyy/MM/dd"];
-    NSString *stringTime=[format stringFromDate:[NSDate date]];
-    return stringTime;
-}
 
 @end

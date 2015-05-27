@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperAttendanceRecordViewController.h"
+#import "CountUpCell.h"
 @interface AttendanceRecordViewController : SuperAttendanceRecordViewController
 @property (strong,nonatomic) NSIndexPath *indexPath;
+
+@property (weak,nonatomic) UIButton *attendanceButton;
+@property (weak,nonatomic) UIButton *absenceButton;
+@property (weak,nonatomic) UIButton *lateButton;
 @end

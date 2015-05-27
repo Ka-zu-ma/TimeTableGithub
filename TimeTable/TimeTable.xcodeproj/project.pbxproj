@@ -16,7 +16,6 @@
 		E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */; };
 		E384598D1AF33AAF00ADB04A /* CreateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */; };
 		E391A8651B12C6AA00585660 /* SuperAttendanceRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E391A8641B12C6AA00585660 /* SuperAttendanceRecordViewController.m */; };
-		E391A8681B12CED100585660 /* SuperCountUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E391A8671B12CED100585660 /* SuperCountUpCell.m */; };
 		E39AF7561B02D6D000A4D8D2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E39AF7551B02D6D000A4D8D2 /* libsqlite3.0.dylib */; };
 		E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E39AF7581B02EF4E00A4D8D2 /* DateCell.m */; };
 		E39AF75B1B02EF4E00A4D8D2 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39AF7591B02EF4E00A4D8D2 /* DateCell.xib */; };
@@ -69,8 +68,6 @@
 		E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateClassViewController.xib; sourceTree = "<group>"; };
 		E391A8631B12C6AA00585660 /* SuperAttendanceRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperAttendanceRecordViewController.h; sourceTree = "<group>"; };
 		E391A8641B12C6AA00585660 /* SuperAttendanceRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperAttendanceRecordViewController.m; sourceTree = "<group>"; };
-		E391A8661B12CED100585660 /* SuperCountUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperCountUpCell.h; sourceTree = "<group>"; };
-		E391A8671B12CED100585660 /* SuperCountUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperCountUpCell.m; sourceTree = "<group>"; };
 		E39AF7551B02D6D000A4D8D2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		E39AF7571B02EF4E00A4D8D2 /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		E39AF7581B02EF4E00A4D8D2 /* DateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
@@ -199,8 +196,6 @@
 				E3A0F6ED1AFC7C08009664DD /* ClassListCell.h */,
 				E3A0F6EE1AFC7C08009664DD /* ClassListCell.m */,
 				E3A0F6EF1AFC7C08009664DD /* ClassListCell.xib */,
-				E391A8661B12CED100585660 /* SuperCountUpCell.h */,
-				E391A8671B12CED100585660 /* SuperCountUpCell.m */,
 				E3FE06681B01F5A800AB1BB3 /* CountUpCell.h */,
 				E3FE06691B01F5A800AB1BB3 /* CountUpCell.m */,
 				E3FE066A1B01F5A800AB1BB3 /* CountUpCell.xib */,
@@ -449,7 +444,6 @@
 				E3A162251AF30F780058642D /* SelectClassViewController.m in Sources */,
 				E380FB321B0984170018D0D5 /* SuperClassViewController.m in Sources */,
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
-				E391A8681B12CED100585660 /* SuperCountUpCell.m in Sources */,
 				E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */,
 				E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */,
 				E39CBFCE1AFB460100AAEA5D /* ClassTableCell.m in Sources */,

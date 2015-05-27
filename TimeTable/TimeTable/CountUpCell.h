@@ -7,23 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
-#import "SuperCountUpCell.h"
-@interface CountUpCell : SuperCountUpCell
+
+@protocol CountUpDelegate <NSObject>
+-(void)attendanceCountUp;
+-(void)absenceCountUp;
+-(void)lateCountUp;
+
+@end
+
+@interface CountUpCell :UITableViewCell
+
+@property (nonatomic,assign) id<CountUpDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UIButton *attendanceButton;
 @property (weak, nonatomic) IBOutlet UIButton *absenceButton;
 @property (weak, nonatomic) IBOutlet UIButton *lateButton;
 
-@property  (strong,nonatomic) NSString *attendanceCountOfMaxIdString;
-@property  (strong,nonatomic) NSString *absenceCountOfMaxIdString;
-@property  (strong,nonatomic) NSString *lateCountOfMaxIdString;
-
-@property (strong,nonatomic) NSString *renewAttendanceCountOfMaxIdString;
-@property (strong,nonatomic) NSString *renewAbsenceCountOfMaxIdString;
-@property (strong,nonatomic) NSString *renewlateCountOfMaxIdString;
-
-- (IBAction)attendanceButton:(id)sender;
-- (IBAction)absenceButton:(id)sender;
-- (IBAction)lateButton:(id)sender;
--(void)selectCountsOfMaxIdAndNewCounts;
 @end
