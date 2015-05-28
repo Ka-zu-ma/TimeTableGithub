@@ -13,5 +13,6 @@
 -(void)createCountUpRecordTable;
 -(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable;
 -(void)createDateAndAttendanceRecordTable;
+-(FMDatabase *)getDatabaseOfselectclass;
 -(NSString *)getNowTime;
 @end

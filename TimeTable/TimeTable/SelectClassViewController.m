@@ -185,10 +185,16 @@
     [super createSelectClassTable];
     FMDatabase *twodb=[super getDatabaseOfselectclass];
     [twodb open];
-    
-    [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,_indexPath];
+    //NSLog(@"selectclasstableに登録したindexpath:%ld",(long)_indexPath.row);
+    [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
     [twodb close];
+    
+    //前の画面に戻る前に更新
+    NSArray *allControllers = self.navigationController.viewControllers;
+    NSInteger target = [allControllers count] - 2;
+    TimeTableViewController *parent = [allControllers objectAtIndex:target];
+    [parent.collectionView reloadSections:[NSIndexSet indexSetWithIndex:_indexPath.section]];
 
     [self.navigationController popViewControllerAnimated:YES];
     

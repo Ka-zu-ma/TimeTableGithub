@@ -15,15 +15,16 @@
 #import "FMDatabase.h"
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
+
 @property (strong,nonatomic) NSMutableArray *weeks;
 @property (strong,nonatomic) NSMutableArray *classTimes;
 
 @property (strong,nonatomic) NSMutableDictionary *classNamesAndIndexPathes;
 @property (strong,nonatomic) NSMutableDictionary *classroomNamesAndIndexPathes;
-@property (strong,nonatomic) NSMutableArray *classNames;
+/*@property (strong,nonatomic) NSMutableArray *classNames;
 @property (strong,nonatomic) NSMutableArray *classroomNames;
-@property (strong,nonatomic) NSMutableArray *indexPathes;
+@property (strong,nonatomic) NSMutableArray *indexPathes;*/
 
 extern const int userRegisteredWeekCount; //ユーザーが登録した週の日数
 extern const int userRegisteredClassCount; //ユーザーが登録した授業コマ数
@@ -85,16 +86,19 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     // Do any additional setup after loading the view from its nib.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+/*-(void)viewWillAppear:(BOOL)animated{
     
-    _classNames=[NSMutableArray array];
+    /*_classNames=[NSMutableArray array];
     _classroomNames=[NSMutableArray array];
-    _indexPathes=[NSMutableArray array];
+    _indexPathes=[NSMutableArray array];*/
     
-    _classNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classNames forKey:_indexPathes];
+    /*_classNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classNames forKey:_indexPathes];
     _classroomNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classroomNames forKey:_indexPathes];
     
-    if (_classNames.count > 0 && _classroomNames.count > 0) {
+    _classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    
+    /*if (_classNames.count > 0 && _classroomNames.count > 0) {
         
         [super createSelectClassTable];
         
@@ -105,16 +109,18 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         
         while ([results next]) {
             
-            [_classNames addObject:[results stringForColumn:@"className"]];
+            /*[_classNames addObject:[results stringForColumn:@"className"]];
             [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
             [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
+            
+            [_classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
+            [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
             
         }
         
         [db close];
         
-        [_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
-        [_classroomNamesAndIndexPathes setObject:_classroomNames forKey:_indexPathes];
+        
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
@@ -129,15 +135,19 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         
         while ([results next]) {
             
-            [_classNames addObject:[results stringForColumn:@"className"]];
+            /*[_classNames addObject:[results stringForColumn:@"className"]];
             [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
             [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
+            
+            [_classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
+            [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
+
             
         }
         
         [db close];
         
-        [_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
+        /*[_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
         [_classroomNamesAndIndexPathes setObject:_classroomNames forKey:_indexPathes];
         
         //NSLog(@"indexPathes:%@",_indexPathes);
@@ -145,8 +155,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         
         [self.collectionView reloadData];
         [super viewWillAppear:animated];
-    }
-}
+//}
+}*/
 
 #pragma mark - Memory Management
 
@@ -158,6 +168,24 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
 #pragma mark - UICollectionView DataSource
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    _classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    
+    [super createSelectClassTable];
+    FMDatabase *db=[super getDatabaseOfselectclass];
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
+    
+    while ([results next]) {
+        
+        [_classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
+        [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
+    }
+    
+    [db close];
+
     
     return 2;
 }
@@ -205,24 +233,16 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             cell.classTimeLabel.text=_classTimes[(indexPath.row) / (_weeks.count + 1) ];
             
         }else{
-            NSUInteger oneindex=[_classroomNamesAndIndexPathes.allKeys indexOfObject:indexPath];
-            NSUInteger twoindex=[_classNamesAndIndexPathes.allKeys indexOfObject:indexPath];
             
-            if (oneindex != NSNotFound && twoindex !=NSNotFound) {
-                
-                cell.classTimeLabel.text=@"";
-                cell.classLabel.text=_classNamesAndIndexPathes[_indexPathes[oneindex]];
-                cell.classroomLabel.text=_classroomNamesAndIndexPathes[_indexPathes[twoindex]];
-                
-                NSLog(@"abcd");
-                
-            }else{
-                
-                cell.classTimeLabel.text=@"";
-                cell.classLabel.text=@"";
-                cell.classroomLabel.text=@"";
+            cell.classTimeLabel.text=@"";
+            
+            if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
+                NSLog(@"ロウ:%ld",(long)indexPath.row);
+               
+                cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+                cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+            
             }
-            
         }
         return  cell;
     }
@@ -304,9 +324,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         if (indexPath.row % (_weeks.count + 1)==0) {
             
         }else{
-            //BOOL b =[_indexPathes containsObject:indexPath];
             
-            if (indexPath.row==1) {
+            if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]) {
                 
                 AttendanceRecordViewController *viewController=[[AttendanceRecordViewController alloc]init];
                 viewController.indexPath=indexPath;

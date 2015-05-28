@@ -11,5 +11,5 @@
 
 
 @interface TimeTableViewController : SuperClassViewController
-
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
