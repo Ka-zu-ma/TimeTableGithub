@@ -67,8 +67,7 @@
     return db;
 }
 
-
--(NSString *)getNowTime{
+-(NSString *)getToday{
     
     NSDateFormatter *format=[[NSDateFormatter alloc]init];
     [format setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"ja_JP"]];
@@ -76,8 +75,4 @@
     NSString *stringTime=[format stringFromDate:[NSDate date]];
     return stringTime;
 }
-
-
-
-
 @end

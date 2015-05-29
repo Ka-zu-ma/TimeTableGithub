@@ -14,5 +14,5 @@
 -(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable;
 -(void)createDateAndAttendanceRecordTable;
 -(FMDatabase *)getDatabaseOfselectclass;
--(NSString *)getNowTime;
+-(NSString *)getToday;
 @end

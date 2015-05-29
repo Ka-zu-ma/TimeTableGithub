@@ -86,78 +86,6 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     // Do any additional setup after loading the view from its nib.
 }
 
-/*-(void)viewWillAppear:(BOOL)animated{
-    
-    /*_classNames=[NSMutableArray array];
-    _classroomNames=[NSMutableArray array];
-    _indexPathes=[NSMutableArray array];*/
-    
-    /*_classNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classNames forKey:_indexPathes];
-    _classroomNamesAndIndexPathes=[NSMutableDictionary dictionaryWithObject:_classroomNames forKey:_indexPathes];
-    
-    _classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
-    _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
-    
-    /*if (_classNames.count > 0 && _classroomNames.count > 0) {
-        
-        [super createSelectClassTable];
-        
-        FMDatabase *db=[super getDatabaseOfselectclass];
-        [db open];
-        
-        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable WHERE id= (SELECT MAX(id) FROM selectclasstable);"];
-        
-        while ([results next]) {
-            
-            /*[_classNames addObject:[results stringForColumn:@"className"]];
-            [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
-            [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
-            
-            [_classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
-            [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
-            
-        }
-        
-        [db close];
-        
-        
-        
-        [self.collectionView reloadData];
-        [super viewWillAppear:animated];
-    
-    }else{
-        
-        [super createSelectClassTable];
-        FMDatabase *db=[super getDatabaseOfselectclass];
-        [db open];
-        
-        FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
-        
-        while ([results next]) {
-            
-            /*[_classNames addObject:[results stringForColumn:@"className"]];
-            [_classroomNames addObject:[results stringForColumn:@"classroomName"]];
-            [_indexPathes addObject:[results stringForColumn:@"indexPath"]];
-            
-            [_classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
-            [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
-
-            
-        }
-        
-        [db close];
-        
-        /*[_classNamesAndIndexPathes setObject:_classNames forKey:_indexPathes];
-        [_classroomNamesAndIndexPathes setObject:_classroomNames forKey:_indexPathes];
-        
-        //NSLog(@"indexPathes:%@",_indexPathes);
-        //NSLog(@"%@",_classNames[1]);
-        
-        [self.collectionView reloadData];
-        [super viewWillAppear:animated];
-//}
-}*/
-
 #pragma mark - Memory Management
 
 - (void)didReceiveMemoryWarning {
@@ -237,8 +165,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             cell.classTimeLabel.text=@"";
             
             if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
-                NSLog(@"ロウ:%ld",(long)indexPath.row);
-               
+                
                 cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
                 cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
             
@@ -321,6 +248,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     if (indexPath.section==0) {
         
     }else{
+        
         if (indexPath.row % (_weeks.count + 1)==0) {
             
         }else{
@@ -328,6 +256,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]) {
                 
                 AttendanceRecordViewController *viewController=[[AttendanceRecordViewController alloc]init];
+                
                 viewController.indexPath=indexPath;
                 [self.navigationController pushViewController:viewController animated:YES];
                 

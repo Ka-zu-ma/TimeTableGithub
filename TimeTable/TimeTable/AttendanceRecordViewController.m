@@ -10,8 +10,9 @@
 #import "CountUpCell.h"
 #import "DateCell.h"
 #import "FMDatabase.h"
+#import "UpdateAttendanceRecordAndCountViewController.h"
 
-@interface AttendanceRecordViewController ()<UITableViewDelegate,UITableViewDataSource,CountUpDelegate,UIAlertViewDelegate>
+@interface AttendanceRecordViewController ()<UITableViewDelegate,UITableViewDataSource,CountUpDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteClassButton;
 
@@ -29,6 +30,10 @@
 @property (strong,nonatomic) NSString *renewAttendanceCountOfMaxIdString;
 @property (strong,nonatomic) NSString *renewAbsenceCountOfMaxIdString;
 @property (strong,nonatomic) NSString *renewLateCountOfMaxIdString;
+
+@property (nonatomic) UIAlertView *firstAlert;
+@property (nonatomic) UIAlertView *secondAlert;
+@property (nonatomic) UIAlertView *thirdAlert;
 
 - (IBAction)deleteClassButton:(id)sender;
 
@@ -93,6 +98,7 @@
     }
     
     [db close];
+    [self.tableView reloadData];
     
     [self displayLatestCounts];
     [super viewWillAppear:animated];
@@ -129,7 +135,7 @@
     
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getNowTime],@"出席",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getToday],@"出席",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     FMResultSet *results=[twodb executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table);"];
     
     while ([results next]) {
@@ -166,7 +172,7 @@
     
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getNowTime],@"欠席",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getToday],@"欠席",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
     FMResultSet *results=[twodb executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table);"];
     
@@ -205,7 +211,7 @@
     
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getNowTime],@"遅刻",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getToday],@"遅刻",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
     FMResultSet *results=[twodb executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table);"];
     
@@ -320,8 +326,6 @@
     
 }
 
-
-
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     //削除ボタン
@@ -342,7 +346,6 @@
             [twodb open];
             [twodb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount,  absencecount, latecount) VALUES (?, ?, ?);",_renewAttendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_lateCountOfMaxIdString];
 
-            
             [twodb close];
             
             [self selectCountsOfMaxId];
@@ -403,43 +406,19 @@
         
         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
-        if ([cell.detailTextLabel.text isEqual:@"出席"]) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"出席/欠席/遅刻 変更" message:@"どれに変更しますか。" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"欠席",@"遅刻",nil];
-            
-            [alert show];
-            
-
-        }else if ([cell.detailTextLabel.text isEqual:@"欠席"]){
-            
-            
-        }else{
-            
-        }
+        UpdateAttendanceRecordAndCountViewController *viewController=[[UpdateAttendanceRecordAndCountViewController alloc]init];
         
+        viewController.dateString=cell.textLabel.text;
+        viewController.attendanceRecordString=cell.detailTextLabel.text;
+        viewController.indexPath=_indexPath;
         
-        
+        [self.navigationController pushViewController:viewController animated:YES];
         
     }];
+    
     editAction.backgroundColor=[UIColor greenColor];
 
     return  @[deleteAction,editAction];
-}
-
-#pragma mark - UIAlertView Delegate
-
-//アラートのボタンが押された時
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    switch (buttonIndex) {
-        case 0://Button1が押されたとき
-            break;
-            
-        case 1://Button2が押されたとき
-            break;
-            
-        default://キャンセルが押されたとき
-            break;
-    }
 }
 
 #pragma mark - IBAction
@@ -448,20 +427,18 @@
     
     FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
     [db open];
-    [db executeUpdate:@"DROP TABLE count_up_record_table"];
+    [db executeUpdate:@"DELETE FROM count_up_record_table WHERE indexPath = ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     [db close];
     
     FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
     [twodb open];
-    [twodb executeUpdate:@"DROP TABLE date_attendancerecord_table"];
+    [twodb executeUpdate:@"DELETE FROM date_attendancerecord_table WHERE indexPath = ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     [twodb close];
-    
-    
     
     FMDatabase *threedb=[super getDatabaseOfselectclass];
     [threedb open];
     
-    [threedb executeUpdate:@"DELETE FROM selectclasstable WHERE indexPath= ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    [threedb executeUpdate:@"DELETE FROM selectclasstable WHERE indexPath = ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
     [threedb close];
     
@@ -533,9 +510,9 @@
         [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount,  latecount, indexPath) VALUES (?, ?, ?, ?);",@"0",@"0",@"0",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
         [db close];
         
-    }else{
-        
     }
+        
+    
 }
 
 -(void)selectCountsOfMaxId{

@@ -185,6 +185,7 @@
     [super createSelectClassTable];
     FMDatabase *twodb=[super getDatabaseOfselectclass];
     [twodb open];
+    
     //NSLog(@"selectclasstableに登録したindexpath:%ld",(long)_indexPath.row);
     [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
@@ -253,9 +254,6 @@
         
         [self.navigationController pushViewController:viewController animated:YES];
 
-        
-        
-        //NSLog(@"Edit:%@", indexPath);
     }];
     
     editAction.backgroundColor=[UIColor greenColor];
@@ -286,9 +284,9 @@
 }
 
 -(void)createEmptyArrays{
-    _classes=[NSMutableArray array];
-    _teachers=[NSMutableArray array];
-    _classrooms=[NSMutableArray array];
+    _classes=[[NSMutableArray alloc]init];
+    _teachers=[[NSMutableArray array]init];
+    _classrooms=[[NSMutableArray array]init];
 
 }
 @end

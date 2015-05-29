@@ -47,12 +47,15 @@
 #pragma mark - IBAction
 
 - (IBAction)attendanceButton:(id)sender {
+    
     [self.delegate attendanceCountUp];
 }
 - (IBAction)absenceButton:(id)sender {
+    
     [self.delegate absenceCountUp];
 }
 - (IBAction)lateButton:(id)sender {
+    
     [self.delegate lateCountUp];
 }
 
