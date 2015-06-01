@@ -65,49 +65,24 @@
     
     [self createEmptyArrays];
     
-    if (_classes.count>0 && _teachers.count>0 && _classrooms.count>0) {
+    [super createCreateClassTable];
         
-        [super createCreateClassTable];
+    FMDatabase *db=[super getDatabaseOfcreateclass];
         
-        FMDatabase *db=[super getDatabaseOfcreateclass];
+    [db open];
         
-        [db open];
-        
-        FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName　FROM createclasstable　WHERE id= (SELECT MAX(id) FROM createclasstable);"];
-        
-        while ([results next]) {
+    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
+    while ([results next]) {
             [_classes addObject:[results stringForColumn:@"className"]];
             [_teachers addObject:[results stringForColumn:@"teacherName"]];
             [_classrooms addObject:[results stringForColumn:@"classroomName"]];
-        }
-        
-        [db close];
-        
-        [self.tableView reloadData];
-        [super viewWillAppear:animated];
-        
-    }else{
-        
-        
-        [super createCreateClassTable];
-        
-        FMDatabase *db=[super getDatabaseOfcreateclass];
-        
-        [db open];
-        
-        FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
-        while ([results next]) {
-            [_classes addObject:[results stringForColumn:@"className"]];
-            [_teachers addObject:[results stringForColumn:@"teacherName"]];
-            [_classrooms addObject:[results stringForColumn:@"classroomName"]];
-        }
-        
-        [db close];
-        
-        [self.tableView reloadData];
-        [super viewWillAppear:animated];
-        
     }
+        
+    [db close];
+        
+    [self.tableView reloadData];
+    [super viewWillAppear:animated];
+    
 }
 
 #pragma mark - Memory Management
@@ -186,7 +161,7 @@
     FMDatabase *twodb=[super getDatabaseOfselectclass];
     [twodb open];
     
-    //NSLog(@"selectclasstableに登録したindexpath:%ld",(long)_indexPath.row);
+    
     [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
     [twodb close];

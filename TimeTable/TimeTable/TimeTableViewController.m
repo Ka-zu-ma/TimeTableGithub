@@ -16,15 +16,11 @@
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
-
 @property (strong,nonatomic) NSMutableArray *weeks;
 @property (strong,nonatomic) NSMutableArray *classTimes;
 
 @property (strong,nonatomic) NSMutableDictionary *classNamesAndIndexPathes;
 @property (strong,nonatomic) NSMutableDictionary *classroomNamesAndIndexPathes;
-/*@property (strong,nonatomic) NSMutableArray *classNames;
-@property (strong,nonatomic) NSMutableArray *classroomNames;
-@property (strong,nonatomic) NSMutableArray *indexPathes;*/
 
 extern const int userRegisteredWeekCount; //ユーザーが登録した週の日数
 extern const int userRegisteredClassCount; //ユーザーが登録した授業コマ数
@@ -132,6 +128,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     
     if (indexPath.section == 0) {
         
+        //dequeueReusableCellWithReuseIdentifier:再利用できるセルがあればそれを使う、なければ生成
         DayOfWeekCell *cell=[collectionView
                              dequeueReusableCellWithReuseIdentifier:@"DayOfWeekCell" forIndexPath:indexPath];
         

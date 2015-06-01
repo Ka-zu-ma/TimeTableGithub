@@ -76,7 +76,7 @@
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             
             while ([results next]) {
                 
@@ -99,7 +99,7 @@
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             
             while ([results next]) {
                 
@@ -112,7 +112,7 @@
             FMDatabase *threedb=[super getDatabaseOfCountUpRecordTable];
             [threedb open];
             
-            [threedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount, indexPath) VALUES  (?, ?, ?, ?);",[NSString stringWithFormat:@"%d",_attendanceCountOfMaxIdString.intValue - 1],_absenceCountOfMaxIdString,_absenceCountOfMaxIdString,[NSString stringWithFormat:@"%d",_lateCountOfMaxIdString.intValue + 1 ],[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+            [threedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount, indexPath) VALUES  (?, ?, ?, ?);",[NSString stringWithFormat:@"%d",_attendanceCountOfMaxIdString.intValue - 1],_absenceCountOfMaxIdString,[NSString stringWithFormat:@"%d",_lateCountOfMaxIdString.intValue + 1 ],[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             [threedb close];
         
         }
@@ -123,7 +123,7 @@
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             
             while ([results next]) {
                 
@@ -136,7 +136,7 @@
             FMDatabase *threedb=[super getDatabaseOfCountUpRecordTable];
             [threedb open];
             
-            [threedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount, indexPath) VALUES  (?, ?, ?, ?);",[NSString stringWithFormat:@"%d",_attendanceCountOfMaxIdString.intValue + 1],[NSString stringWithFormat:@"%d",_absenceCountOfMaxIdString.intValue - 1],_lateCountOfMaxIdString,_lateCountOfMaxIdString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+            [threedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount, indexPath) VALUES  (?, ?, ?, ?);",[NSString stringWithFormat:@"%d",_attendanceCountOfMaxIdString.intValue + 1],[NSString stringWithFormat:@"%d",_absenceCountOfMaxIdString.intValue - 1],_lateCountOfMaxIdString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             [threedb close];
         }else{
             
@@ -144,7 +144,7 @@
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             
             while ([results next]) {
                 
@@ -171,7 +171,7 @@
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             
             while ([results next]) {
                 
@@ -194,7 +194,7 @@
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table);"];
+            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
             
             while ([results next]) {
                 
