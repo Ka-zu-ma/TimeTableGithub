@@ -111,44 +111,84 @@
 
 #pragma mark - CountUp Delegate
 
-//同じ日に１度までしかカウントアップボタンが押せないようにしたい
+//同じ日付が登録されないようにする
 -(void)attendanceCountUp{
     
-    [self selectCountsOfMaxIdAndCreateUpDownNewCounts:1];
     
-    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
+    //同じメソッド内のインスタンス変数で値が入ったもの入ってないものが混在するときどうするか？
+    //なるべくインスタンス変数ではなくローカル変数で間に合わせる
+   NSMutableArray *localDates=[[NSMutableArray alloc]init];
+    
+    FMDatabase *db=[super getDatabaseOfDateAndAttendanceRecordTable];
     [db open];
     
-    FMResultSet *oneresults=[db executeQuery:@"SELECT absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE  indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    FMResultSet *results=[db executeQuery:@"SELECT date FROM date_attendancerecord_table"];
     
-    while ([oneresults next]) {
+    while ([results next]) {
+        [localDates addObject:[results stringForColumn:@"date"]];
+    }
+    [db close];
+    
+    if (![localDates containsObject:[super getToday]]) {
+        
+    
+        
+        [self selectCountsOfMaxIdAndCreateUpDownNewCounts:1];
+    
+        FMDatabase *onedb=[super getDatabaseOfCountUpRecordTable];
+        [onedb open];
+    
+        FMResultSet *oneresults=[onedb executeQuery:@"SELECT absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE  indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    
+        while ([oneresults next]) {
         
         _absenceCountOfMaxIdString=[oneresults stringForColumn:@"absencecount"];
         _lateCountOfMaxIdString=[oneresults stringForColumn:@"latecount"];
-    }
+        }
+        //[oneresults close];
     
-    [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount,indexPath) VALUES (?, ?, ?, ?);",_renewAttendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_lateCountOfMaxIdString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    [db close];
+        [onedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount,indexPath) VALUES (?, ?, ?, ?);",_renewAttendanceCountOfMaxIdString,_absenceCountOfMaxIdString,_lateCountOfMaxIdString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+        [onedb close];
     
-    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
-    [twodb open];
-    [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getToday],@"出席",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    FMResultSet *results=[twodb executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table  WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+        FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
+        [twodb open];
+        [twodb executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",[super getToday],@"出席",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+        
+        [self createEmptyArrays];
+      
+        FMResultSet *tworesults=[twodb executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table  WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
-    while ([results next]) {
-        [_dates addObject:[results stringForColumn:@"date"]];
-        [_attendanceOrAbsenceOrLates addObject:[results stringForColumn:@"attendancerecord"]];
+        while ([tworesults next]) {
+        [_dates addObject:[tworesults stringForColumn:@"date"]];
+        [_attendanceOrAbsenceOrLates addObject:[tworesults stringForColumn:@"attendancerecord"]];
 
-    }
-    
-    [twodb close];
-    
+        }
+        [tworesults close];
+        [twodb close];
+        
     [self displayLatestCounts];
     
     [self.tableView reloadData];
+        
+    }
 }
 
 -(void)absenceCountUp{
+    
+    NSMutableArray *localDates=[[NSMutableArray alloc]init];
+    
+    FMDatabase *db=[super getDatabaseOfDateAndAttendanceRecordTable];
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:@"SELECT date FROM date_attendancerecord_table"];
+    
+    while ([results next]) {
+        [localDates addObject:[results stringForColumn:@"date"]];
+    }
+    [db close];
+    
+    if (![localDates containsObject:[super getToday]]) {
+
     
     [self selectCountsOfMaxIdAndCreateUpDownNewCounts:1];
     
@@ -185,9 +225,25 @@
     
     [self.tableView reloadData];
     
+    }
 }
 
 -(void)lateCountUp{
+    
+    NSMutableArray *localDates=[[NSMutableArray alloc]init];
+    
+    FMDatabase *db=[super getDatabaseOfDateAndAttendanceRecordTable];
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:@"SELECT date FROM date_attendancerecord_table"];
+    
+    while ([results next]) {
+        [localDates addObject:[results stringForColumn:@"date"]];
+    }
+    [db close];
+    
+    if (![localDates containsObject:[super getToday]]) {
+
     
     [self selectCountsOfMaxIdAndCreateUpDownNewCounts:1];
     
@@ -223,6 +279,7 @@
     
     [self displayLatestCounts];
     
+    }
 }
 
 #pragma mark - UITableView DataSource
@@ -338,10 +395,6 @@
             [self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1];
             
             [self selectCountsOfMaxId];
-            
-            /*NSLog(@"renew:%@",_renewAttendanceCountOfMaxIdString);
-            NSLog(@"abs:%@",_absenceCountOfMaxIdString);
-            NSLog(@"late:%@",_lateCountOfMaxIdString);*/
             
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
             [twodb open];
@@ -517,13 +570,14 @@
         
         [db executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount,  latecount, indexPath) VALUES (?, ?, ?, ?);",@"0",@"0",@"0",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
         [db close];
-        
     }
-    
-    
 }
 
 -(void)selectCountsOfMaxId{
+    
+    /*NSString *attendanceCountOfMaxIdString;
+    NSString *absenceCountOfMaxIdString;
+    NSString *lateCountOfMaxIdString;*/
     
     FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
     [db open];
@@ -532,7 +586,7 @@
         _attendanceCountOfMaxIdString=[results stringForColumn:@"attendancecount"];
         _absenceCountOfMaxIdString=[results stringForColumn:@"absencecount"];
         _lateCountOfMaxIdString=[results stringForColumn:@"latecount"];
-        NSLog(@"atten:%@",_absenceCountOfMaxIdString);
+        NSLog(@"atten:%@",_attendanceCountOfMaxIdString);
     }
     [db close];
 }

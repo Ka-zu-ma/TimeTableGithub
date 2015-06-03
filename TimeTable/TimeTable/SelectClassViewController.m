@@ -15,11 +15,13 @@
 #import "SuperClassViewController.h"
 
 @interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property (strong,nonatomic) NSMutableArray *classes;
 @property (strong,nonatomic) NSMutableArray *teachers;
-@property (strong,nonatomic) NSMutableArray *classrooms;
-@property NSString *cellclassroomNameString;
+
+@property (strong,nonatomic) NSString *cellclassroomNameString;
 
 -(void)deleteTableViewCell;
 @end
@@ -54,9 +56,8 @@
     
     self.navigationItem.rightBarButtonItem=addButton;
     
+    //xibファイルを紐付けたカスタムセル用クラスを指定。セル再利用のためのIDを第二引数で指定。
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-    
-    //NSLog(@"%ld",(long)_indexPath.row);
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -75,7 +76,7 @@
     while ([results next]) {
             [_classes addObject:[results stringForColumn:@"className"]];
             [_teachers addObject:[results stringForColumn:@"teacherName"]];
-            [_classrooms addObject:[results stringForColumn:@"classroomName"]];
+            
     }
         
     [db close];
@@ -105,9 +106,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ClassListCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if(!cell){
-    cell=[[ClassListCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-    }
     
     cell.textLabel.text=_classes[indexPath.row];
     cell.detailTextLabel.text=_teachers[indexPath.row];
@@ -117,20 +115,21 @@
     cell.selectionStyle=UITableViewCellSelectionStyleBlue;
     
     //中央寄せに設定できない
-    cell.textLabel.textAlignment=NSTextAlignmentCenter;
+    cell.detailTextLabel.textAlignment=NSTextAlignmentCenter;
     return cell;
                          
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
    
-    return _classes.count; //1;
+    return _classes.count;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1; //_classes.count;
+    return 1;
 }
 
+//編集可能かどうか、表示されきったときに呼び出される
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return  YES;
@@ -161,12 +160,12 @@
     FMDatabase *twodb=[super getDatabaseOfselectclass];
     [twodb open];
     
-    
     [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
     [twodb close];
     
     //前の画面に戻る前に更新
+    //UINavigationControllerで遷移してきた過去のビューはself.navigationController.viewControllersに保存
     NSArray *allControllers = self.navigationController.viewControllers;
     NSInteger target = [allControllers count] - 2;
     TimeTableViewController *parent = [allControllers objectAtIndex:target];
@@ -252,7 +251,7 @@
     while ([results next]) {
         [_classes addObject:[results stringForColumn:@"className"]];
         [_teachers addObject:[results stringForColumn:@"teacherName"]];
-        [_classrooms addObject:[results stringForColumn:@"classroomName"]];
+        
     }
     
     [db close];
@@ -261,7 +260,6 @@
 -(void)createEmptyArrays{
     _classes=[[NSMutableArray alloc]init];
     _teachers=[[NSMutableArray array]init];
-    _classrooms=[[NSMutableArray array]init];
-
+    
 }
 @end

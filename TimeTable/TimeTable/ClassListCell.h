@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ClassListCell : UITableViewCell
-@property NSString *cellclassroomNameString;
+
 @end
