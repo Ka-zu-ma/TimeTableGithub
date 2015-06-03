@@ -8,15 +8,16 @@
 
 #import "UpdateAttendanceRecordAndCountViewController.h"
 #import "FMDatabase.h"
+#import "TitleLabel.h"
 
 @interface UpdateAttendanceRecordAndCountViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *attendanceRecordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *updateButton;
 
-/*@property (strong,nonatomic) NSString *attendanceCountString;
+@property (strong,nonatomic) NSString *attendanceCountString;
 @property (strong,nonatomic) NSString *absenceCountString;
-@property (strong,nonatomic) NSString *lateCountString;*/
+@property (strong,nonatomic) NSString *lateCountString;
 
 @property  (strong,nonatomic) NSString *attendanceCountOfMaxIdString;
 @property  (strong,nonatomic) NSString *absenceCountOfMaxIdString;
@@ -41,11 +42,11 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     //タイトル色変更
-    UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
+    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.textColor=[UIColor whiteColor];
     titleLabel.text=@"日付け、出席状況　変更";
-    [titleLabel sizeToFit];
-    self.navigationItem.titleView=titleLabel;
+    [titleLabel sizeToFit];*/
+    self.navigationItem.titleView=[TitleLabel createTitlelabel:@"日付変更、出席状況変更"];
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色

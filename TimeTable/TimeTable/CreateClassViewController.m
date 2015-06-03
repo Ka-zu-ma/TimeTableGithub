@@ -9,6 +9,8 @@
 #import "CreateClassViewController.h"
 #import "ClassTableCell.h"
 #import "FMDatabase.h"
+#import "DatabaseOfCreateClassTable.h"
+#import "TitleLabel.h"
 
 @interface CreateClassViewController ()<UITextFieldDelegate>
 
@@ -37,13 +39,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    //タイトル色変更
-    UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.textColor=[UIColor whiteColor];
-    titleLabel.text=@"授業作成";
-    [titleLabel sizeToFit];
-    self.navigationItem.titleView=titleLabel;
-    
+    self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業作成"];
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
@@ -66,28 +62,28 @@
         
         if ((![_classTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_classroomTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_teacherTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding])) {
             
-            FMDatabase *db=[super getDatabaseOfcreateclass];
-            
-            [db open];
-            [db executeUpdate:@"INSERT INTO createclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",_classTextField.text,_teacherTextField.text,_classroomTextField.text];
-            
-            [db close];
+            [DatabaseOfCreateClassTable insertCreateClassTable:_classTextField.text teacherName:_teacherTextField.text classroomName:_classroomTextField.text];
             
             [self.navigationController popViewControllerAnimated:YES];
 
         }else{
-            
-            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"警告" message:@"授業名、教員名、教室名には日本語のみ入力してください。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            
-            [alertView show];
+            [self showAlert:@"授業名、教員名、教室名には日本語のみ入力してください。"];
+           
         }
     
     }else{
-        
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"警告" message:@"授業名、教員名、教室名を3つとも入力しなさい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        
-        [alertView show];
+        [self showAlert:@"授業名、教員名、教室名を3つとも入力しなさい。"];
     }
+}
+
+#pragma mark - Original Method
+
+-(void)showAlert:(NSString *)messageString{
+    
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"警告" message:messageString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    
+    [alertView show];
+
 }
 
 @end

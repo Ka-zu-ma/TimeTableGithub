@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SuperClassViewController.h"
 
-@interface SelectClassViewController : SuperClassViewController
+@interface SelectClassViewController : UIViewController
 @property  (strong,nonatomic) NSIndexPath *indexPath;
 @end

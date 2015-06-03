@@ -14,9 +14,6 @@
 
 @implementation SuperClassViewController
 
-//static  NSString *const createclassdbName=@"createclass.db";
-//static  NSString *const selectclassdbName=@"selectclass.db";
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

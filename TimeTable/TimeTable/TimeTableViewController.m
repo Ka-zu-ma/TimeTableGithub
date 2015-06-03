@@ -13,6 +13,7 @@
 #import "AttendanceRecordViewController.h"
 #import "CreateClassViewController.h"
 #import "FMDatabase.h"
+#import "TitleLabel.h"
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -22,7 +23,7 @@
 @property (strong,nonatomic) NSMutableDictionary *classNamesAndIndexPathes;
 @property (strong,nonatomic) NSMutableDictionary *classroomNamesAndIndexPathes;
 
-extern const int userRegisteredWeekCount; //ユーザーが登録した週の日数
+extern const int userRegisteredWeekCount;//ユーザーが登録した週の日数
 extern const int userRegisteredClassCount; //ユーザーが登録した授業コマ数
 
 @end
@@ -38,7 +39,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     _classTimes=[NSMutableArray array];
     
     NSArray *weekContents=@[@"月",@"火",@"水",@"木",@"金",@"土",@"日"];
-    NSArray *classTimeContents=@[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    NSArray *classTimeContents=@[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];//モデル
     
     int i=0;
     int m=0;
@@ -61,12 +62,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     //ナビゲーションバー表示
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    //タイトル色変更
-    UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.textColor=[UIColor whiteColor];
-    titleLabel.text=@"Time Table";
-    [titleLabel sizeToFit];
-    self.navigationItem.titleView=titleLabel;
+    self.navigationItem.titleView=[TitleLabel createTitlelabel:@"Time Table"];
     
     self.navigationController.navigationBar.tintColor=[UIColor blueColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
@@ -108,7 +104,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
         [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
     }
     
-    [db close];
+    [db close];//データベースクラスを作り、Modelに入れる
 
     
     return 2;
@@ -166,7 +162,7 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
                 cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
                 cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
             
-            }
+            }//else内にclass,classname空文字、164行目あやしい
         }
         return  cell;
     }
@@ -267,6 +263,6 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
             }
         }
     }
-}
+}//ネストあさく
     
 @end

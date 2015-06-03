@@ -9,6 +9,8 @@
 #import "UpdateClassViewController.h"
 #import "SelectClassViewController.h"
 #import "FMDatabase.h"
+#import "DatabaseOfCreateClassTable.h"
+#import "TitleLabel.h"
 
 @interface UpdateClassViewController ()<UITextFieldDelegate>
 
@@ -41,17 +43,15 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     //タイトル色変更
-    UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
+    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.textColor=[UIColor whiteColor];
     titleLabel.text=@"授業変更";
-    [titleLabel sizeToFit];
-    self.navigationItem.titleView=titleLabel;
-    
+    [titleLabel sizeToFit];*/
+    self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業変更"];
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
    
-    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -62,15 +62,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
-
 #pragma mark - IBAction
 
 - (IBAction)registerButton:(id)sender {
     
-    [super getDatabaseOfcreateclass];
-    FMDatabase *db=[super getDatabaseOfcreateclass];
+    [DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
     
     [db open];
     [db executeUpdate:@"UPDATE createclasstable SET className = ?, teacherName = ?, classroomName = ? WHERE className = ? AND teacherName = ? AND classroomName = ?;",_classNameTextField.text,_teacherNameTextField.text,_classroomNameTextField.text,_classNameString,_teacherNameString,_classroomNameString];

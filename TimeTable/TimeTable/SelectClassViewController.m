@@ -12,7 +12,9 @@
 #import "FMDatabase.h"
 #import "TimeTableViewController.h"
 #import "UpdateClassViewController.h"
-#import "SuperClassViewController.h"
+#import "DatabaseOfCreateClassTable.h"
+#import "DatabaseOfSelectClassTable.h"
+#import "TitleLabel.h"
 
 @interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 
@@ -40,11 +42,11 @@
     self.navigationItem.title=@"授業選択";
     
     //タイトル色変更
-    UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
+    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.textColor=[UIColor whiteColor];
     titleLabel.text=@"授業選択";
-    [titleLabel sizeToFit];
-    self.navigationItem.titleView=titleLabel;  //親クラス作って共通化
+    [titleLabel sizeToFit];*/
+    self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業選択"];  
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
@@ -66,9 +68,9 @@
     
     [self createEmptyArrays];
     
-    [super createCreateClassTable];
+    [DatabaseOfCreateClassTable createCreateClassTable];
         
-    FMDatabase *db=[super getDatabaseOfcreateclass];
+    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
     [db open];
         
@@ -110,7 +112,6 @@
     cell.textLabel.text=_classes[indexPath.row];
     cell.detailTextLabel.text=_teachers[indexPath.row];
     
-    
     cell.detailTextLabel.textColor=[UIColor grayColor];
     cell.selectionStyle=UITableViewCellSelectionStyleBlue;
     
@@ -146,7 +147,7 @@
     
     UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
     
-    FMDatabase *onedb=[super getDatabaseOfcreateclass];
+    FMDatabase *onedb=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
     [onedb open];
     
     FMResultSet *results=[onedb executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
@@ -155,9 +156,8 @@
     }
     [onedb close];
     
-    
-    [super createSelectClassTable];
-    FMDatabase *twodb=[super getDatabaseOfselectclass];
+    [DatabaseOfSelectClassTable createSelectClassTable];
+    FMDatabase *twodb=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
     [twodb open];
     
     [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
@@ -183,7 +183,7 @@
         
         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
-        FMDatabase *db=[super getDatabaseOfcreateclass];
+        FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
         [db open];
         
@@ -212,7 +212,7 @@
         viewController.classNameString=cell.textLabel.text;
         viewController.teacherNameString=cell.detailTextLabel.text;
         
-        FMDatabase *db=[super getDatabaseOfcreateclass];
+        FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
         [db open];
         //セルの授業名、教室名に対応する教室名を取得
@@ -241,8 +241,8 @@
     
     [self createEmptyArrays];
     
-    [super createCreateClassTable];
-    FMDatabase *db=[super getDatabaseOfcreateclass];
+    [DatabaseOfCreateClassTable createCreateClassTable];
+    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
     
     [db open];
     

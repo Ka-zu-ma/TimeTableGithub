@@ -15,4 +15,5 @@
 -(void)createDateAndAttendanceRecordTable;
 -(FMDatabase *)getDatabaseOfselectclass;
 -(NSString *)getToday;
+
 @end
