@@ -41,11 +41,6 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    //タイトル色変更
-    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.textColor=[UIColor whiteColor];
-    titleLabel.text=@"日付け、出席状況　変更";
-    [titleLabel sizeToFit];*/
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"日付変更、出席状況変更"];
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー

@@ -12,7 +12,7 @@
 
 +(UILabel *)createTitlelabel:titleLabelName{
     
-    //タイトル色変更
+    //タイトル作成
     UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];//(0,0)で大きさ、長さが0
     titleLabel.textColor=[UIColor whiteColor];
     titleLabel.text=titleLabelName;

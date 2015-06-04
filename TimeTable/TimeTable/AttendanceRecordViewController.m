@@ -13,6 +13,7 @@
 #import "UpdateAttendanceRecordAndCountViewController.h"
 #import "TimeTableViewController.h"
 #import "TitleLabel.h"
+#import "NavigationBar.h"
 
 @interface AttendanceRecordViewController ()<UITableViewDelegate,UITableViewDataSource,CountUpDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,17 +46,17 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    //タイトル色変更
-    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];//(0,0)で大きさ、長さが0
-    titleLabel.textColor=[UIColor whiteColor];
-    titleLabel.text=@"出席状況";
-    [titleLabel sizeToFit];*/
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"出席状況"];
     
     //バー背景色
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
+    /*self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
+    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色*/
     
+    
+    //[self.navigationController setView:[NavigationBar setColor]];//バー背景色
+    
+    [NavigationBar setColor];
+
     //授業削除ボタンの枠を丸くする
     [[_deleteClassButton layer] setCornerRadius:10.0];
     [_deleteClassButton setClipsToBounds:YES];

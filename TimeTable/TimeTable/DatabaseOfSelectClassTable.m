@@ -9,6 +9,7 @@
 #import "DatabaseOfSelectClassTable.h"
 
 @implementation DatabaseOfSelectClassTable
+
 +(FMDatabase *)getDatabaseOfselectclass{
     
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -17,6 +18,7 @@
     
     return db;
 }
+
 +(void)createSelectClassTable{
     
     FMDatabase *db=[self getDatabaseOfselectclass];//クラスメソッド内のselfは自身のClassオブジェクトを指している
@@ -26,4 +28,13 @@
     [db close];
 }
 
++(void)selectSelectClassTable{
+    
+    FMDatabase *db=[self getDatabaseOfselectclass];
+    [db open];
+    
+    
+    
+    
+}
 @end

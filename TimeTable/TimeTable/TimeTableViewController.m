@@ -14,6 +14,8 @@
 #import "CreateClassViewController.h"
 #import "FMDatabase.h"
 #import "TitleLabel.h"
+#import "WeekContentsData.h"
+#import "ClassTimeContentsData.h"
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -22,9 +24,6 @@
 
 @property (strong,nonatomic) NSMutableDictionary *classNamesAndIndexPathes;
 @property (strong,nonatomic) NSMutableDictionary *classroomNamesAndIndexPathes;
-
-extern const int userRegisteredWeekCount;//ユーザーが登録した週の日数
-extern const int userRegisteredClassCount; //ユーザーが登録した授業コマ数
 
 @end
 
@@ -38,14 +37,13 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
     _weeks=[NSMutableArray array];
     _classTimes=[NSMutableArray array];
     
-    NSArray *weekContents=@[@"月",@"火",@"水",@"木",@"金",@"土",@"日"];
-    NSArray *classTimeContents=@[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];//モデル
+    NSArray *weekContents=[WeekContentsData createWeekContents];
+    NSArray *classTimeContents=[ClassTimeContentsData createClassTimeContents];
     
     int i=0;
     int m=0;
-    
-    const int userRegisteredWeekCount = 5; //今回は5で作る
-    const int userRegisteredClassCount = 7; //今回は7で作る
+    int userRegisteredWeekCount = 5; //今回は5で作る
+    int userRegisteredClassCount = 7; //今回は7で作る
     
     while (i < userRegisteredWeekCount){
         
@@ -238,14 +236,8 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section==0) {
-        
-    }else{
-        
-        if (indexPath.row % (_weeks.count + 1)==0) {
-            
-        }else{
-            
+    if (!indexPath.section==0) {
+        if (!(indexPath.row % (_weeks.count + 1)==0)) {
             if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]) {
                 
                 AttendanceRecordViewController *viewController=[[AttendanceRecordViewController alloc]init];
@@ -261,7 +253,9 @@ extern const int userRegisteredClassCount; //ユーザーが登録した授業�
                 
                 [self.navigationController pushViewController:viewController animated:YES];
             }
+
         }
+            
     }
 }//ネストあさく
     

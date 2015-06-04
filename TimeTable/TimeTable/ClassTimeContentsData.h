@@ -1,5 +1,5 @@
 //
-//  WeekContents.h
+//  ClassTimeContents.h
 //  TimeTable
 //
 //  Created by SDT-B004 on 2015/06/03.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WeekContents : NSObject
-@property (strong,nonatomic) NSArray *weekContents;
+@interface ClassTimeContentsData : NSObject
++(NSArray *)createClassTimeContents;
 @end

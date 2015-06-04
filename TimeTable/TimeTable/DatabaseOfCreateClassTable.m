@@ -38,5 +38,31 @@
     [db close];
 }
 
++(void)updateCreateClassTable:(NSString *)classNameTextField teacherNameTextField:(NSString *)teacherNameTextField  classroomNameTextField:(NSString *)classroomNameTextField classNameString:(NSString *)classNameString teacherNameString:(NSString *)teacherNameString classroomNameString:(NSString *)classroomNameString{
+    
+    FMDatabase *db=[self getDatabaseOfcreateclass];
+    
+    [db open];
+    [db executeUpdate:@"UPDATE createclasstable SET className = ?, teacherName = ?, classroomName = ? WHERE className = ? AND teacherName = ? AND classroomName = ?;",classNameTextField,teacherNameTextField,classroomNameTextField,classNameString,teacherNameString,classroomNameString];
+    
+    [db close];
+}
+
++(void)selectCreateClassTable:(NSString *)query className:(NSString *)className teacherName:(NSString *)teacherName classroomName:(NSString *)classroomName classes:(NSMutableArray *)classes teachers:(NSMutableArray *)teachers classroomNameString:(NSString *)classroomNameString{
+    
+    FMDatabase *db=[self getDatabaseOfcreateclass];
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:query,className,teacherName,classroomName];
+    while ([results next]) {
+        
+        [classes addObject:[results stringForColumn:@"className"]];
+        [teachers addObject:[results stringForColumn:@"teacherName"]];
+        classroomName=[results stringForColumn:@"classroomName"];
+    }
+    
+    [db close];
+
+}
 
 @end

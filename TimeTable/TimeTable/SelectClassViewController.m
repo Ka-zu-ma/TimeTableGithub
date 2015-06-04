@@ -15,8 +15,10 @@
 #import "DatabaseOfCreateClassTable.h"
 #import "DatabaseOfSelectClassTable.h"
 #import "TitleLabel.h"
+#import "BarButtonItem.h"
+#import "NavigationBar.h"
 
-@interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+@interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,BarButtonItemDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -41,15 +43,12 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title=@"授業選択";
     
-    //タイトル色変更
-    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.textColor=[UIColor whiteColor];
-    titleLabel.text=@"授業選択";
-    [titleLabel sizeToFit];*/
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業選択"];  
     
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
+    /*self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
+    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色*/
+    
+    [NavigationBar setColor];
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                               initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -57,6 +56,13 @@
                               action:@selector(addButtontouched:)];
     
     self.navigationItem.rightBarButtonItem=addButton;
+    
+    //BarButtonItem *barButtonItem=[[BarButtonItem alloc]init];
+    
+    /*BarButtonItem *barButtonItem=[[BarButtonItem alloc]init];
+    barButtonItem.delegate=self;
+    
+    self.navigationItem.rightBarButtonItem=[BarButtonItem createBarButtonItem];*/
     
     //xibファイルを紐付けたカスタムセル用クラスを指定。セル再利用のためのIDを第二引数で指定。
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
@@ -70,7 +76,7 @@
     
     [DatabaseOfCreateClassTable createCreateClassTable];
         
-    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
     [db open];
         
@@ -81,7 +87,9 @@
             
     }
         
-    [db close];
+    [db close];*/
+    
+    [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT className, teacherName, classroomName FROM createclasstable;" className:nil teacherName:nil classroomName:nil classes:_classes teachers:_teachers classroomNameString:nil];
         
     [self.tableView reloadData];
     [super viewWillAppear:animated];
@@ -95,13 +103,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - BarButtonItem Methods
+#pragma mark - BarButtonItem Delegate
 
 -(void)addButtontouched:(UIBarButtonItem *)addButton{
+    CreateClassViewController *viewController=[[CreateClassViewController alloc]init];
+    [self.navigationController pushViewController:viewController animated:YES];
+
+}
+
+/*-(void)createClass{
     
     CreateClassViewController *viewController=[[CreateClassViewController alloc]init];
     [self.navigationController pushViewController:viewController animated:YES];
-}
+}*/
 
 #pragma mark - UITableView DataSource
 
@@ -147,14 +161,16 @@
     
     UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
     
-    FMDatabase *onedb=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    /*FMDatabase *onedb=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
     [onedb open];
     
     FMResultSet *results=[onedb executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
     while ([results next]) {
         _cellclassroomNameString=[results stringForColumn:@"classroomName"];
     }
-    [onedb close];
+    [onedb close];*/
+    
+    [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;" className:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:nil classes:nil teachers:nil classroomNameString:_cellclassroomNameString];
     
     [DatabaseOfSelectClassTable createSelectClassTable];
     FMDatabase *twodb=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
@@ -212,7 +228,7 @@
         viewController.classNameString=cell.textLabel.text;
         viewController.teacherNameString=cell.detailTextLabel.text;
         
-        FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+        /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
         [db open];
         //セルの授業名、教室名に対応する教室名を取得
@@ -222,7 +238,9 @@
             _cellclassroomNameString=[results stringForColumn:@"classroomName"];
         }
         
-        [db close];
+        [db close];*/
+        
+        [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;" className:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:nil classes:nil teachers:nil classroomNameString:_cellclassroomNameString];
         
         viewController.classroomNameString=_cellclassroomNameString;
         
@@ -242,7 +260,7 @@
     [self createEmptyArrays];
     
     [DatabaseOfCreateClassTable createCreateClassTable];
-    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
     
     [db open];
     
@@ -254,10 +272,15 @@
         
     }
     
-    [db close];
+    [db close];*/
+    
+    [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT className, teacherName, classroomName FROM createclasstable;" className:nil teacherName:nil classroomName:nil classes:_classes teachers:_teachers classroomNameString:nil];
 }
 
+#pragma mark - Original Method
+
 -(void)createEmptyArrays{
+    
     _classes=[[NSMutableArray alloc]init];
     _teachers=[[NSMutableArray array]init];
     

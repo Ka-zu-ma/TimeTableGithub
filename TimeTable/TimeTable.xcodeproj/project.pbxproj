@@ -36,13 +36,13 @@
 		E3A1622B1AF30FE40058642D /* AttendanceRecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3A162291AF30FE40058642D /* AttendanceRecordViewController.xib */; };
 		E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A1623C1AF3325B0058642D /* TimeTableViewController.m */; };
 		E3A1623F1AF3325B0058642D /* TimeTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3A1623D1AF3325B0058642D /* TimeTableViewController.xib */; };
+		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
+		E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E31B200F9100795954 /* NavigationBar.m */; };
 		E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */; };
 		E3CF48FE1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */; };
-		E3CF49011B1ECFA400CFA4C7 /* Title.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49001B1ECFA400CFA4C7 /* Title.m */; };
-		E3CF49041B1ED06300CFA4C7 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49031B1ED06300CFA4C7 /* NavigationBar.m */; };
 		E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49061B1F058800CFA4C7 /* TitleLabel.m */; };
-		E3CF490A1B1F0DA400CFA4C7 /* WeekContents.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49091B1F0DA400CFA4C7 /* WeekContents.m */; };
-		E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContents.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContents.m */; };
+		E3CF490A1B1F0DA400CFA4C7 /* WeekContentsData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49091B1F0DA400CFA4C7 /* WeekContentsData.m */; };
+		E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m */; };
 		E3FE065D1B01983F00AB1BB3 /* PodFile in Resources */ = {isa = PBXBuildFile; fileRef = E3FE065C1B01983F00AB1BB3 /* PodFile */; };
 		E3FE066B1B01F5A800AB1BB3 /* CountUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FE06691B01F5A800AB1BB3 /* CountUpCell.m */; };
 		E3FE066C1B01F5A800AB1BB3 /* CountUpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE066A1B01F5A800AB1BB3 /* CountUpCell.xib */; };
@@ -107,20 +107,20 @@
 		E3A1623B1AF3325B0058642D /* TimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableViewController.h; sourceTree = "<group>"; };
 		E3A1623C1AF3325B0058642D /* TimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableViewController.m; sourceTree = "<group>"; };
 		E3A1623D1AF3325B0058642D /* TimeTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeTableViewController.xib; sourceTree = "<group>"; };
+		E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarButtonItem.h; sourceTree = "<group>"; };
+		E3BC78E01B1FE11A00795954 /* BarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItem.m; sourceTree = "<group>"; };
+		E3BC78E21B200F9100795954 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
+		E3BC78E31B200F9100795954 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		E3CF48F91B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfCreateClassTable.h; sourceTree = "<group>"; };
 		E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfCreateClassTable.m; sourceTree = "<group>"; };
 		E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfSelectClassTable.h; sourceTree = "<group>"; };
 		E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfSelectClassTable.m; sourceTree = "<group>"; };
-		E3CF48FF1B1ECFA400CFA4C7 /* Title.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Title.h; sourceTree = "<group>"; };
-		E3CF49001B1ECFA400CFA4C7 /* Title.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Title.m; sourceTree = "<group>"; };
-		E3CF49021B1ED06300CFA4C7 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
-		E3CF49031B1ED06300CFA4C7 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		E3CF49051B1F058800CFA4C7 /* TitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleLabel.h; sourceTree = "<group>"; };
 		E3CF49061B1F058800CFA4C7 /* TitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleLabel.m; sourceTree = "<group>"; };
-		E3CF49081B1F0DA400CFA4C7 /* WeekContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekContents.h; sourceTree = "<group>"; };
-		E3CF49091B1F0DA400CFA4C7 /* WeekContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekContents.m; sourceTree = "<group>"; };
-		E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTimeContents.h; sourceTree = "<group>"; };
-		E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTimeContents.m; sourceTree = "<group>"; };
+		E3CF49081B1F0DA400CFA4C7 /* WeekContentsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekContentsData.h; sourceTree = "<group>"; };
+		E3CF49091B1F0DA400CFA4C7 /* WeekContentsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekContentsData.m; sourceTree = "<group>"; };
+		E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContentsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTimeContentsData.h; sourceTree = "<group>"; };
+		E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTimeContentsData.m; sourceTree = "<group>"; };
 		E3FE065C1B01983F00AB1BB3 /* PodFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodFile; sourceTree = "<group>"; };
 		E3FE06681B01F5A800AB1BB3 /* CountUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountUpCell.h; sourceTree = "<group>"; };
 		E3FE06691B01F5A800AB1BB3 /* CountUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountUpCell.m; sourceTree = "<group>"; };
@@ -234,16 +234,16 @@
 				E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */,
 				E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */,
 				E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */,
-				E3CF48FF1B1ECFA400CFA4C7 /* Title.h */,
-				E3CF49001B1ECFA400CFA4C7 /* Title.m */,
-				E3CF49021B1ED06300CFA4C7 /* NavigationBar.h */,
-				E3CF49031B1ED06300CFA4C7 /* NavigationBar.m */,
 				E3CF49051B1F058800CFA4C7 /* TitleLabel.h */,
 				E3CF49061B1F058800CFA4C7 /* TitleLabel.m */,
-				E3CF49081B1F0DA400CFA4C7 /* WeekContents.h */,
-				E3CF49091B1F0DA400CFA4C7 /* WeekContents.m */,
-				E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContents.h */,
-				E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContents.m */,
+				E3CF49081B1F0DA400CFA4C7 /* WeekContentsData.h */,
+				E3CF49091B1F0DA400CFA4C7 /* WeekContentsData.m */,
+				E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContentsData.h */,
+				E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m */,
+				E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */,
+				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
+				E3BC78E21B200F9100795954 /* NavigationBar.h */,
+				E3BC78E31B200F9100795954 /* NavigationBar.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -472,22 +472,22 @@
 				E391A8651B12C6AA00585660 /* SuperAttendanceRecordViewController.m in Sources */,
 				E3CF48FE1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m in Sources */,
 				E3A1622A1AF30FE40058642D /* AttendanceRecordViewController.m in Sources */,
-				E3CF490A1B1F0DA400CFA4C7 /* WeekContents.m in Sources */,
+				E3CF490A1B1F0DA400CFA4C7 /* WeekContentsData.m in Sources */,
 				E3A161F31AF301520058642D /* AppDelegate.m in Sources */,
 				E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */,
 				E3A161F01AF301520058642D /* main.m in Sources */,
 				E3A162201AF30D7C0058642D /* DayOfWeekCell.m in Sources */,
 				E380FB2E1B096E510018D0D5 /* UpdateClassViewController.m in Sources */,
 				E3A0F6F01AFC7C08009664DD /* ClassListCell.m in Sources */,
-				E3CF49041B1ED06300CFA4C7 /* NavigationBar.m in Sources */,
 				E3A162251AF30F780058642D /* SelectClassViewController.m in Sources */,
 				E380FB321B0984170018D0D5 /* SuperClassViewController.m in Sources */,
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
+				E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */,
 				E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */,
-				E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContents.m in Sources */,
-				E3CF49011B1ECFA400CFA4C7 /* Title.m in Sources */,
+				E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m in Sources */,
 				E36E9EDF1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.m in Sources */,
 				E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */,
+				E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */,
 				E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */,
 				E39CBFCE1AFB460100AAEA5D /* ClassTableCell.m in Sources */,
 				E3FE066B1B01F5A800AB1BB3 /* CountUpCell.m in Sources */,

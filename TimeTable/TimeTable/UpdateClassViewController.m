@@ -42,11 +42,6 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    //タイトル色変更
-    /*UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.textColor=[UIColor whiteColor];
-    titleLabel.text=@"授業変更";
-    [titleLabel sizeToFit];*/
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業変更"];
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
@@ -66,13 +61,15 @@
 
 - (IBAction)registerButton:(id)sender {
     
-    [DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    //[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
     
     [db open];
     [db executeUpdate:@"UPDATE createclasstable SET className = ?, teacherName = ?, classroomName = ? WHERE className = ? AND teacherName = ? AND classroomName = ?;",_classNameTextField.text,_teacherNameTextField.text,_classroomNameTextField.text,_classNameString,_teacherNameString,_classroomNameString];
     
-    [db close];
+    [db close];*/
+    
+    [DatabaseOfCreateClassTable updateCreateClassTable:_classNameTextField.text teacherNameTextField:_teacherNameTextField.text classroomNameTextField:_classroomNameTextField.text classNameString:_classNameString teacherNameString:_teacherNameString classroomNameString:_classroomNameString];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
