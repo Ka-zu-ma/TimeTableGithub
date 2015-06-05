@@ -66,11 +66,12 @@
             [DatabaseOfCreateClassTable insertCreateClassTable:_classTextField.text teacherName:_teacherTextField.text classroomName:_classroomTextField.text];
             
             [self.navigationController popViewControllerAnimated:YES];
+            return;
         }
-            
         [[AlertView createAlertView:@"授業名、教員名、教室名には日本語のみ入力してください。"] show];
-    }
         
+        return;
+    }
     [[AlertView createAlertView:@"授業名、教員名、教室名を3つとも入力しなさい。"] show];
 }
 

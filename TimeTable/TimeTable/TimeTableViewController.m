@@ -87,7 +87,7 @@
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    _classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    /*_classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
     _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
     
     [super createSelectClassTable];
@@ -102,7 +102,7 @@
         [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
     }
     
-    [db close];//データベースクラスを作り、Modelに入れる
+    [db close];//データベースクラスを作り、Modelに入れる*/
 
     
     return 2;
@@ -112,10 +112,8 @@
     if (section == 0) {
         
         return _weeks.count + 1;
-    }else{
-        
-        return (_classTimes.count)*(_weeks.count + 1);
     }
+    return (_classTimes.count)*(_weeks.count + 1);
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -132,39 +130,35 @@
         if (indexPath.row == 0) {
             
             cell.weekLabel.text=@"";
-            
-        }else{
-            
-            cell.weekLabel.text=_weeks[indexPath.row -1];
-            
+            return cell;
         }
+        cell.weekLabel.text=_weeks[indexPath.row -1];
+            
         return cell;
+    }
         
-    }else{
+    ClassTableCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ClassTableCell" forIndexPath:indexPath];
         
-        ClassTableCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ClassTableCell" forIndexPath:indexPath];
+    cell.backgroundColor=[UIColor whiteColor];
+    cell.classTimeLabel.textColor=[UIColor blackColor];
         
-        cell.backgroundColor=[UIColor whiteColor];
-        cell.classTimeLabel.textColor=[UIColor blackColor];
-        
-        if (indexPath.row%(_weeks.count + 1) == 0) {
+    if (indexPath.row%(_weeks.count + 1) == 0) {
             
-            cell.classTimeLabel.text=_classTimes[(indexPath.row) / (_weeks.count + 1) ];
+        cell.classTimeLabel.text=_classTimes[(indexPath.row) / (_weeks.count + 1) ];
+        return cell;
+    }
             
-        }else{
-            
-            cell.classTimeLabel.text=@"";
-            
-            if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
+    cell.classTimeLabel.text=@"";
+    cell.classLabel.text=@"";
+    cell.classroomLabel.text=@"";
+            /*if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
                 
                 cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
                 cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
             
-            }//else内にclass,classname空文字、164行目あやしい
-        }
-        return  cell;
-    }
+            }//else内にclass,classname空文字、164行目あやしい*/
     
+    return  cell;
 }
 
 #pragma mark - UICollectionView Layout
@@ -176,31 +170,28 @@
         if (indexPath.row == 0) {
             
             return CGSizeMake(20, 20);
-        }else{
-            
+        
+        }
         float widthsize=([[UIScreen mainScreen]applicationFrame].size.width -(20 + _weeks.count))/(_weeks.count);
             
         return CGSizeMake(widthsize, 20);
-        }
-    }else{
-        if (indexPath.row % (_weeks.count + 1) == 0) {
-            
-            //[[UIScreen mainScreen]applicationFrame].size.height ステータスバーを除いた画面の高さ
-            //[[UIScreen mainScreen]applicationFrame].size.width  ステータスバーを除いた画面の幅
-            float heightsize=([[UIScreen mainScreen]applicationFrame].size.height -self.navigationController.navigationBar.bounds.size.height -(20 + _classTimes.count))/(_classTimes.count);
-            
-            return CGSizeMake(20, heightsize);
-            
-        }else{
-            
-            float widthsize=([[UIScreen mainScreen]applicationFrame].size.width -(20 + _weeks.count))/(_weeks.count);
-            
-            float heightsize=([[UIScreen mainScreen]applicationFrame].size.height -self.navigationController.navigationBar.bounds.size.height  -(20 + _classTimes.count))/(_classTimes.count);
-            
-            return CGSizeMake(widthsize, heightsize);
-        }
+        
     }
-    
+    if (indexPath.row % (_weeks.count + 1) == 0) {
+            
+        //[[UIScreen mainScreen]applicationFrame].size.height ステータスバーを除いた画面の高さ
+        //[[UIScreen mainScreen]applicationFrame].size.width  ステータスバーを除いた画面の幅
+        float heightsize=([[UIScreen mainScreen]applicationFrame].size.height -self.navigationController.navigationBar.bounds.size.height -(20 + _classTimes.count))/(_classTimes.count);
+            
+        return CGSizeMake(20, heightsize);
+            
+    }
+            
+    float widthsize=([[UIScreen mainScreen]applicationFrame].size.width -(20 + _weeks.count))/(_weeks.count);
+            
+    float heightsize=([[UIScreen mainScreen]applicationFrame].size.height -self.navigationController.navigationBar.bounds.size.height  -(20 + _classTimes.count))/(_classTimes.count);
+            
+    return CGSizeMake(widthsize, heightsize);
 }
 
 //アイテム同士の間隔を設定
@@ -244,18 +235,15 @@
                 viewController.indexPath=indexPath;
                 [self.navigationController pushViewController:viewController animated:YES];
                 
-            }else{
-                
-                SelectClassViewController *viewController=[[SelectClassViewController alloc]init];
-                
-                viewController.indexPath=indexPath;
-                
-                [self.navigationController pushViewController:viewController animated:YES];
             }
-
+                
+            SelectClassViewController *viewController=[[SelectClassViewController alloc]init];
+                
+            viewController.indexPath=indexPath;
+                
+            [self.navigationController pushViewController:viewController animated:YES];
         }
-            
     }
-}//ネストあさく
+}
     
 @end

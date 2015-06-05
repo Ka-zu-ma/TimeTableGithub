@@ -28,6 +28,16 @@
     [db close];
 }
 
++(void)insertSelectClassTable:(NSString *)classNameString teacherName:(NSString *)teacherNameString classroomName:(NSString *)classroomNameString indexPathRow:(NSString *)indexPathRowString{
+    
+    FMDatabase *db=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
+    [db open];
+    
+    [db executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",classNameString,teacherNameString,classroomNameString,indexPathRowString];
+    
+    [db close];
+}
+
 +(void)selectSelectClassTable{
     
     FMDatabase *db=[self getDatabaseOfselectclass];

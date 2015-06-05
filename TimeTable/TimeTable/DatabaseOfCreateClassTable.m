@@ -48,7 +48,52 @@
     [db close];
 }
 
-+(void)selectCreateClassTable:(NSString *)query className:(NSString *)className teacherName:(NSString *)teacherName classroomName:(NSString *)classroomName classes:(NSMutableArray *)classes teachers:(NSMutableArray *)teachers classroomNameString:(NSString *)classroomNameString{
++(NSArray *)selectCreateClassTable{
+    
+    NSMutableArray *classes=[[NSMutableArray alloc]init];
+    NSMutableArray *teachers=[[NSMutableArray alloc]init];
+    NSMutableArray *classrooms=[[NSMutableArray alloc]init];
+    
+    FMDatabase *db=[self getDatabaseOfcreateclass];
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName ,classroomName FROM createclasstable;"];
+    while ([results next]) {
+        
+        [classes addObject:[results stringForColumn:@"className"]];
+        [teachers addObject:[results stringForColumn:@"teacherName"]];
+        [classrooms addObject:[results stringForColumn:@"classroomName"]];
+    }
+    
+    [db close];
+    return  @[classes,teachers,classrooms];
+}
+
++(NSString *)selectCreateClassTableToGetClassroomName:(NSString *)classNameString teacherName:(NSString *)teacherNameString{
+    NSString *cellclassroomNameString;
+    
+    FMDatabase *db=[self getDatabaseOfcreateclass];
+    
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",classNameString,teacherNameString];
+    
+    while ([results next]) {
+        cellclassroomNameString=[results stringForColumn:@"classroomName"];
+    }
+    [db close];
+    
+    return cellclassroomNameString;
+}
+
++(void)deleteCreateClassTable:(NSString *)classNameString teacherName:(NSString *)teacherNameString classroomName:(NSString *)classroomNameString{
+    
+    FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+    [db open];
+    [db executeUpdate:@"DELETE FROM createclasstable WHERE className = ? AND teacherName = ? AND classroomName = ?",classNameString,teacherNameString,classroomNameString];
+    [db close];
+}
+/*+(void)selectCreateClassTable:(NSString *)query className:(NSString *)className teacherName:(NSString *)teacherName classroomName:(NSString *)classroomName classes:(NSMutableArray *)classes teachers:(NSMutableArray *)teachers classroomNameString:(NSString *)classroomNameString{
     
     FMDatabase *db=[self getDatabaseOfcreateclass];
     [db open];
@@ -58,11 +103,31 @@
         
         [classes addObject:[results stringForColumn:@"className"]];
         [teachers addObject:[results stringForColumn:@"teacherName"]];
-        classroomName=[results stringForColumn:@"classroomName"];
+        classroomNameString=[results stringForColumn:@"classroomName"];
     }
-    
+    NSLog(@"abc:%@",classroomNameString);
     [db close];
 
-}
+}*/
+
+/*+(NSArray *)selectCreateClassTable:(NSString *)query className:(NSString *)className teacherName:(NSString *)teacherName classroomName:(NSString *)classroomName classes:(NSMutableArray *)classes teachers:(NSMutableArray *)teachers classroomNameString:(NSString *)classroomNameString{
+    
+    FMDatabase *db=[self getDatabaseOfcreateclass];
+    [db open];
+    
+    FMResultSet *results=[db executeQuery:query,className,teacherName,classroomName];
+    while ([results next]) {
+        
+        [classes addObject:[results stringForColumn:@"className"]];
+        [teachers addObject:[results stringForColumn:@"teacherName"]];
+        classroomNameString=[results stringForColumn:@"classroomName"];
+    }
+    NSLog(@"abc:%@",classroomNameString);
+    [db close];
+    
+    return  @[classes,teachers,classroomNameString];
+}*/
+
+
 
 @end

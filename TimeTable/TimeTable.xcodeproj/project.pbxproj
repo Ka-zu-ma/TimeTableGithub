@@ -12,7 +12,6 @@
 		E36E9EE01B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E36E9EDE1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.xib */; };
 		E380FB2E1B096E510018D0D5 /* UpdateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E380FB2C1B096E510018D0D5 /* UpdateClassViewController.m */; };
 		E380FB2F1B096E510018D0D5 /* UpdateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E380FB2D1B096E510018D0D5 /* UpdateClassViewController.xib */; };
-		E380FB321B0984170018D0D5 /* SuperClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E380FB311B0984170018D0D5 /* SuperClassViewController.m */; };
 		E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */; };
 		E384598D1AF33AAF00ADB04A /* CreateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */; };
 		E391A8651B12C6AA00585660 /* SuperAttendanceRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E391A8641B12C6AA00585660 /* SuperAttendanceRecordViewController.m */; };
@@ -39,6 +38,7 @@
 		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
 		E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E31B200F9100795954 /* NavigationBar.m */; };
 		E3CD023F1B21289500127B33 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CD023E1B21289500127B33 /* AlertView.m */; };
+		E3CD02431B219DC900127B33 /* memo in Resources */ = {isa = PBXBuildFile; fileRef = E3CD02421B219DC800127B33 /* memo */; };
 		E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */; };
 		E3CF48FE1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */; };
 		E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49061B1F058800CFA4C7 /* TitleLabel.m */; };
@@ -69,8 +69,6 @@
 		E380FB2B1B096E510018D0D5 /* UpdateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateClassViewController.h; sourceTree = "<group>"; };
 		E380FB2C1B096E510018D0D5 /* UpdateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateClassViewController.m; sourceTree = "<group>"; };
 		E380FB2D1B096E510018D0D5 /* UpdateClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateClassViewController.xib; sourceTree = "<group>"; };
-		E380FB301B0984170018D0D5 /* SuperClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperClassViewController.h; sourceTree = "<group>"; };
-		E380FB311B0984170018D0D5 /* SuperClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperClassViewController.m; sourceTree = "<group>"; };
 		E38459891AF33AAF00ADB04A /* CreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClassViewController.h; sourceTree = "<group>"; };
 		E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateClassViewController.xib; sourceTree = "<group>"; };
@@ -114,6 +112,7 @@
 		E3BC78E31B200F9100795954 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		E3CD023D1B21289500127B33 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		E3CD023E1B21289500127B33 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
+		E3CD02421B219DC800127B33 /* memo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = memo; sourceTree = "<group>"; };
 		E3CF48F91B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfCreateClassTable.h; sourceTree = "<group>"; };
 		E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfCreateClassTable.m; sourceTree = "<group>"; };
 		E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfSelectClassTable.h; sourceTree = "<group>"; };
@@ -198,8 +197,6 @@
 				E36E9EDC1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.h */,
 				E36E9EDD1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.m */,
 				E36E9EDE1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.xib */,
-				E380FB301B0984170018D0D5 /* SuperClassViewController.h */,
-				E380FB311B0984170018D0D5 /* SuperClassViewController.m */,
 				E3A162221AF30F780058642D /* SelectClassViewController.h */,
 				E3A162231AF30F780058642D /* SelectClassViewController.m */,
 				E3A162241AF30F780058642D /* SelectClassViewController.xib */,
@@ -233,16 +230,10 @@
 		E391A8691B131A2C00585660 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E3CF48F91B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.h */,
-				E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */,
-				E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */,
-				E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */,
+				E3CD02411B216AFC00127B33 /* TimeTableContentsData */,
+				E3CD02401B213D4500127B33 /* Database */,
 				E3CF49051B1F058800CFA4C7 /* TitleLabel.h */,
 				E3CF49061B1F058800CFA4C7 /* TitleLabel.m */,
-				E3CF49081B1F0DA400CFA4C7 /* WeekContentsData.h */,
-				E3CF49091B1F0DA400CFA4C7 /* WeekContentsData.m */,
-				E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContentsData.h */,
-				E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m */,
 				E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */,
 				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
 				E3BC78E21B200F9100795954 /* NavigationBar.h */,
@@ -277,6 +268,7 @@
 		E3A161EC1AF301520058642D /* TimeTable */ = {
 			isa = PBXGroup;
 			children = (
+				E3CD02421B219DC800127B33 /* memo */,
 				E3A161F11AF301520058642D /* AppDelegate.h */,
 				E3A161F21AF301520058642D /* AppDelegate.m */,
 				E391A8691B131A2C00585660 /* Models */,
@@ -313,6 +305,28 @@
 				E3A162081AF301520058642D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E3CD02401B213D4500127B33 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				E3CF48F91B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.h */,
+				E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */,
+				E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */,
+				E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		E3CD02411B216AFC00127B33 /* TimeTableContentsData */ = {
+			isa = PBXGroup;
+			children = (
+				E3CF49081B1F0DA400CFA4C7 /* WeekContentsData.h */,
+				E3CF49091B1F0DA400CFA4C7 /* WeekContentsData.m */,
+				E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContentsData.h */,
+				E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m */,
+			);
+			name = TimeTableContentsData;
 			sourceTree = "<group>";
 		};
 		E3FE066D1B01FB4000AB1BB3 /* CollectionViewCell */ = {
@@ -410,6 +424,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3CD02431B219DC900127B33 /* memo in Resources */,
 				E3A162261AF30F780058642D /* SelectClassViewController.xib in Resources */,
 				E3A161FE1AF301520058642D /* LaunchScreen.xib in Resources */,
 				E3A162211AF30D7C0058642D /* DayOfWeekCell.xib in Resources */,
@@ -486,7 +501,6 @@
 				E3A0F6F01AFC7C08009664DD /* ClassListCell.m in Sources */,
 				E3A162251AF30F780058642D /* SelectClassViewController.m in Sources */,
 				E3CD023F1B21289500127B33 /* AlertView.m in Sources */,
-				E380FB321B0984170018D0D5 /* SuperClassViewController.m in Sources */,
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
 				E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */,
 				E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */,

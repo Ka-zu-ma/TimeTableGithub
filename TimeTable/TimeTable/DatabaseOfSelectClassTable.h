@@ -12,4 +12,5 @@
 @interface DatabaseOfSelectClassTable : NSObject
 +(FMDatabase *)getDatabaseOfselectclass;
 +(void)createSelectClassTable;
++(void)insertSelectClassTable:(NSString *)classNameString teacherName:(NSString *)teacherNameString classroomName:(NSString *)classroomNameString indexPathRow:(NSString *)indexPathRowString;
 @end

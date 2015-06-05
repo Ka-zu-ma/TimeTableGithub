@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SuperClassViewController.h"
 
-
-@interface TimeTableViewController : SuperClassViewController
+@interface TimeTableViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end

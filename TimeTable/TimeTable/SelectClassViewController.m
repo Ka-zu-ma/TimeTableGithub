@@ -72,8 +72,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self createEmptyArrays];
-    
     [DatabaseOfCreateClassTable createCreateClassTable];
         
     /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
@@ -88,12 +86,20 @@
     }
         
     [db close];*/
+    @try {
+        _classes=[[NSMutableArray alloc]init];
+        _teachers=[[NSMutableArray alloc]init];
     
-    [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT className, teacherName, classroomName FROM createclasstable;" className:nil teacherName:nil classroomName:nil classes:_classes teachers:_teachers classroomNameString:nil];
+        _classes=[DatabaseOfCreateClassTable selectCreateClassTable][0];
+        _teachers=[DatabaseOfCreateClassTable selectCreateClassTable][1];
+    }
+    @catch (NSException *exception){
         
-    [self.tableView reloadData];
-    [super viewWillAppear:animated];
-    
+    }
+    @finally{
+        [self.tableView reloadData];
+        [super viewWillAppear:animated];
+    }
 }
 
 #pragma mark - Memory Management
@@ -170,15 +176,19 @@
     }
     [onedb close];*/
     
-    [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;" className:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:nil classes:nil teachers:nil classroomNameString:_cellclassroomNameString];
-    
+    _cellclassroomNameString=[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
     [DatabaseOfSelectClassTable createSelectClassTable];
-    FMDatabase *twodb=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
+    
+    [DatabaseOfSelectClassTable insertSelectClassTable:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:_cellclassroomNameString indexPathRow:[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+    
+    /*FMDatabase *twodb=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
     [twodb open];
     
     [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
     
-    [twodb close];
+    
+    
+    [twodb close];*/
     
     //前の画面に戻る前に更新
     //UINavigationControllerで遷移してきた過去のビューはself.navigationController.viewControllersに保存
@@ -199,7 +209,7 @@
         
         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
-        FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+        /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
         [db open];
         
@@ -207,14 +217,22 @@
         
         while ([results next]) {
             _cellclassroomNameString=[results stringForColumn:@"classroomName"];
-        }
+        }*/
+        _cellclassroomNameString=[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
         
+        [DatabaseOfCreateClassTable deleteCreateClassTable:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:_cellclassroomNameString];
+        /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
+        [db open];
         [db executeUpdate:@"DELETE FROM createclasstable WHERE className = ? AND teacherName = ? AND classroomName = ?",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString];
-        [db close];
+        [db close];*/
         
-        [self deleteTableViewCell];
+        [_classes removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        [self.tableView reloadData];
+        
+        //データベースから再びとってきてリロードじゃなくてテーブルのいらなくなったところを直接消す。要は一時領域のデータ消す。
+        
+        //[self.tableView reloadData];
     }];
     
     //編集ボタン
@@ -228,6 +246,10 @@
         viewController.classNameString=cell.textLabel.text;
         viewController.teacherNameString=cell.detailTextLabel.text;
         
+        //[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
+        
+        viewController.classroomNameString=[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
+        
         /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
         
         [db open];
@@ -239,10 +261,7 @@
         }
         
         [db close];*/
-        
-        [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;" className:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:nil classes:nil teachers:nil classroomNameString:_cellclassroomNameString];
-        
-        viewController.classroomNameString=_cellclassroomNameString;
+         /*viewController.classroomNameString=[DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT classroomName FROM  createclasstable WHERE className = ? AND teacherName = ?;" className:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:nil classes:nil teachers:nil classroomNameString:_cellclassroomNameString][2];*/
         
         [self.navigationController pushViewController:viewController animated:YES];
 
@@ -274,15 +293,17 @@
     
     [db close];*/
     
-    [DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT className, teacherName, classroomName FROM createclasstable;" className:nil teacherName:nil classroomName:nil classes:_classes teachers:_teachers classroomNameString:nil];
+    /*[DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT className, teacherName, classroomName FROM createclasstable;" className:nil teacherName:nil classroomName:nil classes:_classes teachers:_teachers classroomNameString:nil];*/
 }
 
 #pragma mark - Original Method
 
--(void)createEmptyArrays{
+-(NSArray *)createEmptyArrays{
     
-    _classes=[[NSMutableArray alloc]init];
-    _teachers=[[NSMutableArray array]init];
+    NSMutableArray *classes=[[NSMutableArray alloc]init];
+    NSMutableArray *teachers=[[NSMutableArray array]init];
+    
+    return @[classes,teachers];
     
 }
 @end
