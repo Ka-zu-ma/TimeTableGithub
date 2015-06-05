@@ -178,11 +178,10 @@
             return CGSizeMake(20, 20);
         }else{
             
-            float widthsize=([[UIScreen mainScreen]applicationFrame].size.width -(20 + _weeks.count))/(_weeks.count);
+        float widthsize=([[UIScreen mainScreen]applicationFrame].size.width -(20 + _weeks.count))/(_weeks.count);
             
-            return CGSizeMake(widthsize, 20);
+        return CGSizeMake(widthsize, 20);
         }
-        
     }else{
         if (indexPath.row % (_weeks.count + 1) == 0) {
             

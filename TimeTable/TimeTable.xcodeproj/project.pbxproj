@@ -38,6 +38,7 @@
 		E3A1623F1AF3325B0058642D /* TimeTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3A1623D1AF3325B0058642D /* TimeTableViewController.xib */; };
 		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
 		E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E31B200F9100795954 /* NavigationBar.m */; };
+		E3CD023F1B21289500127B33 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CD023E1B21289500127B33 /* AlertView.m */; };
 		E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */; };
 		E3CF48FE1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */; };
 		E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF49061B1F058800CFA4C7 /* TitleLabel.m */; };
@@ -111,6 +112,8 @@
 		E3BC78E01B1FE11A00795954 /* BarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItem.m; sourceTree = "<group>"; };
 		E3BC78E21B200F9100795954 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
 		E3BC78E31B200F9100795954 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
+		E3CD023D1B21289500127B33 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
+		E3CD023E1B21289500127B33 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		E3CF48F91B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfCreateClassTable.h; sourceTree = "<group>"; };
 		E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfCreateClassTable.m; sourceTree = "<group>"; };
 		E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfSelectClassTable.h; sourceTree = "<group>"; };
@@ -244,6 +247,8 @@
 				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
 				E3BC78E21B200F9100795954 /* NavigationBar.h */,
 				E3BC78E31B200F9100795954 /* NavigationBar.m */,
+				E3CD023D1B21289500127B33 /* AlertView.h */,
+				E3CD023E1B21289500127B33 /* AlertView.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 				E380FB2E1B096E510018D0D5 /* UpdateClassViewController.m in Sources */,
 				E3A0F6F01AFC7C08009664DD /* ClassListCell.m in Sources */,
 				E3A162251AF30F780058642D /* SelectClassViewController.m in Sources */,
+				E3CD023F1B21289500127B33 /* AlertView.m in Sources */,
 				E380FB321B0984170018D0D5 /* SuperClassViewController.m in Sources */,
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
 				E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */,

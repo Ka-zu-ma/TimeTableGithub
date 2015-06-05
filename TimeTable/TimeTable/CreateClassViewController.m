@@ -11,6 +11,7 @@
 #import "FMDatabase.h"
 #import "DatabaseOfCreateClassTable.h"
 #import "TitleLabel.h"
+#import "AlertView.h"
 
 @interface CreateClassViewController ()<UITextFieldDelegate>
 
@@ -65,25 +66,12 @@
             [DatabaseOfCreateClassTable insertCreateClassTable:_classTextField.text teacherName:_teacherTextField.text classroomName:_classroomTextField.text];
             
             [self.navigationController popViewControllerAnimated:YES];
-
-        }else{
-            [self showAlert:@"授業名、教員名、教室名には日本語のみ入力してください。"];
-           
         }
-    
-    }else{
-        [self showAlert:@"授業名、教員名、教室名を3つとも入力しなさい。"];
+            
+        [[AlertView createAlertView:@"授業名、教員名、教室名には日本語のみ入力してください。"] show];
     }
-}
-
-#pragma mark - Original Method
-
--(void)showAlert:(NSString *)messageString{
-    
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"警告" message:messageString delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    
-    [alertView show];
-
+        
+    [[AlertView createAlertView:@"授業名、教員名、教室名を3つとも入力しなさい。"] show];
 }
 
 @end
