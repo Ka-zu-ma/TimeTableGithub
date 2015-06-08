@@ -35,6 +35,9 @@
 		E3A1622B1AF30FE40058642D /* AttendanceRecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3A162291AF30FE40058642D /* AttendanceRecordViewController.xib */; };
 		E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A1623C1AF3325B0058642D /* TimeTableViewController.m */; };
 		E3A1623F1AF3325B0058642D /* TimeTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3A1623D1AF3325B0058642D /* TimeTableViewController.xib */; };
+		E3A927671B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A927661B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m */; };
+		E3A9276A1B252966003468B5 /* DatabaseOfCountUpRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A927691B252966003468B5 /* DatabaseOfCountUpRecordTable.m */; };
+		E3A9276D1B252BE6003468B5 /* CommonMethodsOfDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */; };
 		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
 		E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E31B200F9100795954 /* NavigationBar.m */; };
 		E3CD023F1B21289500127B33 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CD023E1B21289500127B33 /* AlertView.m */; };
@@ -106,6 +109,12 @@
 		E3A1623B1AF3325B0058642D /* TimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableViewController.h; sourceTree = "<group>"; };
 		E3A1623C1AF3325B0058642D /* TimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableViewController.m; sourceTree = "<group>"; };
 		E3A1623D1AF3325B0058642D /* TimeTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeTableViewController.xib; sourceTree = "<group>"; };
+		E3A927651B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfDateAndAttendanceRecordTable.h; sourceTree = "<group>"; };
+		E3A927661B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfDateAndAttendanceRecordTable.m; sourceTree = "<group>"; };
+		E3A927681B252966003468B5 /* DatabaseOfCountUpRecordTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOfCountUpRecordTable.h; sourceTree = "<group>"; };
+		E3A927691B252966003468B5 /* DatabaseOfCountUpRecordTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfCountUpRecordTable.m; sourceTree = "<group>"; };
+		E3A9276B1B252BE6003468B5 /* CommonMethodsOfDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMethodsOfDatabase.h; sourceTree = "<group>"; };
+		E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMethodsOfDatabase.m; sourceTree = "<group>"; };
 		E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarButtonItem.h; sourceTree = "<group>"; };
 		E3BC78E01B1FE11A00795954 /* BarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItem.m; sourceTree = "<group>"; };
 		E3BC78E21B200F9100795954 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
@@ -310,10 +319,16 @@
 		E3CD02401B213D4500127B33 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				E3A9276B1B252BE6003468B5 /* CommonMethodsOfDatabase.h */,
+				E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */,
 				E3CF48F91B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.h */,
 				E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */,
 				E3CF48FC1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.h */,
 				E3CF48FD1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m */,
+				E3A927651B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.h */,
+				E3A927661B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m */,
+				E3A927681B252966003468B5 /* DatabaseOfCountUpRecordTable.h */,
+				E3A927691B252966003468B5 /* DatabaseOfCountUpRecordTable.m */,
 			);
 			name = Database;
 			sourceTree = "<group>";
@@ -494,7 +509,9 @@
 				E3A1622A1AF30FE40058642D /* AttendanceRecordViewController.m in Sources */,
 				E3CF490A1B1F0DA400CFA4C7 /* WeekContentsData.m in Sources */,
 				E3A161F31AF301520058642D /* AppDelegate.m in Sources */,
+				E3A9276D1B252BE6003468B5 /* CommonMethodsOfDatabase.m in Sources */,
 				E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */,
+				E3A927671B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m in Sources */,
 				E3A161F01AF301520058642D /* main.m in Sources */,
 				E3A162201AF30D7C0058642D /* DayOfWeekCell.m in Sources */,
 				E380FB2E1B096E510018D0D5 /* UpdateClassViewController.m in Sources */,
@@ -504,6 +521,7 @@
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
 				E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */,
 				E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */,
+				E3A9276A1B252966003468B5 /* DatabaseOfCountUpRecordTable.m in Sources */,
 				E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m in Sources */,
 				E36E9EDF1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.m in Sources */,
 				E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */,

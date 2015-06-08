@@ -16,6 +16,7 @@
 #import "TitleLabel.h"
 #import "WeekContentsData.h"
 #import "ClassTimeContentsData.h"
+#import "DatabaseOfSelectClassTable.h"
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -103,6 +104,12 @@
     }
     
     [db close];//データベースクラスを作り、Modelに入れる*/
+    _classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
+    
+    [DatabaseOfSelectClassTable createSelectClassTable];
+
+    [DatabaseOfSelectClassTable selectSelectClassTable:_classNamesAndIndexPathes classroomNamesAndIndexPathes:_classroomNamesAndIndexPathes];
 
     
     return 2;
@@ -143,20 +150,25 @@
     cell.classTimeLabel.textColor=[UIColor blackColor];
         
     if (indexPath.row%(_weeks.count + 1) == 0) {
-            
+        
+        cell.classLabel.text=@"";
+        cell.classroomLabel.text=@"";
         cell.classTimeLabel.text=_classTimes[(indexPath.row) / (_weeks.count + 1) ];
         return cell;
     }
             
     cell.classTimeLabel.text=@"";
+    
+    if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
+        
+                
+        cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+        cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+        return cell;
+        
+    }//else内にclass,classname空文字、164行目あやしい
     cell.classLabel.text=@"";
     cell.classroomLabel.text=@"";
-            /*if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
-                
-                cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-                cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-            
-            }//else内にclass,classname空文字、164行目あやしい*/
     
     return  cell;
 }
@@ -234,7 +246,7 @@
                 
                 viewController.indexPath=indexPath;
                 [self.navigationController pushViewController:viewController animated:YES];
-                
+                return;
             }
                 
             SelectClassViewController *viewController=[[SelectClassViewController alloc]init];

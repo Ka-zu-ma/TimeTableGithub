@@ -10,7 +10,7 @@
 #import "FMDatabase.h"
 
 @interface DatabaseOfCreateClassTable : NSObject
-+(FMDatabase *)getDatabaseOfcreateclass;
+
 +(void)createCreateClassTable;
 +(void)insertCreateClassTable:(NSString *)classNameString teacherName:(NSString *)teacherNameString classroomName:(NSString *)classroomNameString;
 

@@ -7,21 +7,12 @@
 //
 
 #import "DatabaseOfSelectClassTable.h"
-
+#import "CommonMethodsOfDatabase.h"
 @implementation DatabaseOfSelectClassTable
-
-+(FMDatabase *)getDatabaseOfselectclass{
-    
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *dbPathString=paths[0];
-    FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:@"selectclass.db"]];
-    
-    return db;
-}
 
 +(void)createSelectClassTable{
     
-    FMDatabase *db=[self getDatabaseOfselectclass];//クラスメソッド内のselfは自身のClassオブジェクトを指している
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"selectclass.db"];//クラスメソッド内のselfは自身のClassオブジェクトを指している
     
     [db open];
     [db executeUpdate:@"CREATE TABLE IF NOT EXISTS selectclasstable (id INTEGER PRIMARY KEY AUTOINCREMENT, className TEXT, teacherName TEXT, classroomName TEXT, indexPath INTEGER);"];
@@ -30,7 +21,7 @@
 
 +(void)insertSelectClassTable:(NSString *)classNameString teacherName:(NSString *)teacherNameString classroomName:(NSString *)classroomNameString indexPathRow:(NSString *)indexPathRowString{
     
-    FMDatabase *db=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"selectclass.db"];
     [db open];
     
     [db executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",classNameString,teacherNameString,classroomNameString,indexPathRowString];
@@ -38,13 +29,19 @@
     [db close];
 }
 
-+(void)selectSelectClassTable{
++(void)selectSelectClassTable:(NSMutableDictionary *)classNamesAndIndexPathes classroomNamesAndIndexPathes:(NSMutableDictionary *)classroomNamesAndIndexPathes{
     
-    FMDatabase *db=[self getDatabaseOfselectclass];
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"selectclass.db"];
     [db open];
     
+    FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
     
+    while ([results next]) {
+        
+        [classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
+        [classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
+    }
     
-    
+    [db close];
 }
 @end

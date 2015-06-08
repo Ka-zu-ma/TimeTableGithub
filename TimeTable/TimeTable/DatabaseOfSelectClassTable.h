@@ -10,7 +10,8 @@
 #import "FMDatabase.h"
 
 @interface DatabaseOfSelectClassTable : NSObject
-+(FMDatabase *)getDatabaseOfselectclass;
+
 +(void)createSelectClassTable;
 +(void)insertSelectClassTable:(NSString *)classNameString teacherName:(NSString *)teacherNameString classroomName:(NSString *)classroomNameString indexPathRow:(NSString *)indexPathRowString;
++(void)selectSelectClassTable:(NSMutableDictionary *)classNamesAndIndexPathes classroomNamesAndIndexPathes:(NSMutableDictionary *)classroomNamesAndIndexPathes;
 @end
