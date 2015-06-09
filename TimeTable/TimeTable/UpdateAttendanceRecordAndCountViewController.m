@@ -9,10 +9,13 @@
 #import "UpdateAttendanceRecordAndCountViewController.h"
 #import "FMDatabase.h"
 #import "TitleLabel.h"
+#import "DatabaseOfDateAndAttendanceRecordTable.h"
+#import "AttendanceRecordPickerData.h"
+#import "DatabaseOfCountUpRecordTable.h"
 
-@interface UpdateAttendanceRecordAndCountViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property (weak, nonatomic) IBOutlet UITextField *attendanceRecordTextField;
+@interface UpdateAttendanceRecordAndCountViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
+@property (weak, nonatomic) IBOutlet UIPickerView *attendanceRecordPicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIButton *updateButton;
 
 @property (strong,nonatomic) NSString *attendanceCountString;
@@ -23,8 +26,11 @@
 @property  (strong,nonatomic) NSString *absenceCountOfMaxIdString;
 @property  (strong,nonatomic) NSString *lateCountOfMaxIdString;
 
+@property (strong,nonatomic) NSString *latestDateString;
+@property (strong,nonatomic) NSString *latestAttendanceRecordString;
 
 - (IBAction)updateButton:(id)sender;
+- (IBAction)changeDatePicker:(id)sender;
 
 @end
 
@@ -33,11 +39,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _attendanceRecordPicker.delegate=self;
+    _attendanceRecordPicker.dataSource=self;
+    _attendanceRecordPicker.showsSelectionIndicator=YES;
+    
+    
+    if ([_attendanceRecordString isEqual:@"出席"]) {
+        [_attendanceRecordPicker selectRow:0 inComponent:0 animated:NO];
+    }else if ([_attendanceRecordString  isEqual:@"欠席"]){
+        [_attendanceRecordPicker selectRow:1 inComponent:0 animated:NO];
+    }else{
+        [_attendanceRecordPicker selectRow:2 inComponent:0 animated:NO];
+    }
+    
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy/MM/dd"];
+    
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+   
+    _datePicker.date=[formatter dateFromString:_dateString];
+
+    
     [[_updateButton layer] setCornerRadius:10.0];
     [_updateButton setClipsToBounds:YES];
-    
-    _dateTextField.text=_dateString;
-    _attendanceRecordTextField.text=_attendanceRecordString;
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
@@ -54,41 +78,51 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+#pragma mark - UIPickerView Delegate
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    return [AttendanceRecordPickerData createAttendanceRecordList].count;
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    
+    return 1;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    
+    return [AttendanceRecordPickerData createAttendanceRecordList][row];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    
+    _latestAttendanceRecordString=[[NSString alloc]initWithFormat:@"%@",[AttendanceRecordPickerData createAttendanceRecordList][row]];
+}
+
+#pragma mark - IBAction
+
 - (IBAction)updateButton:(id)sender {
     
-    FMDatabase *db=[super getDatabaseOfDateAndAttendanceRecordTable];
-    [db open];
+    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
-    [db executeUpdate:@"UPDATE date_attendancerecord_table SET date = ?, attendancerecord = ? WHERE date = ? AND attendancerecord = ?;",[NSString stringWithFormat:@"%@",_dateTextField.text],_attendanceRecordTextField.text,_dateString,_attendanceRecordString];
-    [db close];
+    [DatabaseOfDateAndAttendanceRecordTable update:_latestDateString attendanceRecordTextFieldText:_latestAttendanceRecordString dateString:_dateString attendanceRecordString:_attendanceRecordString];
     
     
     //以下　Original Methodの引数に値を入れてコード量を減らしたい。
     if ([_attendanceRecordString isEqual:@"出席"]) {
         
-        if ([_attendanceRecordTextField.text isEqual:@"欠席"]) {
+        if ([_latestAttendanceRecordString isEqual:@"欠席"]) {
             
-            //出席を欠席に変更
-            FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
-            [twodb open];
             
-            FMResultSet *results=[twodb executeQuery:@"SELECT attendancecount, absencecount, latecount FROM count_up_record_table WHERE id = (SELECT MAX(id) FROM count_up_record_table WHERE indexPath = ?);",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
+            NSString *attendanceCountOfMaxIdString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
+            NSString *absenceCountOfMaxIdString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
+            NSString *lateCountOfMaxIdString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
             
-            while ([results next]) {
-                
-                _attendanceCountOfMaxIdString=[results stringForColumn:@"attendancecount"];
-                _absenceCountOfMaxIdString=[results stringForColumn:@"absencecount"];
-                _lateCountOfMaxIdString=[results stringForColumn:@"latecount"];
-            }
-            [twodb close];
-            
-            FMDatabase *threedb=[super getDatabaseOfCountUpRecordTable];
-            [threedb open];
-            
-            [threedb executeUpdate:@"INSERT INTO count_up_record_table (attendancecount, absencecount, latecount, indexPath) VALUES  (?, ?, ?, ?);",[NSString stringWithFormat:@"%d",_attendanceCountOfMaxIdString.intValue-1],[NSString stringWithFormat:@"%d",_absenceCountOfMaxIdString.intValue+1],_lateCountOfMaxIdString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-            [threedb close];
+            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[NSString stringWithFormat:@"%d",attendanceCountOfMaxIdString.intValue-1] absencecount:[NSString stringWithFormat:@"%d",absenceCountOfMaxIdString.intValue+1] latecount:lateCountOfMaxIdString indexPathRow:indexPathString];
         
-      
         }else{
             
             //出席を遅刻に変更
@@ -113,7 +147,7 @@
         
         }
     }else if([_attendanceRecordString isEqual:@"欠席"]){
-        if ([_attendanceRecordTextField.text isEqual:@"出席"]) {
+        if ([_latestAttendanceRecordString isEqual:@"出席"]) {
             
             //欠席を出席に変更
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
@@ -161,7 +195,7 @@
         
     }else{
         
-        if ([_attendanceRecordTextField.text isEqual:@"出席"]) {
+        if ([_latestAttendanceRecordString isEqual:@"出席"]) {
             
             //遅刻を出席に変更
             FMDatabase *twodb=[super getDatabaseOfCountUpRecordTable];
@@ -213,6 +247,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)changeDatePicker:(id)sender {
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd"];
+    _latestDateString=[dateFormatter stringFromDate:_datePicker.date];
+}
+
 #pragma mark - Original Method
 
 
@@ -244,7 +285,6 @@
     
 }
 
-//
 -(void)plusMinusCounts{
     
     

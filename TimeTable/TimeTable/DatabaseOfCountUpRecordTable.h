@@ -14,4 +14,5 @@
 +(void)insertCountUpRecordTable:(NSString *)attendancecount absencecount:(NSString *)absencecount latecount:(NSString *)latecount indexPathRow:(NSString *)indexPathRow;
 +(void)selectCountUpRecordTable:(NSString *)indexPathRow attendanceCount:(NSString *)attendanceCountString absenceCount:(NSString *)absenceCountString lateCount:(NSString *)lateCountString;
 +(NSArray *)selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:(NSString *)indexPathRow;
++(NSMutableArray *)selectIndexPath;
 @end

@@ -10,6 +10,7 @@
 #import "CommonMethodsOfDatabase.h"
 
 @implementation DatabaseOfCountUpRecordTable
+
 +(void)createCountUpRecordTable{
     
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"count_up_record.db"];
@@ -55,6 +56,7 @@
     [db close];
 
 }
+
 +(NSArray *)selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:(NSString *)indexPathRow{
     
     NSString *attendanceCountString;
@@ -75,4 +77,21 @@
     
     return @[attendanceCountString,absenceCountString,lateCountString];
 }
+
++(NSMutableArray *)selectIndexPath{
+    
+    NSMutableArray *indexPathes=[[NSMutableArray alloc]init];
+    
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"count_up_record.db"];
+    [db open];
+
+    FMResultSet *results=[db executeQuery:@"SELECT indexPath FROM count_up_record_table;"];
+    while ([results next]) {
+        [indexPathes addObject:[results stringForColumn:@"indexPath"]];
+    }
+    [db close];
+    
+    return indexPathes;
+}
+
 @end

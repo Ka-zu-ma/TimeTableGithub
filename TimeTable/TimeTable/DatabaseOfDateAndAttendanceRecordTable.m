@@ -29,7 +29,20 @@
     [db close];
 }
 
-+(void)selectDateAndAttendanceRecord:(NSMutableArray *)dates attendanceOrAbsenceOrLates:(NSMutableArray *)attendanceOrAbsenceOrLates indexPathRow:(NSString *)indexPathRow{
++(void)update:(NSString *)dateTextFieldText attendanceRecordTextFieldText:(NSString *)attendanceRecordTextFieldText dateString:(NSString *)dateString attendanceRecordString:(NSString *)attendanceRecordString{
+    
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
+    [db open];
+    
+    [db executeUpdate:@"UPDATE date_attendancerecord_table SET date = ?, attendancerecord = ? WHERE date = ? AND attendancerecord = ?;",dateTextFieldText,attendanceRecordTextFieldText,dateString,attendanceRecordString];
+    [db close];
+
+}
+
++(NSArray *)selectDateAndAttendanceRecord:(NSString *)indexPathRow{
+    
+    NSMutableArray *dates=[[NSMutableArray alloc]init];
+    NSMutableArray *attendanceOrAbsenceOrLates=[[NSMutableArray alloc]init];
     
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
     [db open];
@@ -42,9 +55,11 @@
         
     }
     [db close];
+    
+    return @[dates,attendanceOrAbsenceOrLates];
 }
 
-+(NSArray *)selectDateAndAttendanceRecordWhereMaxIdWhereindexPath:(NSString *)indexPathRow{
++(NSArray *)selectWhereMaxIdWhereindexPath:(NSString *)indexPathRow{
     
     NSMutableArray *dates=[[NSMutableArray alloc]init];
     NSMutableArray *attendanceOrAbsenceOrLates=[[NSMutableArray alloc]init];
@@ -55,15 +70,24 @@
     FMResultSet *results=[db executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table  WHERE indexPath = ?);",indexPathRow];
     
     while ([results next]) {
+        
         [dates addObject:[results stringForColumn:@"date"]];
         [attendanceOrAbsenceOrLates addObject:[results stringForColumn:@"attendancerecord"]];
-        
     }
     [db close];
     
     return @[dates,attendanceOrAbsenceOrLates];
 }
 
++(void)delete:(NSString *)date attendancerecord:(NSString *)attendancerecord indexPathRow:(NSString *)indexPathRow{
+    
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
+    [db open];
+    
+    [db executeUpdate:@"DELETE FROM date_attendancerecord_table WHERE date = ? AND attendancerecord = ? AND indexPath = ?",date,attendancerecord,indexPathRow];
+    
+    [db close];
+}
 
 
 @end

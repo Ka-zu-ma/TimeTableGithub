@@ -13,6 +13,8 @@
 
 +(void)createTable;
 +(void)insertDateAndAttendanceRecord:(NSString *)today attendanceRecord:(NSString *)attendanceRecord indexPathRow:(NSString *)indexPathRow;
-+(void)selectDateAndAttendanceRecord:(NSMutableArray *)dates attendanceOrAbsenceOrLates:(NSMutableArray *)attendanceOrAbsenceOrLates indexPathRow:(NSString *)indexPathRow;
-+(NSArray *)selectDateAndAttendanceRecordWhereMaxIdWhereindexPath:(NSString *)indexPathRow;
++(void)update:(NSString *)dateTextFieldText attendanceRecordTextFieldText:(NSString *)attendanceRecordTextFieldText dateString:(NSString *)dateString attendanceRecordString:(NSString *)attendanceRecordString;
++(NSArray *)selectDateAndAttendanceRecord:(NSString *)indexPathRow;
++(NSArray *)selectWhereMaxIdWhereindexPath:(NSString *)indexPathRow;
++(void)delete:(NSString *)date attendancerecord:(NSString *)attendancerecord indexPathRow:(NSString *)indexPathRow;
 @end

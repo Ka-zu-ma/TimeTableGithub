@@ -38,6 +38,7 @@
 		E3A927671B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A927661B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m */; };
 		E3A9276A1B252966003468B5 /* DatabaseOfCountUpRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A927691B252966003468B5 /* DatabaseOfCountUpRecordTable.m */; };
 		E3A9276D1B252BE6003468B5 /* CommonMethodsOfDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */; };
+		E3A93F9F1B26E89E0088B01B /* AttendanceRecordPickerData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */; };
 		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
 		E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E31B200F9100795954 /* NavigationBar.m */; };
 		E3CD023F1B21289500127B33 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CD023E1B21289500127B33 /* AlertView.m */; };
@@ -115,6 +116,8 @@
 		E3A927691B252966003468B5 /* DatabaseOfCountUpRecordTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOfCountUpRecordTable.m; sourceTree = "<group>"; };
 		E3A9276B1B252BE6003468B5 /* CommonMethodsOfDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMethodsOfDatabase.h; sourceTree = "<group>"; };
 		E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMethodsOfDatabase.m; sourceTree = "<group>"; };
+		E3A93F9D1B26E89E0088B01B /* AttendanceRecordPickerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceRecordPickerData.h; sourceTree = "<group>"; };
+		E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceRecordPickerData.m; sourceTree = "<group>"; };
 		E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarButtonItem.h; sourceTree = "<group>"; };
 		E3BC78E01B1FE11A00795954 /* BarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItem.m; sourceTree = "<group>"; };
 		E3BC78E21B200F9100795954 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
@@ -239,6 +242,7 @@
 		E391A8691B131A2C00585660 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E3A93F9C1B26E8480088B01B /* AttendanceRecordPickerData */,
 				E3CD02411B216AFC00127B33 /* TimeTableContentsData */,
 				E3CD02401B213D4500127B33 /* Database */,
 				E3CF49051B1F058800CFA4C7 /* TitleLabel.h */,
@@ -314,6 +318,15 @@
 				E3A162081AF301520058642D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E3A93F9C1B26E8480088B01B /* AttendanceRecordPickerData */ = {
+			isa = PBXGroup;
+			children = (
+				E3A93F9D1B26E89E0088B01B /* AttendanceRecordPickerData.h */,
+				E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */,
+			);
+			name = AttendanceRecordPickerData;
 			sourceTree = "<group>";
 		};
 		E3CD02401B213D4500127B33 /* Database */ = {
@@ -511,6 +524,7 @@
 				E3A161F31AF301520058642D /* AppDelegate.m in Sources */,
 				E3A9276D1B252BE6003468B5 /* CommonMethodsOfDatabase.m in Sources */,
 				E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */,
+				E3A93F9F1B26E89E0088B01B /* AttendanceRecordPickerData.m in Sources */,
 				E3A927671B2522C4003468B5 /* DatabaseOfDateAndAttendanceRecordTable.m in Sources */,
 				E3A161F01AF301520058642D /* main.m in Sources */,
 				E3A162201AF30D7C0058642D /* DayOfWeekCell.m in Sources */,
