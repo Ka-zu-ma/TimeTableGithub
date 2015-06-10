@@ -25,7 +25,12 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
     
     [db open];
+    
+    [db beginTransaction];
+    
     [db executeUpdate:@"INSERT INTO date_attendancerecord_table (date, attendancerecord, indexPath) VALUES (?, ?, ?);",today,attendanceRecord,indexPathRow];
+    
+    [db commit];
     [db close];
 }
 
@@ -34,7 +39,11 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
     [db open];
     
+    [db beginTransaction];
+    
     [db executeUpdate:@"UPDATE date_attendancerecord_table SET date = ?, attendancerecord = ? WHERE date = ? AND attendancerecord = ?;",dateTextFieldText,attendanceRecordTextFieldText,dateString,attendanceRecordString];
+    
+    [db commit];
     [db close];
 
 }
@@ -47,6 +56,8 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
     [db open];
     
+    [db beginTransaction];
+    
     FMResultSet *results=[db executeQuery:@"SELECT date, attendancerecord FROM date_attendancerecord_table WHERE indexPath=?;",indexPathRow];
     
     while ([results next]) {
@@ -54,6 +65,7 @@
         [attendanceOrAbsenceOrLates addObject:[results stringForColumn:@"attendancerecord"]];
         
     }
+    [db commit];
     [db close];
     
     return @[dates,attendanceOrAbsenceOrLates];
@@ -67,6 +79,8 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
     [db open];
     
+    [db beginTransaction];
+    
     FMResultSet *results=[db executeQuery:@"SELECT date, attendancerecord FROM  date_attendancerecord_table WHERE id = (SELECT MAX(id) FROM date_attendancerecord_table  WHERE indexPath = ?);",indexPathRow];
     
     while ([results next]) {
@@ -74,6 +88,8 @@
         [dates addObject:[results stringForColumn:@"date"]];
         [attendanceOrAbsenceOrLates addObject:[results stringForColumn:@"attendancerecord"]];
     }
+    
+    [db commit];
     [db close];
     
     return @[dates,attendanceOrAbsenceOrLates];
@@ -84,8 +100,11 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"date_attendancerecord.db"];
     [db open];
     
+    [db beginTransaction];
+    
     [db executeUpdate:@"DELETE FROM date_attendancerecord_table WHERE date = ? AND attendancerecord = ? AND indexPath = ?",date,attendancerecord,indexPathRow];
     
+    [db commit];
     [db close];
 }
 

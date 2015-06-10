@@ -182,6 +182,14 @@
 		E30EF6291B04AABC00BFFAFC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E3CF49051B1F058800CFA4C7 /* TitleLabel.h */,
+				E3CF49061B1F058800CFA4C7 /* TitleLabel.m */,
+				E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */,
+				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
+				E3BC78E21B200F9100795954 /* NavigationBar.h */,
+				E3BC78E31B200F9100795954 /* NavigationBar.m */,
+				E3CD023D1B21289500127B33 /* AlertView.h */,
+				E3CD023E1B21289500127B33 /* AlertView.m */,
 				E38448CA1B002DBE00F855E5 /* TableViewCell */,
 				E3FE066D1B01FB4000AB1BB3 /* CollectionViewCell */,
 			);
@@ -245,14 +253,6 @@
 				E3A93F9C1B26E8480088B01B /* AttendanceRecordPickerData */,
 				E3CD02411B216AFC00127B33 /* TimeTableContentsData */,
 				E3CD02401B213D4500127B33 /* Database */,
-				E3CF49051B1F058800CFA4C7 /* TitleLabel.h */,
-				E3CF49061B1F058800CFA4C7 /* TitleLabel.m */,
-				E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */,
-				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
-				E3BC78E21B200F9100795954 /* NavigationBar.h */,
-				E3BC78E31B200F9100795954 /* NavigationBar.m */,
-				E3CD023D1B21289500127B33 /* AlertView.h */,
-				E3CD023E1B21289500127B33 /* AlertView.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";

@@ -17,6 +17,7 @@
 #import "WeekContentsData.h"
 #import "ClassTimeContentsData.h"
 #import "DatabaseOfSelectClassTable.h"
+#import "NavigationBar.h"
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -66,6 +67,8 @@
     self.navigationController.navigationBar.tintColor=[UIColor blueColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
     
+    
+    
     //カスタムセル追加
     [_collectionView registerNib:[UINib nibWithNibName:@"DayOfWeekCell" bundle:nil] forCellWithReuseIdentifier:@"DayOfWeekCell"];
     
@@ -88,29 +91,12 @@
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    /*_classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
-    _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
-    
-    [super createSelectClassTable];
-    FMDatabase *db=[super getDatabaseOfselectclass];
-    [db open];
-    
-    FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
-    
-    while ([results next]) {
-        
-        [_classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
-        [_classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
-    }
-    
-    [db close];//データベースクラスを作り、Modelに入れる*/
     _classNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
     _classroomNamesAndIndexPathes=[[NSMutableDictionary alloc]init];
     
     [DatabaseOfSelectClassTable createSelectClassTable];
 
     [DatabaseOfSelectClassTable selectSelectClassTable:_classNamesAndIndexPathes classroomNamesAndIndexPathes:_classroomNamesAndIndexPathes];
-
     
     return 2;
 }
@@ -166,7 +152,7 @@
         cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         return cell;
         
-    }//else内にclass,classname空文字、164行目あやしい
+    }
     cell.classLabel.text=@"";
     cell.classroomLabel.text=@"";
     

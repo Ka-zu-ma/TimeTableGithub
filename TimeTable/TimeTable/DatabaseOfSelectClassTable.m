@@ -34,6 +34,8 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"selectclass.db"];
     [db open];
     
+    [db beginTransaction];
+    
     FMResultSet *results=[db executeQuery:@"SELECT className, classroomName, indexPath FROM selectclasstable;"];
     
     while ([results next]) {
@@ -41,6 +43,8 @@
         [classNamesAndIndexPathes setObject:[results stringForColumn:@"className"] forKey:[results stringForColumn:@"indexPath"]];
         [classroomNamesAndIndexPathes setObject:[results stringForColumn:@"classroomName"] forKey:[results stringForColumn:@"indexPath"]];
     }
+    
+    [db commit];
     
     [db close];
 }

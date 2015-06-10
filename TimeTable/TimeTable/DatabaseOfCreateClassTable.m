@@ -8,6 +8,7 @@
 
 #import "DatabaseOfCreateClassTable.h"
 #import "CommonMethodsOfDatabase.h"
+
 @implementation DatabaseOfCreateClassTable
 
 +(void)createCreateClassTable{
@@ -23,7 +24,21 @@
     
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"createclass.db"];
     [db open];
-    [db executeUpdate:@"INSERT INTO createclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",classNameString,teacherNameString,classroomNameString];
+    
+    [db beginTransaction];
+    
+    BOOL isSucceeded = YES;
+    
+    if(![db executeUpdate:@"INSERT INTO createclasstable (className, teacherName, classroomName) VALUES  (?, ?, ?);",classNameString,teacherNameString,classroomNameString]){
+        isSucceeded = NO;
+        
+    }
+    
+    if (isSucceeded) {
+        [db commit];
+    }else{
+        [db rollback];
+    }
     
     [db close];
 }
@@ -33,7 +48,12 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"createclass.db"];
     
     [db open];
+    
+    [db beginTransaction];
+    
     [db executeUpdate:@"UPDATE createclasstable SET className = ?, teacherName = ?, classroomName = ? WHERE className = ? AND teacherName = ? AND classroomName = ?;",classNameTextField,teacherNameTextField,classroomNameTextField,classNameString,teacherNameString,classroomNameString];
+    
+    [db commit];
     
     [db close];
 }
@@ -47,6 +67,10 @@
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"createclass.db"];
     [db open];
     
+    [db beginTransaction];
+    
+    BOOL isSucceeded = YES;
+
     FMResultSet *results=[db executeQuery:@"SELECT className, teacherName ,classroomName FROM createclasstable;"];
     while ([results next]) {
         
@@ -55,6 +79,12 @@
         [classrooms addObject:[results stringForColumn:@"classroomName"]];
     }
     
+    if (isSucceeded) {
+        [db commit];
+    }else{
+        [db rollback];
+    }
+
     [db close];
     return  @[classes,teachers,classrooms];
 }
@@ -66,11 +96,22 @@
     
     [db open];
     
+    [db beginTransaction];
+    
+    BOOL isSucceeded = YES;
+
     FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",classNameString,teacherNameString];
     
     while ([results next]) {
         cellclassroomNameString=[results stringForColumn:@"classroomName"];
     }
+    
+    if (isSucceeded) {
+        [db commit];
+    }else{
+        [db rollback];
+    }
+
     [db close];
     
     return cellclassroomNameString;
@@ -80,44 +121,12 @@
     
     FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:@"createclass.db"];
     [db open];
+    
+    [db beginTransaction];
+    
     [db executeUpdate:@"DELETE FROM createclasstable WHERE className = ? AND teacherName = ? AND classroomName = ?",classNameString,teacherNameString,classroomNameString];
+    
+    [db commit];
     [db close];
 }
-/*+(void)selectCreateClassTable:(NSString *)query className:(NSString *)className teacherName:(NSString *)teacherName classroomName:(NSString *)classroomName classes:(NSMutableArray *)classes teachers:(NSMutableArray *)teachers classroomNameString:(NSString *)classroomNameString{
-    
-    FMDatabase *db=[self getDatabaseOfcreateclass];
-    [db open];
-    
-    FMResultSet *results=[db executeQuery:query,className,teacherName,classroomName];
-    while ([results next]) {
-        
-        [classes addObject:[results stringForColumn:@"className"]];
-        [teachers addObject:[results stringForColumn:@"teacherName"]];
-        classroomNameString=[results stringForColumn:@"classroomName"];
-    }
-    NSLog(@"abc:%@",classroomNameString);
-    [db close];
-
-}*/
-
-/*+(NSArray *)selectCreateClassTable:(NSString *)query className:(NSString *)className teacherName:(NSString *)teacherName classroomName:(NSString *)classroomName classes:(NSMutableArray *)classes teachers:(NSMutableArray *)teachers classroomNameString:(NSString *)classroomNameString{
-    
-    FMDatabase *db=[self getDatabaseOfcreateclass];
-    [db open];
-    
-    FMResultSet *results=[db executeQuery:query,className,teacherName,classroomName];
-    while ([results next]) {
-        
-        [classes addObject:[results stringForColumn:@"className"]];
-        [teachers addObject:[results stringForColumn:@"teacherName"]];
-        classroomNameString=[results stringForColumn:@"classroomName"];
-    }
-    NSLog(@"abc:%@",classroomNameString);
-    [db close];
-    
-    return  @[classes,teachers,classroomNameString];
-}*/
-
-
-
 @end

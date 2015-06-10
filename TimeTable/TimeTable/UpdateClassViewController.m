@@ -61,14 +61,6 @@
 
 - (IBAction)registerButton:(id)sender {
     
-    //[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-    /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-    
-    [db open];
-    [db executeUpdate:@"UPDATE createclasstable SET className = ?, teacherName = ?, classroomName = ? WHERE className = ? AND teacherName = ? AND classroomName = ?;",_classNameTextField.text,_teacherNameTextField.text,_classroomNameTextField.text,_classNameString,_teacherNameString,_classroomNameString];
-    
-    [db close];*/
-    
     [DatabaseOfCreateClassTable updateCreateClassTable:_classNameTextField.text teacherNameTextField:_teacherNameTextField.text classroomNameTextField:_classroomNameTextField.text classNameString:_classNameString teacherNameString:_teacherNameString classroomNameString:_classroomNameString];
     
     [self.navigationController popViewControllerAnimated:YES];

@@ -9,11 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "FMDatabase.h"
 @interface SuperAttendanceRecordViewController : UIViewController
--(FMDatabase *)getDatabaseOfCountUpRecordTable;
--(void)createCountUpRecordTable;
--(FMDatabase *)getDatabaseOfDateAndAttendanceRecordTable;
--(void)createDateAndAttendanceRecordTable;
--(FMDatabase *)getDatabaseOfselectclass;
 -(NSString *)getToday;
-
 @end

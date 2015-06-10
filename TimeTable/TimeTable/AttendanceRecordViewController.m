@@ -48,13 +48,12 @@
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"出席状況"];
     
     //バー背景色
-    /*self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色*/
-    
+    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
+    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
     
     //[self.navigationController setView:[NavigationBar setColor]];//バー背景色
     
-    [NavigationBar setColor];
+    //[NavigationBar setColor];
 
     //授業削除ボタンの枠を丸くする
     [[_deleteClassButton layer] setCornerRadius:10.0];
@@ -92,9 +91,9 @@
     _dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathRowString][0];
     _attendanceOrAbsenceOrLates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathRowString][1];
     
-    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathRowString][0];
-    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathRowString][1];
-    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathRowString][2];
+    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathRowString][attendanceCountString];
+    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathRowString][absenceCountString];
+    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathRowString][lateCountString];
     
     [self.tableView reloadData];
     
@@ -117,16 +116,16 @@
     
     NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
-    [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2] indexPathRow:indexPathString];
+    [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString] indexPathRow:indexPathString];
     
     [DatabaseOfDateAndAttendanceRecordTable insertDateAndAttendanceRecord:[super getToday] attendanceRecord:@"出席" indexPathRow:indexPathString];
     
     _dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][0];
     _attendanceOrAbsenceOrLates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][1];
     
-    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
-    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
-    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
+    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString];
+    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString];
+    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
 
     [self.tableView reloadData];
 }
@@ -138,16 +137,16 @@
     
     NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
-    [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0] absencecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2] indexPathRow:indexPathString];
+    [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString] absencecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString] indexPathRow:indexPathString];
     
     [DatabaseOfDateAndAttendanceRecordTable insertDateAndAttendanceRecord:[super getToday] attendanceRecord:@"欠席" indexPathRow:indexPathString];
     
     _dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][0];
     _attendanceOrAbsenceOrLates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][1];
     
-    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
-    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
-    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
+    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString];
+    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString];
+    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
     
     [self.tableView reloadData];
 }
@@ -159,16 +158,16 @@
     
     NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
-    [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1] latecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][2] indexPathRow:indexPathString];
+    [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString] latecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][2] indexPathRow:indexPathString];
     
     [DatabaseOfDateAndAttendanceRecordTable insertDateAndAttendanceRecord:[super getToday] attendanceRecord:@"遅刻" indexPathRow:indexPathString];
     
     _dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][0];
     _attendanceOrAbsenceOrLates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][1];
     
-    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
-    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
-    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
+    _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString];
+    _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString];
+    _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
 
     [self.tableView reloadData];
 }
@@ -251,10 +250,6 @@
 //編集モードを呼び出す
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_dates removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
 }
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -271,35 +266,35 @@
         if ([cell.detailTextLabel.text isEqual:@"出席"]) {
             
             //出席カウントを1減らす
-            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2] indexPathRow:indexPathString];
+            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString] indexPathRow:indexPathString];
             
-            _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
-            _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
-            _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
+            _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString];
+            _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString];
+            _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
             
         }else if ([cell.detailTextLabel.text isEqual:@"欠席"]){
             
             //欠席カウント1減らす
-            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0] absencecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2] indexPathRow:indexPathString];
+            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString] absencecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString] indexPathRow:indexPathString];
     
-            _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
-            _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
-            _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
+            _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString];
+            _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString];
+            _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
             
         }else if ([cell.detailTextLabel.text isEqual:@"遅刻"]){
             //遅刻カウント1減らす
-            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1] latecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1][2] indexPathRow:indexPathString];
+            [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString] latecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:-1][2] indexPathRow:indexPathString];
             
-            _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][0];
-            _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][1];
-            _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][2];
+            _attendanceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString];
+            _absenceCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString];
+            _lateCountString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
             
         }
         //セクション指定して更新
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         
         [_dates removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
     //編集ボタン
@@ -326,22 +321,13 @@
 
 - (IBAction)deleteClassButton:(id)sender {
     
-    FMDatabase *db=[super getDatabaseOfCountUpRecordTable];
-    [db open];//トランザクション
-    [db executeUpdate:@"DELETE FROM count_up_record_table WHERE indexPath = ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    [db close];
+    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
+
+    [CommonMethodsOfDatabase delete:@"count_up_record.db" query:@"DELETE FROM count_up_record_table WHERE indexPath = ?;" indexPathRow:indexPathString];
     
-    FMDatabase *twodb=[super getDatabaseOfDateAndAttendanceRecordTable];
-    [twodb open];
-    [twodb executeUpdate:@"DELETE FROM date_attendancerecord_table WHERE indexPath = ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    [twodb close];
+    [CommonMethodsOfDatabase delete:@"date_attendancerecord.db" query:@"DELETE FROM date_attendancerecord_table WHERE indexPath = ?;" indexPathRow:indexPathString];
     
-    FMDatabase *threedb=[super getDatabaseOfselectclass];
-    [threedb open];
-    
-    [threedb executeUpdate:@"DELETE FROM selectclasstable WHERE indexPath = ?;",[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    
-    [threedb close];
+    [CommonMethodsOfDatabase delete:@"selectclass.db" query:@"DELETE FROM selectclasstable WHERE indexPath = ?;" indexPathRow:indexPathString];
     
     //前の画面に戻る前に更新
     NSArray *allControllers = self.navigationController.viewControllers;

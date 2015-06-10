@@ -10,4 +10,5 @@
 #import "FMDatabase.h"
 @interface CommonMethodsOfDatabase : NSObject
 +(FMDatabase *)getDatabaseFile:(NSString *)databaseFile;
++(void)delete:(NSString *)databaseFile query:(NSString *)query indexPathRow:(NSString *)indexPathRow;
 @end

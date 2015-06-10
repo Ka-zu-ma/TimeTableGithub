@@ -45,10 +45,10 @@
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業選択"];  
     
-    /*self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色*/
+    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
+    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
     
-    [NavigationBar setColor];
+    //[NavigationBar setColor];
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                               initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -74,18 +74,6 @@
     
     [DatabaseOfCreateClassTable createCreateClassTable];
         
-    /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-        
-    [db open];
-        
-    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
-    while ([results next]) {
-            [_classes addObject:[results stringForColumn:@"className"]];
-            [_teachers addObject:[results stringForColumn:@"teacherName"]];
-            
-    }
-        
-    [db close];*/
     @try {
         _classes=[[NSMutableArray alloc]init];
         _teachers=[[NSMutableArray alloc]init];
@@ -167,28 +155,10 @@
     
     UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
     
-    /*FMDatabase *onedb=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-    [onedb open];
-    
-    FMResultSet *results=[onedb executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
-    while ([results next]) {
-        _cellclassroomNameString=[results stringForColumn:@"classroomName"];
-    }
-    [onedb close];*/
-    
     _cellclassroomNameString=[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
     [DatabaseOfSelectClassTable createSelectClassTable];
     
     [DatabaseOfSelectClassTable insertSelectClassTable:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:_cellclassroomNameString indexPathRow:[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    
-    /*FMDatabase *twodb=[DatabaseOfSelectClassTable getDatabaseOfselectclass];
-    [twodb open];
-    
-    [twodb executeUpdate:@"INSERT INTO selectclasstable (className, teacherName, classroomName, indexPath) VALUES  (?, ?, ?, ?);",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString,[NSString stringWithFormat:@"%ld",(long)_indexPath.row]];
-    
-    
-    
-    [twodb close];*/
     
     //前の画面に戻る前に更新
     //UINavigationControllerで遷移してきた過去のビューはself.navigationController.viewControllersに保存
@@ -209,30 +179,13 @@
         
         UITableViewCell *cell=[self.tableView cellForRowAtIndexPath:indexPath];
         
-        /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-        
-        [db open];
-        
-        FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
-        
-        while ([results next]) {
-            _cellclassroomNameString=[results stringForColumn:@"classroomName"];
-        }*/
         _cellclassroomNameString=[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
         
         [DatabaseOfCreateClassTable deleteCreateClassTable:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:_cellclassroomNameString];
-        /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-        [db open];
-        [db executeUpdate:@"DELETE FROM createclasstable WHERE className = ? AND teacherName = ? AND classroomName = ?",cell.textLabel.text,cell.detailTextLabel.text,_cellclassroomNameString];
-        [db close];*/
+
         
         [_classes removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        
-        //データベースから再びとってきてリロードじゃなくてテーブルのいらなくなったところを直接消す。要は一時領域のデータ消す。
-        
-        //[self.tableView reloadData];
     }];
     
     //編集ボタン
@@ -245,23 +198,7 @@
         
         viewController.classNameString=cell.textLabel.text;
         viewController.teacherNameString=cell.detailTextLabel.text;
-        
-        //[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
-        
         viewController.classroomNameString=[DatabaseOfCreateClassTable selectCreateClassTableToGetClassroomName:cell.textLabel.text teacherName:cell.detailTextLabel.text];
-        
-        /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-        
-        [db open];
-        //セルの授業名、教室名に対応する教室名を取得
-        FMResultSet *results=[db executeQuery:@"SELECT classroomName FROM createclasstable WHERE className = ? AND teacherName = ?;",cell.textLabel.text,cell.detailTextLabel.text];
-        
-        while ([results next]) {
-            _cellclassroomNameString=[results stringForColumn:@"classroomName"];
-        }
-        
-        [db close];*/
-         /*viewController.classroomNameString=[DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT classroomName FROM  createclasstable WHERE className = ? AND teacherName = ?;" className:cell.textLabel.text teacherName:cell.detailTextLabel.text classroomName:nil classes:nil teachers:nil classroomNameString:_cellclassroomNameString][2];*/
         
         [self.navigationController pushViewController:viewController animated:YES];
 
@@ -279,21 +216,7 @@
     [self createEmptyArrays];
     
     [DatabaseOfCreateClassTable createCreateClassTable];
-    /*FMDatabase *db=[DatabaseOfCreateClassTable getDatabaseOfcreateclass];
-    
-    [db open];
-    
-    FMResultSet *results=[db executeQuery:@"SELECT className, teacherName, classroomName FROM createclasstable;"];
-    
-    while ([results next]) {
-        [_classes addObject:[results stringForColumn:@"className"]];
-        [_teachers addObject:[results stringForColumn:@"teacherName"]];
-        
-    }
-    
-    [db close];*/
-    
-    /*[DatabaseOfCreateClassTable selectCreateClassTable:@"SELECT className, teacherName, classroomName FROM createclasstable;" className:nil teacherName:nil classroomName:nil classes:_classes teachers:_teachers classroomNameString:nil];*/
+ 
 }
 
 #pragma mark - Original Method

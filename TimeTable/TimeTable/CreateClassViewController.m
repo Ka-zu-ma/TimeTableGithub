@@ -12,6 +12,7 @@
 #import "DatabaseOfCreateClassTable.h"
 #import "TitleLabel.h"
 #import "AlertView.h"
+#import "NavigationBar.h"
 
 @interface CreateClassViewController ()<UITextFieldDelegate>
 
@@ -44,6 +45,8 @@
     
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
     self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
+    
+    //[NavigationBar setColor];
 
     // Do any additional setup after loading the view from its nib.
 }

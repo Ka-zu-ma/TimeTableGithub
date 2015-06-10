@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger,Counts){
+    
+    attendanceCountString = 0,
+    absenceCountString = 1,
+    lateCountString = 2
+};
+
 @interface DatabaseOfCountUpRecordTable : NSObject
 +(void)createCountUpRecordTable;
 +(void)insertInitialValueCountUpRecordTable:(NSString *)indexPathRow;

@@ -13,6 +13,7 @@
     
     UINavigationBar *navigationBar=[[UINavigationBar alloc]init];
     navigationBar.tintColor=[UIColor blackColor];
+    //[UINavigationBar appearance].tintColor=[UIColor blackColor];
     navigationBar.barTintColor=[UIColor blueColor];
     return navigationBar;
 }

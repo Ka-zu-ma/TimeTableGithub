@@ -18,4 +18,14 @@
     NSLog(@"createclass.dbの場所:%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
     return db;
 }
+
++(void)delete:(NSString *)databaseFile query:(NSString *)query indexPathRow:(NSString *)indexPathRow{
+    
+    FMDatabase *db=[CommonMethodsOfDatabase getDatabaseFile:databaseFile];
+    [db open];
+    [db executeUpdate:query,indexPathRow];
+    [db close];
+    
+}
+
 @end
