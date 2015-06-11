@@ -11,6 +11,7 @@
 #import "FMDatabase.h"
 #import "DatabaseOfCreateClassTable.h"
 #import "TitleLabel.h"
+#import "AlertView.h"
 
 @interface UpdateClassViewController ()<UITextFieldDelegate>
 
@@ -40,13 +41,15 @@
     _teacherNameTextField.text=_teacherNameString;
     _classroomNameTextField.text=_classroomNameString;
     
+    // 背景をキリックしたら、キーボードを隠す
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+
+
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業変更"];
     
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
-   
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -57,12 +60,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+// キーボードを隠す処理
+- (void)closeSoftKeyboard {
+    [self.view endEditing: YES];
+}
+
 #pragma mark - IBAction
 
 - (IBAction)registerButton:(id)sender {
     
-    [DatabaseOfCreateClassTable updateCreateClassTable:_classNameTextField.text teacherNameTextField:_teacherNameTextField.text classroomNameTextField:_classroomNameTextField.text classNameString:_classNameString teacherNameString:_teacherNameString classroomNameString:_classroomNameString];
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    if ((_classNameTextField.text.length != 0) && (_teacherNameTextField.text.length != 0) && (_classroomNameTextField.text.length != 0)){
+        
+        if ((![_classNameTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_classroomNameTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_teacherNameTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding])) {
+            
+            [DatabaseOfCreateClassTable updateCreateClassTable:_classNameTextField.text teacherNameTextField:_teacherNameTextField.text classroomNameTextField:_classroomNameTextField.text classNameString:_classNameString teacherNameString:_teacherNameString classroomNameString:_classroomNameString];
+
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            return;
+        }
+        [[AlertView createAlertView:@"授業名、教員名、教室名には日本語のみ入力してください。"] show];
+        
+        return;
+    }
+    [[AlertView createAlertView:@"授業名、教員名、教室名を3つとも入力しなさい。"] show];
+
 }
 @end

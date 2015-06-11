@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlertView : NSObject
+@interface AlertView : UIAlertView
 +(UIAlertView *)createAlertView:messageString;
 @end

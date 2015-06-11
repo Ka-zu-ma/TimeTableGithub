@@ -12,7 +12,7 @@
 -(void)createClass;
 @end
 
-@interface BarButtonItem : NSObject
+@interface BarButtonItem : UIBarButtonItem
 
 @property (nonatomic,assign) id <BarButtonItemDelegate> delegate;
 +(UIBarButtonItem *)createBarButtonItem;

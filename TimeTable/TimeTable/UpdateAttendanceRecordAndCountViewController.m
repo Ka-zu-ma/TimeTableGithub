@@ -58,12 +58,14 @@
     [[_updateButton layer] setCornerRadius:10.0];
     [_updateButton setClipsToBounds:YES];
     
+    // 背景をキリックしたら、キーボードを隠す
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+
+    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"日付変更、出席状況変更"];
-    
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -72,6 +74,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)closeSoftKeyboard {
+    [self.view endEditing: YES];
+}
+
 
 #pragma mark - UIPickerView Delegate
 
@@ -124,15 +131,18 @@
     NSString *lateCountOfMaxIdString=[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString];
     
     if ([attendanceRecordString isEqual:@"出席"]) {
-        
+        NSLog(@"ここ1:%@",attendanceRecordString);
+        NSLog(@"ここ2:%@",latestAttendanceRecordString);
+  
         if ([latestAttendanceRecordString isEqual:@"遅刻"]) {
-            NSLog(@"かきくけこ");
+            NSLog(@"おk");
             [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[NSString stringWithFormat:@"%d",attendanceCountOfMaxIdString.intValue-1] absencecount:absenceCountOfMaxIdString latecount:[NSString stringWithFormat:@"%d",lateCountOfMaxIdString.intValue+1] indexPathRow:indexPathString];
 
-        }else if ([latestAttendanceRecordString isEqualToString:@"欠席"]){
+        }else if ([latestAttendanceRecordString isEqual:@"欠席"]){
             
             [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[NSString stringWithFormat:@"%d",attendanceCountOfMaxIdString.intValue-1] absencecount:[NSString stringWithFormat:@"%d",absenceCountOfMaxIdString.intValue+1] latecount:lateCountOfMaxIdString indexPathRow:indexPathString];
         }
+        
     }else if([attendanceRecordString isEqual:@"欠席"]){
         
         if ([latestAttendanceRecordString isEqual:@"出席"]) {
@@ -143,9 +153,7 @@
             
             [DatabaseOfCountUpRecordTable insertCountUpRecordTable:attendanceCountOfMaxIdString absencecount:[NSString stringWithFormat:@"%d",absenceCountOfMaxIdString.intValue-1] latecount:[NSString stringWithFormat:@"%d",lateCountOfMaxIdString.intValue+1] indexPathRow:indexPathString];
         }
-            
-        
-    }else{
+    }else {
         
         if ([latestAttendanceRecordString isEqual:@"出席"]) {
             

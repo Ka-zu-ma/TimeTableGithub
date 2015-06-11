@@ -17,6 +17,7 @@
                                   action:@selector(addButtontouched:)];
     return addButton;
 }
+
 -(void)addButtontouched:(UIBarButtonItem *)addButton{
     [self.delegate createClass];
 }

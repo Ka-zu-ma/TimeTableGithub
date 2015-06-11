@@ -9,14 +9,12 @@
 #import "SelectClassViewController.h"
 #import "CreateClassViewController.h"
 #import "ClassListCell.h"
-#import "FMDatabase.h"
 #import "TimeTableViewController.h"
 #import "UpdateClassViewController.h"
 #import "DatabaseOfCreateClassTable.h"
 #import "DatabaseOfSelectClassTable.h"
 #import "TitleLabel.h"
 #import "BarButtonItem.h"
-#import "NavigationBar.h"
 
 @interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,BarButtonItemDelegate>
 
@@ -27,7 +25,6 @@
 
 @property (strong,nonatomic) NSString *cellclassroomNameString;
 
--(void)deleteTableViewCell;
 @end
 
 @implementation SelectClassViewController
@@ -45,24 +42,13 @@
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業選択"];  
     
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
+    self.navigationItem.rightBarButtonItem=[super createBarButtonItem];
     
-    //[NavigationBar setColor];
-    
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
-                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                              target:self
-                              action:@selector(addButtontouched:)];
-    
-    self.navigationItem.rightBarButtonItem=addButton;
-    
-    //BarButtonItem *barButtonItem=[[BarButtonItem alloc]init];
-    
-    /*BarButtonItem *barButtonItem=[[BarButtonItem alloc]init];
+    //'-[UIBarButtonItem setDelegate:]: unrecognized selector sent to instanceとエラーが出る
+    /*BarButtonItem *barButtonItem=(BarButtonItem *)[BarButtonItem createBarButtonItem];
     barButtonItem.delegate=self;
     
-    self.navigationItem.rightBarButtonItem=[BarButtonItem createBarButtonItem];*/
+    self.navigationItem.rightBarButtonItem=barButtonItem;*/
     
     //xibファイルを紐付けたカスタムセル用クラスを指定。セル再利用のためのIDを第二引数で指定。
     [self.tableView registerNib:[UINib nibWithNibName:@"ClassListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
@@ -126,7 +112,6 @@
     //中央寄せに設定できない
     cell.detailTextLabel.textAlignment=NSTextAlignmentCenter;
     return cell;
-                         
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -209,24 +194,4 @@
     return @[deleteAction,editAction];
 }
 
-#pragma mark - TableView Methods
-
--(void)deleteTableViewCell{
-    
-    [self createEmptyArrays];
-    
-    [DatabaseOfCreateClassTable createCreateClassTable];
- 
-}
-
-#pragma mark - Original Method
-
--(NSArray *)createEmptyArrays{
-    
-    NSMutableArray *classes=[[NSMutableArray alloc]init];
-    NSMutableArray *teachers=[[NSMutableArray array]init];
-    
-    return @[classes,teachers];
-    
-}
 @end

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SuperAttendanceRecordViewController.h"
+#import "BaseViewController.h"
 
-@interface UpdateAttendanceRecordAndCountViewController : SuperAttendanceRecordViewController
+@interface UpdateAttendanceRecordAndCountViewController : BaseViewController
 @property (strong,nonatomic) NSString *dateString;
 @property (strong,nonatomic) NSString *attendanceRecordString;
 @property (strong,nonatomic) NSIndexPath *indexPath;

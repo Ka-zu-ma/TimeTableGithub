@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface TimeTableViewController : UIViewController
+#import "BaseViewController.h"
+@interface TimeTableViewController : BaseViewController
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SelectClassViewController : UIViewController
+#import "BaseViewController.h"
+@interface SelectClassViewController : BaseViewController
 @property  (strong,nonatomic) NSIndexPath *indexPath;
+-(void)createClass;
 @end

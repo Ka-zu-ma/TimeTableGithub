@@ -17,7 +17,7 @@
 #import "WeekContentsData.h"
 #import "ClassTimeContentsData.h"
 #import "DatabaseOfSelectClassTable.h"
-#import "NavigationBar.h"
+#import "BaseViewController.h"
 
 @interface TimeTableViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -36,8 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _weeks=[NSMutableArray array];
-    _classTimes=[NSMutableArray array];
+    _weeks=[[NSMutableArray alloc]init];
+    _classTimes=[[NSMutableArray array]init];
     
     NSArray *weekContents=[WeekContentsData createWeekContents];
     NSArray *classTimeContents=[ClassTimeContentsData createClassTimeContents];
@@ -64,10 +64,9 @@
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"Time Table"];
     
-    self.navigationController.navigationBar.tintColor=[UIColor blueColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
-    
-    
+    //Home画面でnavigationbarの色を設定すれば他の画面ではしなくていい
+    self.navigationController.navigationBar.tintColor=[super setTintColor];//バーアイテムカラー
+    self.navigationController.navigationBar.barTintColor=[super setBarTintColor];//バー背景色
     
     //カスタムセル追加
     [_collectionView registerNib:[UINib nibWithNibName:@"DayOfWeekCell" bundle:nil] forCellWithReuseIdentifier:@"DayOfWeekCell"];

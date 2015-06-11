@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface UpdateClassViewController : UIViewController
+#import "BaseViewController.h"
+@interface UpdateClassViewController : BaseViewController
 
 @property (strong,nonatomic) NSString *classNameString;
 @property (strong,nonatomic) NSString *teacherNameString;

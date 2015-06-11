@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TitleLabel : NSObject
+@interface TitleLabel : UILabel
 +(UILabel *)createTitlelabel:titleLabelName;
 @end

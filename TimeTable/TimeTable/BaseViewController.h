@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FMDatabase.h"
-@interface SuperAttendanceRecordViewController : UIViewController
+@interface BaseViewController : UIViewController
 -(NSString *)getToday;
+-(UIColor *)setTintColor;
+-(UIColor *)setBarTintColor;
+-(UIBarButtonItem *)createBarButtonItem;
 @end

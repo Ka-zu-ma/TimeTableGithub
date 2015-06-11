@@ -12,7 +12,7 @@
 #import "DatabaseOfCreateClassTable.h"
 #import "TitleLabel.h"
 #import "AlertView.h"
-#import "NavigationBar.h"
+
 
 @interface CreateClassViewController ()<UITextFieldDelegate>
 
@@ -39,15 +39,16 @@
     _classTextField.delegate=self;
     _teacherTextField.delegate=self;
     
+    // 背景をキリックしたら、キーボードを隠す
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    
+
+    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業作成"];
     
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
-    
-    //[NavigationBar setColor];
-
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -57,6 +58,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+// キーボードを隠す処理
+- (void)closeSoftKeyboard {
+    [self.view endEditing: YES];
+}
+
 
 #pragma mark - IBAction
 

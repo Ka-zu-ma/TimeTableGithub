@@ -14,7 +14,7 @@
 		E380FB2F1B096E510018D0D5 /* UpdateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E380FB2D1B096E510018D0D5 /* UpdateClassViewController.xib */; };
 		E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */; };
 		E384598D1AF33AAF00ADB04A /* CreateClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */; };
-		E391A8651B12C6AA00585660 /* SuperAttendanceRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E391A8641B12C6AA00585660 /* SuperAttendanceRecordViewController.m */; };
+		E391A8651B12C6AA00585660 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E391A8641B12C6AA00585660 /* BaseViewController.m */; };
 		E39AF7561B02D6D000A4D8D2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E39AF7551B02D6D000A4D8D2 /* libsqlite3.0.dylib */; };
 		E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E39AF7581B02EF4E00A4D8D2 /* DateCell.m */; };
 		E39AF75B1B02EF4E00A4D8D2 /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39AF7591B02EF4E00A4D8D2 /* DateCell.xib */; };
@@ -40,7 +40,6 @@
 		E3A9276D1B252BE6003468B5 /* CommonMethodsOfDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */; };
 		E3A93F9F1B26E89E0088B01B /* AttendanceRecordPickerData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */; };
 		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
-		E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E31B200F9100795954 /* NavigationBar.m */; };
 		E3CD023F1B21289500127B33 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CD023E1B21289500127B33 /* AlertView.m */; };
 		E3CD02431B219DC900127B33 /* memo in Resources */ = {isa = PBXBuildFile; fileRef = E3CD02421B219DC800127B33 /* memo */; };
 		E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */; };
@@ -76,8 +75,8 @@
 		E38459891AF33AAF00ADB04A /* CreateClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClassViewController.h; sourceTree = "<group>"; };
 		E384598A1AF33AAF00ADB04A /* CreateClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClassViewController.m; sourceTree = "<group>"; };
 		E384598B1AF33AAF00ADB04A /* CreateClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateClassViewController.xib; sourceTree = "<group>"; };
-		E391A8631B12C6AA00585660 /* SuperAttendanceRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperAttendanceRecordViewController.h; sourceTree = "<group>"; };
-		E391A8641B12C6AA00585660 /* SuperAttendanceRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperAttendanceRecordViewController.m; sourceTree = "<group>"; };
+		E391A8631B12C6AA00585660 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		E391A8641B12C6AA00585660 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		E39AF7551B02D6D000A4D8D2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		E39AF7571B02EF4E00A4D8D2 /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		E39AF7581B02EF4E00A4D8D2 /* DateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
@@ -120,8 +119,6 @@
 		E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceRecordPickerData.m; sourceTree = "<group>"; };
 		E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarButtonItem.h; sourceTree = "<group>"; };
 		E3BC78E01B1FE11A00795954 /* BarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItem.m; sourceTree = "<group>"; };
-		E3BC78E21B200F9100795954 /* NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBar.h; sourceTree = "<group>"; };
-		E3BC78E31B200F9100795954 /* NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBar.m; sourceTree = "<group>"; };
 		E3CD023D1B21289500127B33 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		E3CD023E1B21289500127B33 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		E3CD02421B219DC800127B33 /* memo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = memo; sourceTree = "<group>"; };
@@ -186,8 +183,6 @@
 				E3CF49061B1F058800CFA4C7 /* TitleLabel.m */,
 				E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */,
 				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
-				E3BC78E21B200F9100795954 /* NavigationBar.h */,
-				E3BC78E31B200F9100795954 /* NavigationBar.m */,
 				E3CD023D1B21289500127B33 /* AlertView.h */,
 				E3CD023E1B21289500127B33 /* AlertView.m */,
 				E38448CA1B002DBE00F855E5 /* TableViewCell */,
@@ -209,8 +204,8 @@
 		E38448C91B002D9500F855E5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E391A8631B12C6AA00585660 /* SuperAttendanceRecordViewController.h */,
-				E391A8641B12C6AA00585660 /* SuperAttendanceRecordViewController.m */,
+				E391A8631B12C6AA00585660 /* BaseViewController.h */,
+				E391A8641B12C6AA00585660 /* BaseViewController.m */,
 				E3A162271AF30FE40058642D /* AttendanceRecordViewController.h */,
 				E3A162281AF30FE40058642D /* AttendanceRecordViewController.m */,
 				E3A162291AF30FE40058642D /* AttendanceRecordViewController.xib */,
@@ -517,7 +512,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E391A8651B12C6AA00585660 /* SuperAttendanceRecordViewController.m in Sources */,
+				E391A8651B12C6AA00585660 /* BaseViewController.m in Sources */,
 				E3CF48FE1B1ECAF100CFA4C7 /* DatabaseOfSelectClassTable.m in Sources */,
 				E3A1622A1AF30FE40058642D /* AttendanceRecordViewController.m in Sources */,
 				E3CF490A1B1F0DA400CFA4C7 /* WeekContentsData.m in Sources */,
@@ -539,7 +534,6 @@
 				E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m in Sources */,
 				E36E9EDF1B181F8B002B7F25 /* UpdateAttendanceRecordAndCountViewController.m in Sources */,
 				E39AF75A1B02EF4E00A4D8D2 /* DateCell.m in Sources */,
-				E3BC78E41B200F9100795954 /* NavigationBar.m in Sources */,
 				E384598C1AF33AAF00ADB04A /* CreateClassViewController.m in Sources */,
 				E39CBFCE1AFB460100AAEA5D /* ClassTableCell.m in Sources */,
 				E3FE066B1B01F5A800AB1BB3 /* CountUpCell.m in Sources */,
@@ -663,9 +657,12 @@
 			baseConfigurationReference = 0B308C34BF409DAC54B244E5 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: HIROSHI KOHNO (WTA6844PSZ)";
 				INFOPLIST_FILE = TimeTable/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -674,9 +671,12 @@
 			baseConfigurationReference = 803FFAEE7E6B6AD4A6A08A93 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TimeTable/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -13,10 +13,10 @@
 #import "UpdateAttendanceRecordAndCountViewController.h"
 #import "TimeTableViewController.h"
 #import "TitleLabel.h"
-#import "NavigationBar.h"
 #import "DatabaseOfDateAndAttendanceRecordTable.h"
 #import "CommonMethodsOfDatabase.h"
 #import "DatabaseOfCountUpRecordTable.h"
+#import "AlertView.h"
 
 @interface AttendanceRecordViewController ()<UITableViewDelegate,UITableViewDataSource,CountUpDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -47,14 +47,6 @@
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"出席状況"];
     
-    //バー背景色
-    self.navigationController.navigationBar.tintColor=[UIColor blackColor];//バーアイテムカラー
-    self.navigationController.navigationBar.barTintColor=[UIColor blueColor];//バー背景色
-    
-    //[self.navigationController setView:[NavigationBar setColor]];//バー背景色
-    
-    //[NavigationBar setColor];
-
     //授業削除ボタンの枠を丸くする
     [[_deleteClassButton layer] setCornerRadius:10.0];
     [_deleteClassButton setClipsToBounds:YES];
@@ -111,10 +103,19 @@
 
 -(void)attendanceCountUp{
     
+    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
+    
+    //同じ日付が複数追加されないようにする
+    NSMutableArray *dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][0];
+    
+    if ([dates containsObject:[super getToday]]) {
+        
+        [[AlertView createAlertView:@"同じ日に2回以上押せません。"] show];
+        return;
+    }
+    
     _dates=[[NSMutableArray alloc]init];
     _attendanceOrAbsenceOrLates=[[NSMutableArray alloc]init];
-    
-    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
     [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][0] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString] indexPathRow:indexPathString];
     
@@ -132,10 +133,18 @@
 
 -(void)absenceCountUp{
     
+    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
+    
+    NSMutableArray *dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][0];
+    
+    if ([dates containsObject:[super getToday]]) {
+        
+        [[AlertView createAlertView:@"同じ日に2回以上押せません。"] show];
+        return;
+    }
+
     _dates=[[NSMutableArray alloc]init];
     _attendanceOrAbsenceOrLates=[[NSMutableArray alloc]init];
-    
-    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
     [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString] absencecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][1] latecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][lateCountString] indexPathRow:indexPathString];
     
@@ -153,10 +162,17 @@
 
 -(void)lateCountUp{
     
+    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
+    
+    NSMutableArray *dates=[DatabaseOfDateAndAttendanceRecordTable selectDateAndAttendanceRecord:indexPathString][0];
+    
+    if ([dates containsObject:[super getToday]]) {
+        [[AlertView createAlertView:@"同じ日に2回以上押せません。"] show];
+        return;
+    }
+
     _dates=[[NSMutableArray alloc]init];
     _attendanceOrAbsenceOrLates=[[NSMutableArray alloc]init];
-    
-    NSString *indexPathString=[NSString stringWithFormat:@"%ld",(long)_indexPath.row];
     
     [DatabaseOfCountUpRecordTable insertCountUpRecordTable:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][attendanceCountString] absencecount:[DatabaseOfCountUpRecordTable selectCountUpRecordTableToGetCountsWhereMaxIdWhereIndexPath:indexPathString][absenceCountString] latecount:[self selectCountsOfMaxIdAndCreateUpDownNewCounts:1][2] indexPathRow:indexPathString];
     
