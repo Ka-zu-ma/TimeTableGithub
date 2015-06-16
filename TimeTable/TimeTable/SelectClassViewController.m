@@ -14,9 +14,9 @@
 #import "DatabaseOfCreateClassTable.h"
 #import "DatabaseOfSelectClassTable.h"
 #import "TitleLabel.h"
-#import "BarButtonItem.h"
 
-@interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,BarButtonItemDelegate>
+
+@interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -90,12 +90,6 @@
     [self.navigationController pushViewController:viewController animated:YES];
 
 }
-
-/*-(void)createClass{
-    
-    CreateClassViewController *viewController=[[CreateClassViewController alloc]init];
-    [self.navigationController pushViewController:viewController animated:YES];
-}*/
 
 #pragma mark - UITableView DataSource
 

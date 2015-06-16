@@ -39,7 +39,6 @@
 		E3A9276A1B252966003468B5 /* DatabaseOfCountUpRecordTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A927691B252966003468B5 /* DatabaseOfCountUpRecordTable.m */; };
 		E3A9276D1B252BE6003468B5 /* CommonMethodsOfDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */; };
 		E3A93F9F1B26E89E0088B01B /* AttendanceRecordPickerData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */; };
-		E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BC78E01B1FE11A00795954 /* BarButtonItem.m */; };
 		E3CD023F1B21289500127B33 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CD023E1B21289500127B33 /* AlertView.m */; };
 		E3CD02431B219DC900127B33 /* memo in Resources */ = {isa = PBXBuildFile; fileRef = E3CD02421B219DC800127B33 /* memo */; };
 		E3CF48FB1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CF48FA1B1EC9FA00CFA4C7 /* DatabaseOfCreateClassTable.m */; };
@@ -117,8 +116,6 @@
 		E3A9276C1B252BE6003468B5 /* CommonMethodsOfDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMethodsOfDatabase.m; sourceTree = "<group>"; };
 		E3A93F9D1B26E89E0088B01B /* AttendanceRecordPickerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceRecordPickerData.h; sourceTree = "<group>"; };
 		E3A93F9E1B26E89E0088B01B /* AttendanceRecordPickerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceRecordPickerData.m; sourceTree = "<group>"; };
-		E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarButtonItem.h; sourceTree = "<group>"; };
-		E3BC78E01B1FE11A00795954 /* BarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarButtonItem.m; sourceTree = "<group>"; };
 		E3CD023D1B21289500127B33 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		E3CD023E1B21289500127B33 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		E3CD02421B219DC800127B33 /* memo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = memo; sourceTree = "<group>"; };
@@ -181,8 +178,6 @@
 			children = (
 				E3CF49051B1F058800CFA4C7 /* TitleLabel.h */,
 				E3CF49061B1F058800CFA4C7 /* TitleLabel.m */,
-				E3BC78DF1B1FE11A00795954 /* BarButtonItem.h */,
-				E3BC78E01B1FE11A00795954 /* BarButtonItem.m */,
 				E3CD023D1B21289500127B33 /* AlertView.h */,
 				E3CD023E1B21289500127B33 /* AlertView.m */,
 				E38448CA1B002DBE00F855E5 /* TableViewCell */,
@@ -528,7 +523,6 @@
 				E3A162251AF30F780058642D /* SelectClassViewController.m in Sources */,
 				E3CD023F1B21289500127B33 /* AlertView.m in Sources */,
 				E3A1623E1AF3325B0058642D /* TimeTableViewController.m in Sources */,
-				E3BC78E11B1FE11A00795954 /* BarButtonItem.m in Sources */,
 				E3CF49071B1F058800CFA4C7 /* TitleLabel.m in Sources */,
 				E3A9276A1B252966003468B5 /* DatabaseOfCountUpRecordTable.m in Sources */,
 				E3CF490D1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m in Sources */,
