@@ -71,15 +71,8 @@
     
     if ((_classTextField.text.length != 0) && (_teacherTextField.text.length != 0) && (_classroomTextField.text.length != 0)){
         
-        if ((![_classTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_classroomTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_teacherTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding])) {
-            
-            [DatabaseOfCreateClassTable insertCreateClassTable:_classTextField.text teacherName:_teacherTextField.text classroomName:_classroomTextField.text];
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            return;
-        }
-        [[AlertView createAlertView:@"授業名、教員名、教室名には日本語のみ入力してください。"] show];
-        
+        [DatabaseOfCreateClassTable insertCreateClassTable:_classTextField.text teacherName:_teacherTextField.text classroomName:_classroomTextField.text];
+        [self.navigationController popViewControllerAnimated:YES];
         return;
     }
     [[AlertView createAlertView:@"授業名、教員名、教室名を3つとも入力しなさい。"] show];

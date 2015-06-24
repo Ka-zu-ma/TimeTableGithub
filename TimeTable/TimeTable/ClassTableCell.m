@@ -11,6 +11,10 @@
 @implementation ClassTableCell
 
 - (void)awakeFromNib {
+    
+    //_classLabel.adjustsFontSizeToFitWidth=YES;
+    //_classroomLabel.adjustsFontSizeToFitWidth=YES;
+    
     // Initialization code
 }
 

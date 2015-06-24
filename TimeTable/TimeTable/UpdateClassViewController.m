@@ -41,10 +41,9 @@
     _teacherNameTextField.text=_teacherNameString;
     _classroomNameTextField.text=_classroomNameString;
     
-    // 背景をキリックしたら、キーボードを隠す
+    // 背景をクリックしたら、キーボードを隠す
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
-
 
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
@@ -62,7 +61,7 @@
 
 // キーボードを隠す処理
 - (void)closeSoftKeyboard {
-    [self.view endEditing: YES];
+    [self.view endEditing:YES];
 }
 
 #pragma mark - IBAction
@@ -71,19 +70,12 @@
     
     if ((_classNameTextField.text.length != 0) && (_teacherNameTextField.text.length != 0) && (_classroomNameTextField.text.length != 0)){
         
-        if ((![_classNameTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_classroomNameTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding]) && (![_teacherNameTextField.text canBeConvertedToEncoding:NSASCIIStringEncoding])) {
-            
-            [DatabaseOfCreateClassTable updateCreateClassTable:_classNameTextField.text teacherNameTextField:_teacherNameTextField.text classroomNameTextField:_classroomNameTextField.text classNameString:_classNameString teacherNameString:_teacherNameString classroomNameString:_classroomNameString];
+        [DatabaseOfCreateClassTable updateCreateClassTable:_classNameTextField.text teacherNameTextField:_teacherNameTextField.text classroomNameTextField:_classroomNameTextField.text classNameString:_classNameString teacherNameString:_teacherNameString classroomNameString:_classroomNameString];
 
-            [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
             
-            return;
-        }
-        [[AlertView createAlertView:@"授業名、教員名、教室名には日本語のみ入力してください。"] show];
-        
         return;
     }
     [[AlertView createAlertView:@"授業名、教員名、教室名を3つとも入力しなさい。"] show];
-
 }
 @end

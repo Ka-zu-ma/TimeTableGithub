@@ -15,7 +15,6 @@
 #import "DatabaseOfSelectClassTable.h"
 #import "TitleLabel.h"
 
-
 @interface SelectClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -38,7 +37,7 @@
     _tableView.dataSource=self;
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    self.navigationItem.title=@"授業選択";
+    //self.navigationItem.title=@"授業選択";
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"授業選択"];  
     
@@ -99,6 +98,10 @@
     
     cell.textLabel.text=_classes[indexPath.row];
     cell.detailTextLabel.text=_teachers[indexPath.row];
+    
+    cell.textLabel.adjustsFontSizeToFitWidth=YES;
+    cell.textLabel.minimumScaleFactor=0.8f;//指定フォントサイズに対する最小の割合
+    cell.detailTextLabel.adjustsFontSizeToFitWidth=NO;//省略可
     
     cell.detailTextLabel.textColor=[UIColor grayColor];
     cell.selectionStyle=UITableViewCellSelectionStyleBlue;

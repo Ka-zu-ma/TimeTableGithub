@@ -58,11 +58,10 @@
     [[_updateButton layer] setCornerRadius:10.0];
     [_updateButton setClipsToBounds:YES];
     
-    // 背景をキリックしたら、キーボードを隠す
+    // 背景をクリックしたら、キーボードを隠す
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
 
-    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     self.navigationItem.titleView=[TitleLabel createTitlelabel:@"日付変更、出席状況変更"];

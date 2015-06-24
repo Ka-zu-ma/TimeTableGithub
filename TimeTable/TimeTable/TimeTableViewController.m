@@ -133,7 +133,10 @@
         
     cell.backgroundColor=[UIColor whiteColor];
     cell.classTimeLabel.textColor=[UIColor blackColor];
-        
+    cell.classLabel.adjustsFontSizeToFitWidth=YES;
+    cell.classLabel.minimumScaleFactor=0.2f;
+    cell.classroomLabel.adjustsFontSizeToFitWidth=YES;
+    
     if (indexPath.row%(_weeks.count + 1) == 0) {
         
         cell.classLabel.text=@"";
@@ -146,7 +149,6 @@
     
     if ([_classNamesAndIndexPathes.allKeys containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]){
         
-                
         cell.classLabel.text=[_classNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         cell.classroomLabel.text=[_classroomNamesAndIndexPathes objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         return cell;
