@@ -129,7 +129,7 @@
 		E3CF49091B1F0DA400CFA4C7 /* WeekContentsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekContentsData.m; sourceTree = "<group>"; };
 		E3CF490B1B1F0DCC00CFA4C7 /* ClassTimeContentsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTimeContentsData.h; sourceTree = "<group>"; };
 		E3CF490C1B1F0DCC00CFA4C7 /* ClassTimeContentsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTimeContentsData.m; sourceTree = "<group>"; };
-		E3FE065C1B01983F00AB1BB3 /* PodFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodFile; sourceTree = "<group>"; };
+		E3FE065C1B01983F00AB1BB3 /* PodFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodFile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E3FE06681B01F5A800AB1BB3 /* CountUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountUpCell.h; sourceTree = "<group>"; };
 		E3FE06691B01F5A800AB1BB3 /* CountUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountUpCell.m; sourceTree = "<group>"; };
 		E3FE066A1B01F5A800AB1BB3 /* CountUpCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountUpCell.xib; sourceTree = "<group>"; };

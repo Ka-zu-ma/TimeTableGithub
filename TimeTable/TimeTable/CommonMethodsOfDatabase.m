@@ -15,7 +15,7 @@
     NSString *dbPathString=paths[0];
     FMDatabase *db=[FMDatabase databaseWithPath:[dbPathString stringByAppendingPathComponent:databaseFile]];
         
-    NSLog(@"createclass.dbの場所:%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
+//    NSLog(@"createclass.dbの場所:%@",[dbPathString stringByAppendingPathComponent:@"createclass.db"]);
     return db;
 }
 
